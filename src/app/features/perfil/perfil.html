@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="perfil-container">
+    <div class="perfil-avatar">
+      @if (photoURL()) {
+        <img [src]="photoURL()!" [alt]="displayName()" />
+      } @else if (initials()) {
+        {{ initials() }}
+      } @else {
+        <ion-icon name="person-circle-outline"></ion-icon>
+      }
+    </div>
+
+    <div class="perfil-text">
+      <h2 class="perfil-name">{{ displayName() }}</h2>
+      @if (email()) {
+        <p class="perfil-email">{{ email() }}</p>
+      }
+    </div>
+
+    <div class="perfil-info">
+      <ion-item lines="none">
+        <ion-icon slot="start" name="mail-outline"></ion-icon>
+        <ion-label>
+          <h3>Correo</h3>
+          <p>{{ email() || 'Sin correo disponible' }}</p>
+        </ion-label>
+      </ion-item>
+    </div>
+
+    <div class="perfil-actions">
+      <ion-button
+        expand="block"
+        color="medium"
+        routerLink="/nuevo"
+        (keyup.enter)="logout()">
+        Crear nueva partida / evento
+      </ion-button>
+      <ion-button
+        expand="block"
+        color="danger"
+        (click)="logout()"
+        (keyup.enter)="logout()">
+        <ion-icon slot="start" name="log-out-outline"></ion-icon>
+        Cerrar sesión
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
