@@ -1,18 +1,11 @@
-import { Injectable, inject, signal } from '@angular/core';
-import {
-  Auth,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
-  signInWithPopup,
-  GoogleAuthProvider,
-  User,
-} from '@angular/fire/auth';
+import { Injectable, signal } from '@angular/core';
+import { auth } from '../../app.config';
+import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, User } from 'firebase/auth';
+
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly auth = inject(Auth);
+  private readonly auth = auth;
 
   user = signal<User | null>(null);
   loading = signal(true);
