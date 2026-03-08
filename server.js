@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-require("dotenv").config();
+require("dotenv").config({ path: process.env.ENV_FILE || ".env" });
 const uri = process.env.MONGO_URI;
 
 const wargamesRoutes = require("./routes/wargames");
