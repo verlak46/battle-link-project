@@ -1,35 +1,29 @@
 const express = require('express');
 const router = express.Router();
-const { OAuth2Client } = require('google-auth-library');
-const jwt = require('jsonwebtoken');
+const admin = require('../firebaseAdmin');
 const User = require('../models/User');
-
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+const jwt = require('jsonwebtoken');
 
 router.post('/google', async (req, res) => {
+
   try {
 
     const { token } = req.body;
 
-    const ticket = await client.verifyIdToken({
-      idToken: token,
-      audience: process.env.GOOGLE_CLIENT_ID
-    });
-
-    const payload = ticket.getPayload();
+    const decodedToken = await admin.auth().verifyIdToken(token);
 
     const {
-      sub,
+      uid,
       email,
       name,
       picture
-    } = payload;
+    } = decodedToken;
 
-    let user = await User.findOne({ googleId: sub });
+    let user = await User.findOne({ googleId: uid });
 
     if (!user) {
       user = await User.create({
-        googleId: sub,
+        googleId: uid,
         email,
         name,
         picture
@@ -48,8 +42,15 @@ router.post('/google', async (req, res) => {
     });
 
   } catch (error) {
-    res.status(401).json({ error: 'Invalid Google token' });
+
+    console.error("Error verifying token:", error);
+
+    res.status(401).json({
+      error: "Invalid token"
+    });
+
   }
+
 });
 
 module.exports = router;
