@@ -5,6 +5,11 @@ const WargameSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    id: {
+        type: String,
+        required: true,
+        unique: true
+    },
     publisher: String,
     minPlayers: Number,
     maxPlayers: Number,
