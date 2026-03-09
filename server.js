@@ -13,8 +13,8 @@ app.use(cors());
 app.use(express.json());
 
 // rutas
-app.use("/wargames", wargamesRoutes);
-app.use("/auth", authRoutes);
+app.use("/api/wargames", wargamesRoutes);
+app.use("/api/auth", authRoutes);
 
 // conexión MongoDB
 mongoose.connect(uri)
