@@ -1,11 +1,8 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const admin = require("../firebaseAdmin");
-const User = require("../models/User");
-const jwt = require("jsonwebtoken");
 const authController = require("../controllers/authController");
 
-router.post("/google", authController.loginGoogle);
+router.post('/google', authController.loginGoogle);
 router.post("/register", authController.register);
 router.post("/login", authController.login);
 
