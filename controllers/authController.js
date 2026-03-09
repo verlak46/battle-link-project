@@ -1,4 +1,3 @@
-// controllers/authController.js
 const User = require("../models/User");
 const admin = require("../firebaseAdmin");
 const bcrypt = require("bcrypt");
