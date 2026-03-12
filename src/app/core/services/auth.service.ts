@@ -111,6 +111,14 @@ export class AuthService {
     this.user.set(updated);
   }
 
+  async forgotPassword(email: string): Promise<void> {
+    await firstValueFrom(this.api.authForgotPassword(email));
+  }
+
+  async resetPassword(token: string, password: string): Promise<void> {
+    await firstValueFrom(this.api.authResetPassword(token, password));
+  }
+
   async updateProfile(payload: UpdateProfilePayload): Promise<void> {
     const updated = await firstValueFrom(this.api.updateProfile(payload));
 

@@ -81,6 +81,18 @@ export class ApiService {
     );
   }
 
+  authForgotPassword(email: string): Observable<void> {
+    return this.unwrap(
+      this.http.post<ApiResponse<void>>(`${this.baseUrl}/auth/forgot-password`, { email }),
+    );
+  }
+
+  authResetPassword(token: string, password: string): Observable<void> {
+    return this.unwrap(
+      this.http.post<ApiResponse<void>>(`${this.baseUrl}/auth/reset-password`, { token, password }),
+    );
+  }
+
   getProfile(): Observable<AuthUser> {
     return this.unwrap(this.http.get<ApiResponse<AuthUser>>(`${this.baseUrl}/user/profile`));
   }

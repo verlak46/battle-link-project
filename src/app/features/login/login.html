@@ -68,6 +68,12 @@
           {{ isRegister() ? 'Crear cuenta' : 'Entrar' }}
         }
       </ion-button>
+
+      @if (!isRegister()) {
+        <ion-button fill="clear" routerLink="/forgot-password" class="forgot-link">
+          ¿Olvidaste tu contraseña?
+        </ion-button>
+      }
     </form>
 
     <div class="auth-divider">

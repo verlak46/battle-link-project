@@ -1,5 +1,5 @@
 import { Component, inject, signal, computed } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import {
   IonContent,
@@ -15,6 +15,7 @@ import {
 import { addIcons } from 'ionicons';
 import { logoGoogle } from 'ionicons/icons';
 import { AuthService } from '../../core/services/auth.service';
+import { getApiError } from '../../core/utils/api-error';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +23,7 @@ import { AuthService } from '../../core/services/auth.service';
   styleUrl: './login.scss',
   imports: [
     ReactiveFormsModule,
+    RouterLink,
     IonContent,
     IonSegment,
     IonSegmentButton,
@@ -108,13 +110,7 @@ export class LoginPage {
       const target = user?.onboardingCompleted ? '/' : '/onboarding';
       this.router.navigate([target]);
     } catch (err: unknown) {
-      const message =
-        err && typeof err === 'object' && 'code' in err
-          ? this.firebaseMessage((err as { code: string }).code)
-          : err instanceof Error
-            ? err.message
-            : 'Ha ocurrido un error. Inténtalo de nuevo.';
-      this.errorMessage.set(message);
+      this.errorMessage.set(getApiError(err));
     } finally {
       this.loading.set(false);
     }
@@ -132,9 +128,7 @@ export class LoginPage {
       const message =
         err && typeof err === 'object' && 'code' in err
           ? this.firebaseMessage((err as { code: string }).code)
-          : err instanceof Error
-            ? err.message
-            : 'No se pudo iniciar sesión con Google.';
+          : getApiError(err, 'No se pudo iniciar sesión con Google.');
       this.errorMessage.set(message);
     } finally {
       this.loading.set(false);
