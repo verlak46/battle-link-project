@@ -5,6 +5,9 @@ import {
   IsObject,
   IsOptional,
   IsString,
+  Matches,
+  MaxLength,
+  MinLength,
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
@@ -14,6 +17,14 @@ import { LocationDto } from './onboarding.dto';
 const EXPERIENCE_LEVELS: ExperienceLevel[] = ['beginner', 'casual', 'competitive'];
 
 export class UpdateProfileDto {
+  @ApiPropertyOptional({ example: 'comandante_negro' })
+  @IsOptional()
+  @IsString()
+  @MinLength(3)
+  @MaxLength(20)
+  @Matches(/^[a-zA-Z0-9_]+$/, { message: 'Solo letras, números y guiones bajos' })
+  nick?: string;
+
   @ApiPropertyOptional({ example: 'John Doe' })
   @IsOptional()
   @IsString()

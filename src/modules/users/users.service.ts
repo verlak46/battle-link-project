@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from './schemas/user.schema';
@@ -36,17 +36,24 @@ export class UsersService {
   }
 
   async completeOnboarding(id: string, dto: OnboardingDto): Promise<UserDocument> {
-    const user = await this.userModel
-      .findByIdAndUpdate(
-        id,
-        { $set: { ...dto, onboardingCompleted: true } },
-        { new: true },
-      )
-      .select('-password')
-      .lean()
-      .exec();
-    if (!user) throw new NotFoundException('Usuario no encontrado');
-    return user as unknown as UserDocument;
+    try {
+      const user = await this.userModel
+        .findByIdAndUpdate(
+          id,
+          { $set: { ...dto, onboardingCompleted: true } },
+          { new: true },
+        )
+        .select('-password')
+        .lean()
+        .exec();
+      if (!user) throw new NotFoundException('Usuario no encontrado');
+      return user as unknown as UserDocument;
+    } catch (err: unknown) {
+      if ((err as { code?: number }).code === 11000) {
+        throw new ConflictException('Este nick ya está en uso');
+      }
+      throw err;
+    }
   }
 
   async setResetToken(email: string, token: string, expires: Date): Promise<void> {
@@ -74,12 +81,19 @@ export class UsersService {
   }
 
   async updateProfile(id: string, dto: UpdateProfileDto): Promise<UserDocument> {
-    const user = await this.userModel
-      .findByIdAndUpdate(id, { $set: dto }, { new: true })
-      .select('-password')
-      .lean()
-      .exec();
-    if (!user) throw new NotFoundException('Usuario no encontrado');
-    return user as unknown as UserDocument;
+    try {
+      const user = await this.userModel
+        .findByIdAndUpdate(id, { $set: dto }, { new: true })
+        .select('-password')
+        .lean()
+        .exec();
+      if (!user) throw new NotFoundException('Usuario no encontrado');
+      return user as unknown as UserDocument;
+    } catch (err: unknown) {
+      if ((err as { code?: number }).code === 11000) {
+        throw new ConflictException('Este nick ya está en uso');
+      }
+      throw err;
+    }
   }
 }

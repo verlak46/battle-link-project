@@ -6,6 +6,9 @@ import {
   IsObject,
   IsOptional,
   IsString,
+  Matches,
+  MaxLength,
+  MinLength,
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
@@ -25,6 +28,18 @@ export class LocationDto {
 }
 
 export class OnboardingDto {
+  @ApiPropertyOptional({ example: 'John Doe' })
+  @IsOptional()
+  @IsString()
+  name?: string;
+
+  @ApiProperty({ example: 'comandante_negro' })
+  @IsString()
+  @MinLength(3)
+  @MaxLength(20)
+  @Matches(/^[a-zA-Z0-9_]+$/, { message: 'Solo letras, números y guiones bajos' })
+  nick: string;
+
   @ApiPropertyOptional({ example: ['warhammer40k', 'age-of-sigmar'] })
   @IsOptional()
   @IsArray()

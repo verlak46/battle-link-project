@@ -31,6 +31,9 @@ export class User {
   @Prop()
   name: string;
 
+  @Prop({ unique: true, sparse: true })
+  nick: string;
+
   @Prop()
   picture: string;
 
