@@ -49,6 +49,30 @@ export class UsersService {
     return user as unknown as UserDocument;
   }
 
+  async setResetToken(email: string, token: string, expires: Date): Promise<void> {
+    await this.userModel.findOneAndUpdate(
+      { email },
+      { $set: { resetPasswordToken: token, resetPasswordExpires: expires } },
+    );
+  }
+
+  async findByResetToken(token: string): Promise<UserDocument | null> {
+    return this.userModel
+      .findOne({
+        resetPasswordToken: token,
+        resetPasswordExpires: { $gt: new Date() },
+      })
+      .select('+resetPasswordToken +resetPasswordExpires')
+      .exec();
+  }
+
+  async updatePassword(id: string, hashedPassword: string): Promise<void> {
+    await this.userModel.findByIdAndUpdate(id, {
+      $set: { password: hashedPassword },
+      $unset: { resetPasswordToken: '', resetPasswordExpires: '' },
+    });
+  }
+
   async updateProfile(id: string, dto: UpdateProfileDto): Promise<UserDocument> {
     const user = await this.userModel
       .findByIdAndUpdate(id, { $set: dto }, { new: true })

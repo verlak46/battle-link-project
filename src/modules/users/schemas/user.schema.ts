@@ -48,6 +48,12 @@ export class User {
 
   @Prop({ enum: ['local', 'google'], default: 'local' })
   provider: AuthProvider;
+
+  @Prop({ select: false })
+  resetPasswordToken?: string;
+
+  @Prop({ select: false })
+  resetPasswordExpires?: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
