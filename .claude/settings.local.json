@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find \"G:/battle-link-project/battle-link/src/app/features/mapa\" -type f | grep -E \"\\\\.\\(ts|html|scss\\)$\")",
+      "Bash(find \"G:/battle-link-project/battle-link/src/app/features/nuevo\" -type f | grep -E \"\\\\.\\(ts|html|scss\\)$\")",
+      "Bash(find \"G:/battle-link-project/battle-link/src/app/layout/tabs\" -type f | grep -E \"\\\\.\\(ts|html|scss\\)$\")",
+      "Bash(find \"G:/battle-link-project/battle-link/src/app\" -name \"*model*\" -o -name \"*interface*\" | grep -E \"\\\\.\\(ts\\)$\")",
+      "Bash(grep -r \"leaflet\\\\|mapbox\\\\|geolocation\" \"G:/battle-link-project/battle-link/src/app\" --include=\"*.ts\" --include=\"*.json\" 2>/dev/null | head -20)",
+      "Bash(find /g/battle-link-project/battle-link/src/app/features -name \"*.ts\" -type f | grep -E \"^[^/]*\\\\.ts$|nuevo\\\\.ts|mapa\\\\.ts\")",
+      "Bash(cd G:/battle-link-project/battle-link && npm install @angular/google-maps --save 2>&1 | tail -5)",
+      "Bash(cd G:/battle-link-project/battle-link && npm install @angular/google-maps --save --legacy-peer-deps 2>&1 | tail -5)"
+    ]
+  }
+}

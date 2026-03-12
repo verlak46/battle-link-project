@@ -1,4 +1,4 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, signal, computed, inject } from '@angular/core';
 import {
   IonHeader,
   IonToolbar,
@@ -15,8 +15,11 @@ import {
   chevronForwardOutline,
   chevronBackOutline,
 } from 'ionicons/icons';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 import { TipoCreacion, NuevoFormData, PASOS_WIZARD } from './nuevo-form.types';
+import { ApiService } from '../../core/services/api.service';
+import { Venue } from '../../shared/models/IVenue';
 import { TipoSelectorComponent } from './components/tipo-selector/tipo-selector';
 import { StepHeaderComponent } from './components/step-header/step-header';
 import { StepNavComponent } from './components/step-nav/step-nav';
@@ -44,10 +47,12 @@ import { PasoDetallesComponent } from './components/paso-detalles/paso-detalles'
   ],
 })
 export class NuevoPage {
+  private readonly api = inject(ApiService);
   readonly pasos = PASOS_WIZARD;
 
   tipo = signal<TipoCreacion>('partida');
   pasoActual = signal(1);
+  venues = toSignal(this.api.getVenues(), { initialValue: [] as Venue[] });
 
   form = signal<NuevoFormData>({
     juego: '',

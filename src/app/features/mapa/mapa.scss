@@ -1,0 +1,37 @@
+ion-content {
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+google-map {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.info-window {
+  padding: 4px;
+  min-width: 160px;
+
+  h3 {
+    margin: 0 0 4px;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .type {
+    margin: 0 0 4px;
+    font-size: 0.75rem;
+    color: var(--ion-color-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--ion-color-dark);
+  }
+}

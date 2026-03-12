@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { guestGuard } from './core/guards/guest.guard';
+import { adminGuard } from './core/guards/admin.guard';
 
 export const routes: Routes = [
   {
@@ -24,6 +25,18 @@ export const routes: Routes = [
     canActivate: [authGuard],
     loadComponent: () =>
       import('./features/onboarding/onboarding').then((m) => m.OnboardingPage),
+  },
+  {
+    path: 'venues/nueva',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/venues/nueva-venue/nueva-venue').then((m) => m.NuevaVenuePage),
+  },
+  {
+    path: 'admin/venues',
+    canActivate: [adminGuard],
+    loadComponent: () =>
+      import('./features/admin/venues-pendientes/venues-pendientes').then((m) => m.VenuesPendientesPage),
   },
   {
     path: '',

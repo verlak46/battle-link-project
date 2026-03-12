@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Wargame } from '../../shared/models/IWargame';
+import { Venue, CreateVenuePayload } from '../../shared/models/IVenue';
 
 export type ExperienceLevel = 'beginner' | 'casual' | 'competitive';
 
@@ -23,6 +24,7 @@ export interface AuthUser {
   experienceLevel?: ExperienceLevel;
   location?: UserLocation | null;
   onboardingCompleted: boolean;
+  isAdmin?: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -109,5 +111,37 @@ export class ApiService {
     return this.unwrap(
       this.http.patch<ApiResponse<AuthUser>>(`${this.baseUrl}/user/profile`, payload),
     );
+  }
+
+  getVenues(): Observable<Venue[]> {
+    return this.unwrap(this.http.get<ApiResponse<Venue[]>>(`${this.baseUrl}/venues`));
+  }
+
+  getVenue(id: string): Observable<Venue> {
+    return this.unwrap(this.http.get<ApiResponse<Venue>>(`${this.baseUrl}/venues/${id}`));
+  }
+
+  createVenue(payload: CreateVenuePayload): Observable<Venue> {
+    return this.unwrap(this.http.post<ApiResponse<Venue>>(`${this.baseUrl}/venues`, payload));
+  }
+
+  updateVenue(id: string, payload: Partial<CreateVenuePayload>): Observable<Venue> {
+    return this.unwrap(this.http.patch<ApiResponse<Venue>>(`${this.baseUrl}/venues/${id}`, payload));
+  }
+
+  deleteVenue(id: string): Observable<void> {
+    return this.unwrap(this.http.delete<ApiResponse<void>>(`${this.baseUrl}/venues/${id}`));
+  }
+
+  getPendingVenues(): Observable<Venue[]> {
+    return this.unwrap(this.http.get<ApiResponse<Venue[]>>(`${this.baseUrl}/venues/pending`));
+  }
+
+  approveVenue(id: string): Observable<Venue> {
+    return this.unwrap(this.http.patch<ApiResponse<Venue>>(`${this.baseUrl}/venues/${id}/approve`, {}));
+  }
+
+  rejectVenue(id: string): Observable<Venue> {
+    return this.unwrap(this.http.patch<ApiResponse<Venue>>(`${this.baseUrl}/venues/${id}/reject`, {}));
   }
 }
