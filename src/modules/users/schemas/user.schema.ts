@@ -49,6 +49,9 @@ export class User {
   @Prop({ default: false })
   onboardingCompleted: boolean;
 
+  @Prop({ default: false })
+  isAdmin: boolean;
+
   @Prop({ enum: ['local', 'google'], default: 'local' })
   provider: AuthProvider;
 
