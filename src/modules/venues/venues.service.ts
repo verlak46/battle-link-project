@@ -9,6 +9,12 @@ import { Venue, VenueDocument } from './schemas/venue.schema';
 import { CreateVenueDto } from './dto/create-venue.dto';
 import { UpdateVenueDto } from './dto/update-venue.dto';
 
+export enum VenueStatus {
+  PENDING = 'pending',
+  APPROVED = 'approved',
+  REJECTED = 'rejected',
+}
+
 @Injectable()
 export class VenuesService {
   constructor(
@@ -16,11 +22,11 @@ export class VenuesService {
   ) {}
 
   findApproved(): Promise<VenueDocument[]> {
-    return this.venueModel.find({ status: 'approved' }).lean().exec() as unknown as Promise<VenueDocument[]>;
+    return this.venueModel.find({ status: VenueStatus.APPROVED }).lean().exec() as unknown as Promise<VenueDocument[]>;
   }
 
   findPending(): Promise<VenueDocument[]> {
-    return this.venueModel.find({ status: 'pending' }).lean().exec() as unknown as Promise<VenueDocument[]>;
+    return this.venueModel.find({ status: VenueStatus.PENDING }).lean().exec() as unknown as Promise<VenueDocument[]>;
   }
 
   async findById(id: string): Promise<VenueDocument> {
@@ -30,14 +36,14 @@ export class VenuesService {
   }
 
   create(dto: CreateVenueDto, userId: string): Promise<VenueDocument> {
-    return this.venueModel.create({ ...dto, createdBy: userId, status: 'pending' }) as unknown as Promise<VenueDocument>;
+    return this.venueModel.create({ ...dto, createdBy: userId, status: VenueStatus.PENDING }) as unknown as Promise<VenueDocument>;
   }
 
   async update(id: string, dto: UpdateVenueDto, userId: string): Promise<VenueDocument> {
     const venue = await this.venueModel.findById(id).exec();
     if (!venue) throw new NotFoundException('Venue no encontrada');
     if (venue.createdBy !== userId) throw new ForbiddenException('No tienes permiso para editar esta venue');
-    if (venue.status === 'approved') throw new ForbiddenException('No puedes editar una venue aprobada');
+    if (venue.status === VenueStatus.APPROVED) throw new ForbiddenException('No puedes editar una venue aprobada');
     const updated = await this.venueModel
       .findByIdAndUpdate(id, { $set: dto }, { new: true })
       .lean()
@@ -47,7 +53,7 @@ export class VenuesService {
 
   async approve(id: string): Promise<VenueDocument> {
     const venue = await this.venueModel
-      .findByIdAndUpdate(id, { $set: { status: 'approved' } }, { new: true })
+      .findByIdAndUpdate(id, { $set: { status: VenueStatus.APPROVED } }, { new: true })
       .lean()
       .exec();
     if (!venue) throw new NotFoundException('Venue no encontrada');
@@ -56,7 +62,7 @@ export class VenuesService {
 
   async reject(id: string): Promise<VenueDocument> {
     const venue = await this.venueModel
-      .findByIdAndUpdate(id, { $set: { status: 'rejected' } }, { new: true })
+      .findByIdAndUpdate(id, { $set: { status: VenueStatus.REJECTED } }, { new: true })
       .lean()
       .exec();
     if (!venue) throw new NotFoundException('Venue no encontrada');
