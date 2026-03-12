@@ -1,11 +1,5 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
-import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonSpinner,
-} from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonSpinner } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { gameControllerOutline, locationOutline } from 'ionicons/icons';
 import { Router } from '@angular/router';
@@ -17,6 +11,7 @@ import { PasoPerfilOnboardingComponent } from './components/paso-perfil/paso-per
 import { PasoJuegosOnboardingComponent } from './components/paso-juegos/paso-juegos';
 import { PasoUbicacionOnboardingComponent } from './components/paso-ubicacion/paso-ubicacion';
 import { OnboardingStepNavComponent } from './components/step-nav/onboarding-step-nav';
+import { getApiError } from '../../core/utils/api-error';
 
 @Component({
   selector: 'app-onboarding',
@@ -163,15 +158,13 @@ export class OnboardingPage implements OnInit {
         favoriteGames: this.favoriteGamesIds(),
         location,
       });
-      
+
       this.router.navigate(['/']);
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : 'No se pudo completar el onboarding.';
+      const message = getApiError(err, 'No se pudo completar el onboarding.');
       this.errorMessage.set(message);
     } finally {
       this.loading.set(false);
     }
   }
 }
-
