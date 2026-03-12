@@ -24,6 +24,17 @@
   </ion-item>
 
   <ion-item>
+    <ion-label position="stacked">Dirección *</ion-label>
+    <ion-input
+      #addressInput
+      [value]="address()"
+      (ionInput)="address.set($any($event).detail.value)"
+      placeholder="Ej. Calle Mayor 12"
+      autocomplete="off">
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
     <ion-label position="stacked">Ciudad *</ion-label>
     <ion-input
       [value]="city()"
@@ -32,27 +43,22 @@
     </ion-input>
   </ion-item>
 
-  <ion-item>
-    <ion-label position="stacked">Dirección *</ion-label>
-    <ion-input
-      [value]="address()"
-      (ionInput)="address.set($any($event).detail.value)"
-      placeholder="Ej. Calle Mayor 12">
-    </ion-input>
-  </ion-item>
-
-  <div class="location-section">
-    <ion-button fill="outline" expand="block" (click)="useMyLocation()" [disabled]="locating()">
-      @if (locating()) {
-        <ion-spinner name="crescent" slot="start"></ion-spinner>
-        Obteniendo ubicación...
-      } @else if (lat() !== null) {
-        Coordenadas: {{ lat()!.toFixed(4) }}, {{ lng()!.toFixed(4) }}
-      } @else {
-        Usar mi ubicación
-      }
-    </ion-button>
-  </div>
+  @if (mapCenter(); as center) {
+    <div class="map-preview">
+      <google-map
+        [center]="center"
+        [zoom]="16"
+        [options]="mapOptions"
+        width="100%"
+        height="100%">
+        <map-marker [position]="center"></map-marker>
+      </google-map>
+    </div>
+  } @else {
+    <div class="map-placeholder">
+      <p>Selecciona una dirección para ver la ubicación</p>
+    </div>
+  }
 
   <ion-item>
     <ion-label position="stacked">Descripción</ion-label>

@@ -1,25 +1,33 @@
-import { Component, signal, inject, ChangeDetectionStrategy } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  NgZone,
+  ViewChild,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
   IonBackButton,
+  IonButton,
   IonButtons,
+  IonContent,
+  IonHeader,
+  IonInput,
   IonItem,
   IonLabel,
-  IonInput,
-  IonTextarea,
-  IonSelect,
-  IonSelectOption,
   IonSegment,
   IonSegmentButton,
-  IonButton,
-  IonToast,
   IonSpinner,
+  IonTextarea,
+  IonTitle,
+  IonToolbar,
+  IonToast,
 } from '@ionic/angular/standalone';
+import { GoogleMap, MapMarker } from '@angular/google-maps';
 import { ApiService } from '../../../core/services/api.service';
 import { getApiError } from '../../../core/utils/api-error';
 import { VenueType } from '../../../shared/models/IVenue';
@@ -41,18 +49,21 @@ import { VenueType } from '../../../shared/models/IVenue';
     IonLabel,
     IonInput,
     IonTextarea,
-    IonSelect,
-    IonSelectOption,
     IonSegment,
     IonSegmentButton,
     IonButton,
     IonToast,
     IonSpinner,
+    GoogleMap,
+    MapMarker,
   ],
 })
-export class NuevaVenuePage {
+export class NuevaVenuePage implements AfterViewInit {
+  @ViewChild('addressInput') private addressInputRef!: IonInput;
+
   private readonly api = inject(ApiService);
   private readonly router = inject(Router);
+  private readonly zone = inject(NgZone);
 
   name = signal('');
   type = signal<VenueType>('store');
@@ -67,8 +78,45 @@ export class NuevaVenuePage {
   loading = signal(false);
   error = signal('');
   success = signal(false);
-
   locating = signal(false);
+
+  mapCenter = computed<google.maps.LatLngLiteral | null>(() =>
+    this.lat() !== null ? { lat: this.lat()!, lng: this.lng()! } : null,
+  );
+
+  readonly mapOptions: google.maps.MapOptions = {
+    disableDefaultUI: true,
+    zoomControl: true,
+    clickableIcons: false,
+  };
+
+  ngAfterViewInit() {
+    this.addressInputRef.getInputElement().then((el) => {
+      const autocomplete = new google.maps.places.Autocomplete(el, {
+        types: ['address'],
+        fields: ['formatted_address', 'geometry', 'address_components'],
+      });
+
+      autocomplete.addListener('place_changed', () => {
+        const place = autocomplete.getPlace();
+        this.zone.run(() => {
+          if (place.formatted_address) {
+            this.address.set(place.formatted_address);
+          }
+          if (place.geometry?.location) {
+            this.lat.set(place.geometry.location.lat());
+            this.lng.set(place.geometry.location.lng());
+          }
+          const cityComp = place.address_components?.find((c) =>
+            c.types.includes('locality') || c.types.includes('administrative_area_level_2'),
+          );
+          if (cityComp) {
+            this.city.set(cityComp.long_name);
+          }
+        });
+      });
+    });
+  }
 
   useMyLocation() {
     if (!navigator.geolocation) {
@@ -95,7 +143,7 @@ export class NuevaVenuePage {
       return;
     }
     if (this.lat() === null || this.lng() === null) {
-      this.error.set('Debes establecer las coordenadas con "Usar mi ubicación"');
+      this.error.set('Selecciona una dirección del autocompletado o usa "Mi ubicación"');
       return;
     }
 

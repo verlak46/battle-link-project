@@ -1,7 +1,5 @@
-import { Component, input, output } from '@angular/core';
-import { IonItem, IonLabel, IonInput, IonIcon, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
-import { locationOutline } from 'ionicons/icons';
+import { AfterViewInit, Component, NgZone, ViewChild, inject, input, output } from '@angular/core';
+import { IonInput, IonItem, IonLabel, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
 import { Venue } from '../../../../shared/models/IVenue';
 
 @Component({
@@ -30,21 +28,28 @@ import { Venue } from '../../../../shared/models/IVenue';
         clearInput>
       </ion-input>
     </ion-item>
+
     <ion-item>
       <ion-label position="stacked">Dirección / Local (opcional)</ion-label>
       <ion-input
+        #direccionInput
         [value]="direccion()"
         (ionInput)="direccionChange.emit($any($event).detail.value)"
-        placeholder="Ej. Calle Mayor 12, Club Dragón">
+        placeholder="Ej. Calle Mayor 12, Club Dragón"
+        autocomplete="off">
       </ion-input>
     </ion-item>
   `,
   styles: [`
     ion-item { margin-bottom: 4px; }
   `],
-  imports: [IonItem, IonLabel, IonInput, IonIcon, IonSelect, IonSelectOption],
+  imports: [IonItem, IonLabel, IonInput, IonSelect, IonSelectOption],
 })
-export class PasoUbicacionComponent {
+export class PasoUbicacionComponent implements AfterViewInit {
+  @ViewChild('direccionInput') private direccionInputRef!: IonInput;
+
+  private readonly zone = inject(NgZone);
+
   ciudad = input('');
   direccion = input('');
   venueId = input<string | null>(null);
@@ -54,8 +59,28 @@ export class PasoUbicacionComponent {
   direccionChange = output<string>();
   venueIdChange = output<string | null>();
 
-  constructor() {
-    addIcons({ locationOutline });
+  ngAfterViewInit() {
+    this.direccionInputRef.getInputElement().then((el) => {
+      const autocomplete = new google.maps.places.Autocomplete(el, {
+        types: ['address'],
+        fields: ['formatted_address', 'address_components'],
+      });
+
+      autocomplete.addListener('place_changed', () => {
+        const place = autocomplete.getPlace();
+        this.zone.run(() => {
+          if (place.formatted_address) {
+            this.direccionChange.emit(place.formatted_address);
+          }
+          const cityComp = place.address_components?.find((c) =>
+            c.types.includes('locality') || c.types.includes('administrative_area_level_2'),
+          );
+          if (cityComp) {
+            this.ciudadChange.emit(cityComp.long_name);
+          }
+        });
+      });
+    });
   }
 
   onVenueChange(id: string | null) {
