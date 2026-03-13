@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Venues pendientes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  @if (loading()) {
+    <div class="center">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else if (error()) {
+    <p class="error-msg">{{ error() }}</p>
+  } @else if (venues().length === 0) {
+    <p class="empty-msg">No hay venues pendientes de revisión.</p>
+  } @else {
+    <ion-list>
+      @for (venue of venues(); track venue._id) {
+        <ion-item lines="full">
+          <ion-label>
+            <h2>{{ venue.name }}</h2>
+            <p>{{ venue.city }} — {{ venue.address }}</p>
+            <ion-note>{{ venue.type === 'store' ? 'Tienda' : 'Club' }}</ion-note>
+          </ion-label>
+          <div class="actions" slot="end">
+            <ion-button fill="solid" color="success" size="small" (click)="approve(venue)">
+              Aprobar
+            </ion-button>
+            <ion-button fill="outline" color="danger" size="small" (click)="reject(venue)">
+              Rechazar
+            </ion-button>
+          </div>
+        </ion-item>
+      }
+    </ion-list>
+  }
+
+</ion-content>

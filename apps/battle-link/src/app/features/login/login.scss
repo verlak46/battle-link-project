@@ -1,0 +1,87 @@
+.auth-page {
+  --background: var(--ion-background-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.auth-logo {
+  display: block;
+  width: 180px;
+  height: auto;
+  margin: 0 auto 24px;
+  object-fit: contain;
+}
+
+.auth-segment {
+  margin-bottom: 24px;
+}
+
+.auth-form ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  margin-bottom: 8px;
+}
+
+.auth-form ion-item::part(native) {
+  padding-inline-start: 0;
+}
+
+.input-error {
+  margin: -4px 0 8px;
+  padding: 0;
+  font-size: 0.8rem;
+  color: var(--ion-color-danger);
+}
+
+.auth-error {
+  margin: 12px 0;
+  padding: 12px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--ion-color-danger) 15%, transparent);
+  color: var(--ion-color-danger);
+  font-size: 0.9rem;
+}
+
+.auth-submit {
+  margin-top: 16px;
+}
+
+.auth-submit ion-spinner {
+  margin-inline-end: 8px;
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0 16px;
+  color: var(--ion-color-medium);
+  font-size: 0.9rem;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--ion-color-medium-tint);
+}
+
+.auth-google {
+  margin-bottom: 24px;
+}
+
+.forgot-link {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.9rem;
+}
+

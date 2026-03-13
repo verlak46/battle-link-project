@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ tipo() === 'partida' ? 'Nueva Partida' : 'Nuevo Evento' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <app-tipo-selector
+    [tipo]="tipo()"
+    (tipoChange)="tipo.set($event)">
+  </app-tipo-selector>
+
+  <div class="stepper">
+    @for (paso of pasos; track paso.id) {
+
+      <app-step-header
+        [paso]="paso"
+        [total]="pasos.length"
+        [active]="pasoActual() === paso.id"
+        [done]="pasoActual() > paso.id"
+        (clicked)="irAPaso($event)">
+      </app-step-header>
+
+      @if (pasoActual() === paso.id) {
+        <div class="step__body">
+
+          @if (paso.id === 1) {
+            <app-paso-juego
+              [tipo]="tipo()"
+              [juego]="form().juego"
+              [sistema]="form().sistema"
+              (juegoChange)="patch({ juego: $event })"
+              (sistemaChange)="patch({ sistema: $event })">
+            </app-paso-juego>
+          }
+
+          @if (paso.id === 2) {
+            <app-paso-fecha
+              [fecha]="form().fecha"
+              [hora]="form().hora"
+              (fechaChange)="patch({ fecha: $event })"
+              (horaChange)="patch({ hora: $event })">
+            </app-paso-fecha>
+          }
+
+          @if (paso.id === 3) {
+            <app-paso-ubicacion
+              [ciudad]="form().ciudad"
+              [direccion]="form().direccion"
+              [venueId]="form().venueId ?? null"
+              [venues]="venues()"
+              (ciudadChange)="patch({ ciudad: $event })"
+              (direccionChange)="patch({ direccion: $event })"
+              (venueIdChange)="patch({ venueId: $event ?? undefined })">
+            </app-paso-ubicacion>
+          }
+
+          @if (paso.id === 4) {
+            <app-paso-detalles
+              [tipo]="tipo()"
+              [titulo]="form().titulo"
+              [descripcion]="form().descripcion"
+              [maxJugadores]="form().maxJugadores"
+              (tituloChange)="patch({ titulo: $event })"
+              (descripcionChange)="patch({ descripcion: $event })"
+              (maxJugadoresChange)="patch({ maxJugadores: $event })">
+            </app-paso-detalles>
+          }
+
+          <app-step-nav
+            [tipo]="tipo()"
+            [valido]="esPasoValido()"
+            [esUltimoPaso]="esUltimoPaso()"
+            [mostrarAnterior]="pasoActual() > 1"
+            (anterior)="anterior()"
+            (siguiente)="siguiente()"
+            (confirmar)="confirmar()">
+          </app-step-nav>
+
+        </div>
+      }
+
+    }
+  </div>
+
+</ion-content>

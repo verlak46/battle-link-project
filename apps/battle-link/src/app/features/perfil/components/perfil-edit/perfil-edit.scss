@@ -1,0 +1,38 @@
+.perfil-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.perfil-edit__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.perfil-edit__segment-label {
+  --padding-start: 0;
+}
+
+.perfil-edit__segment {
+  margin-top: 4px;
+}
+
+.perfil-edit__segment ion-segment-button {
+  --padding-start: 8px;
+  --padding-end: 8px;
+  font-size: 13px;
+}
+
+.perfil-edit__error {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--ion-color-danger);
+}
+
+.perfil-edit__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}

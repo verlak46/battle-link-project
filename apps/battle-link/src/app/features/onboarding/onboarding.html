@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Bienvenido</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="stepper">
+    @for (paso of pasos; track paso.id) {
+
+      <app-step-header
+        [paso]="paso"
+        [total]="totalPasos"
+        [active]="step() === paso.id"
+        [done]="step() > paso.id"
+        (clicked)="step() > paso.id ? step.set(paso.id) : null">
+      </app-step-header>
+
+      @if (step() === paso.id) {
+        <div class="step__body">
+          @if (loading()) {
+            <div class="onboarding__loading">
+              <ion-spinner></ion-spinner>
+            </div>
+          } @else {
+            @if (paso.id === 1) {
+              <app-onboarding-paso-perfil
+                [name]="name()"
+                [nick]="nick()"
+                [experienceLevel]="experienceLevel()"
+                (nameChange)="name.set($event)"
+                (nickChange)="nick.set($event)"
+                (experienceLevelChange)="experienceLevel.set($event)">
+              </app-onboarding-paso-perfil>
+            } @else if (paso.id === 2) {
+              <app-onboarding-paso-juegos
+                [wargames]="wargames()"
+                [selectedIds]="favoriteGamesIds()"
+                (selectedIdsChange)="favoriteGamesIds.set($event)">
+              </app-onboarding-paso-juegos>
+            } @else if (paso.id === 3) {
+              <app-onboarding-paso-ubicacion
+                [location]="location()"
+                [locationLoading]="locationLoading()"
+                (usarUbicacion)="usarUbicacionActual()">
+              </app-onboarding-paso-ubicacion>
+            }
+          }
+
+          @if (errorMessage()) {
+            <p class="onboarding__error">{{ errorMessage() }}</p>
+          }
+
+          <app-onboarding-step-nav
+            [valido]="esPasoValido()"
+            [esUltimoPaso]="esUltimoPaso()"
+            [mostrarAnterior]="step() > 1"
+            [loading]="loading()"
+            (anterior)="anterior()"
+            (siguiente)="siguiente()"
+            (finalizar)="finalizar()">
+          </app-onboarding-step-nav>
+        </div>
+      }
+    }
+  </div>
+</ion-content>
+
