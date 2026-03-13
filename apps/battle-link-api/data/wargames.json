@@ -1,0 +1,34 @@
+[
+  {
+    "id": "warhammer40k",
+    "name": "Warhammer 40,000",
+    "players": 2,
+    "scale": "28mm",
+    "publisher": "Games Workshop",
+    "active": true
+  },
+  {
+    "id": "ageofsigmar",
+    "name": "Age of Sigmar",
+    "players": 2,
+    "scale": "28mm",
+    "publisher": "Games Workshop",
+    "active": true
+  },
+  {
+    "id": "boltaction",
+    "name": "Bolt Action",
+    "players": 2,
+    "scale": "28mm",
+    "publisher": "Warlord Games",
+    "active": true
+  },
+  {
+    "id": "killteam",
+    "name": "Kill Team",
+    "players": 2,
+    "scale": "28mm",
+    "publisher": "Games Workshop",
+    "active": true
+  }
+]
