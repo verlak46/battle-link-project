@@ -4,64 +4,78 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Battle Link is a wargaming social platform with two sub-projects:
-- **`battle-link/`** — Angular 21 + Ionic 8 frontend (PWA/mobile app)
-- **`battle-link-api/`** — NestJS + MongoDB (Mongoose) backend
+Battle Link is a wargaming social platform — an **Nx integrated monorepo** with two apps:
+- **`apps/battle-link/`** — Angular 21 + Ionic 8 frontend (PWA/mobile app)
+- **`apps/battle-link-api/`** — NestJS + MongoDB (Mongoose) backend
+
+Run `npm install` once at the root; all dependencies are unified in the root `package.json`.
 
 ## Commands
 
-### Frontend (`battle-link/`)
+### Frontend (`apps/battle-link/`)
 
 ```bash
 # Local dev (API at localhost:3000)
-npm run start:local
+nx serve battle-link --configuration=local
 
 # Dev server (API at deployed backend)
-npm run start:dev
+nx serve battle-link --configuration=development
 
 # Run all tests (Vitest + jsdom via @angular/build:unit-test)
-npm test
+nx test battle-link
 
 # Run a single test file
-npx ng test --include="**/login.spec.ts"
+npx ng test battle-link --include="**/login.spec.ts"
 
 # Build for production
-npm run build:prod
+nx build battle-link --configuration=production
 ```
 
-### Backend (`battle-link-api/`)
+### Backend (`apps/battle-link-api/`)
 
 ```bash
-# Local dev with hot reload
-npm run start:local        # uses .env.local
-npm run start:dev          # uses .env
+# Local dev with hot reload (uses .env.local)
+nx serve battle-link-api --configuration=local
 
-# Build + production
-npm run build
-npm start
+# Dev server with hot reload (uses .env)
+nx serve battle-link-api
+
+# Build
+nx build battle-link-api
 
 # Swagger UI (while dev server is running)
 # http://localhost:3000/api/docs
 ```
 
-The backend requires a `.env` or `.env.local` file with `MONGO_URI` and `JWT_SECRET`. Firebase credentials are loaded from `data/serviceAccountKey.json`.
+### Monorepo commands
+
+```bash
+# Serve both apps simultaneously
+nx run-many -t serve -p battle-link battle-link-api
+
+# Only test/build what changed
+nx affected -t test
+nx affected -t build
+```
+
+The backend requires a `.env` or `.env.local` file with `MONGO_URI` and `JWT_SECRET`. Firebase credentials are loaded from `apps/battle-link-api/data/serviceAccountKey.json`.
 
 ## Architecture
 
 ### Frontend
 
-**Environment configs** in `src/environments/` drive the API URL and Firebase config. `environment.local.ts` points to `localhost:3000`; `environment.ts` (default/prod) points to the deployed API on Render.
+**Environment configs** in `apps/battle-link/src/environments/` drive the API URL and Firebase config. `environment.local.ts` points to `localhost:3000`; `environment.ts` (default/prod) points to the deployed API on Render.
 
 **Auth flow:**
 1. Firebase is initialized once in `app.config.ts` (exported `auth` and `firestore` instances used across the app).
-2. `AuthService` (`core/services/auth.service.ts`) manages a JWT session stored in `localStorage` under key `battle-link-auth`. It exposes a `user` signal and a `ready` Promise that resolves after session restore.
+2. `AuthService` (`apps/battle-link/src/app/core/services/auth.service.ts`) manages a JWT session stored in `localStorage` under key `battle-link-auth`. It exposes a `user` signal and a `ready` Promise that resolves after session restore.
 3. `authGuard` waits on `auth.ready` before evaluating; redirects unauthenticated users to `/login` and users without completed onboarding to `/onboarding`. `guestGuard` is the inverse — it protects `/login` by redirecting already-authenticated users to `/` or `/onboarding`.
 4. `authInterceptor` automatically attaches `Authorization: Bearer <token>` to all non-auth API requests.
 5. Google login uses Firebase popup → gets an ID token → sends it to `/api/auth/google` → receives a custom JWT → Firebase session is immediately signed out (Firebase is only used as an OAuth bridge).
 
 **Routing:** Lazy-loaded standalone components. Main app shell is a tabs layout (`layout/tabs/`) with five tabs: `mapa`, `buscar`, `nuevo`, `chat`, `perfil`. Outside the tabs shell: `login`, `onboarding`, `forgot-password`, and `reset-password` (the last one reads a `?token=` query param).
 
-**`ApiService`** (`core/services/api.service.ts`) is the single HTTP client wrapper for all backend calls. All types for the API (AuthUser, Wargame, etc.) are defined there or in `shared/models/`.
+**`ApiService`** (`apps/battle-link/src/app/core/services/api.service.ts`) is the single HTTP client wrapper for all backend calls. All types for the API (AuthUser, Wargame, etc.) are defined there or in `apps/battle-link/src/app/shared/models/`.
 
 ### Backend
 
@@ -74,7 +88,7 @@ The backend requires a `.env` or `.env.local` file with `MONGO_URI` and `JWT_SEC
 
 **API base paths:** `/api/auth`, `/api/user`, `/api/wargames` (prefijo `/api` en `main.ts`)
 
-**Auth strategy:** `@nestjs/jwt` + `passport-jwt`. Google OAuth verifica el Firebase ID token con `firebase-admin` (credenciales en `data/serviceAccountKey.json`) y devuelve un JWT propio. Contraseñas hasheadas con `bcrypt`.
+**Auth strategy:** `@nestjs/jwt` + `passport-jwt`. Google OAuth verifica el Firebase ID token con `firebase-admin` (credenciales en `apps/battle-link-api/data/serviceAccountKey.json`) y devuelve un JWT propio. Contraseñas hasheadas con `bcrypt`.
 
 **User schema** tiene índice `2dsphere` en `location`. `favoriteGames` almacena strings con el `id` del modelo `Wargame` (ej. `"warhammer40k"`), no ObjectIds.
 

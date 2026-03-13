@@ -1,0 +1,42 @@
+# Compiled output
+/dist
+/tmp
+/out-tsc
+/bazel-out
+apps/*/dist
+apps/*/out-tsc
+
+# Node
+node_modules
+npm-debug.log
+yarn-error.log
+
+# IDEs and editors
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.history
+
+# Angular cache
+.angular/cache
+apps/*/.angular/cache
+
+# Nx cache
+.nx/cache
+.nx/workspace-data
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Screenshots
+__screenshots__/
+
+# Original sub-repos (code migrated to apps/)
+/battle-link/
+/battle-link-api/
+
+# Secrets & environment files
+apps/battle-link-api/data/serviceAccountKey.json
+apps/battle-link-api/.env*

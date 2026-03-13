@@ -1,0 +1,15 @@
+{
+  "$schema": "./node_modules/nx/schemas/tsconfig-schema.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "skipLibCheck": true,
+    "paths": {}
+  },
+  "exclude": ["node_modules", "tmp"]
+}
