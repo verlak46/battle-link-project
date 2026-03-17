@@ -42,6 +42,7 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+tsconfig.build.tsbuildinfo
 
 # Secrets (Firebase / service accounts)
 data/serviceAccountKey.json
