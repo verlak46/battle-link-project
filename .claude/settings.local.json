@@ -10,7 +10,8 @@
       "Bash(ls G:/battle-link-project/apps/battle-link/.prettier* 2>/dev/null; ls G:/battle-link-project/apps/battle-link/.eslint* 2>/dev/null; ls G:/battle-link-project/apps/battle-link-api/.eslint* 2>/dev/null)",
       "Bash(nx serve:*)",
       "Bash(nx build:*)",
-      "Bash(cd G:/battle-link-project/apps/battle-link-api && nest build 2>&1)"
+      "Bash(cd G:/battle-link-project/apps/battle-link-api && nest build 2>&1)",
+      "Bash(cd G:/battle-link-project && grep -c '\"node_modules\"' package-lock.json)"
     ]
   }
 }
