@@ -33,10 +33,7 @@ Thumbs.db
 # Screenshots
 __screenshots__/
 
-# Original sub-repos (code migrated to apps/)
-/battle-link/
-/battle-link-api/
-
 # Secrets & environment files
 apps/battle-link-api/data/serviceAccountKey.json
 apps/battle-link-api/.env*
+apps/battle-link/src/environments/.env*

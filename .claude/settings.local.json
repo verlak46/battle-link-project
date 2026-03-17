@@ -7,7 +7,10 @@
       "Bash(grep -rn \"from '\\\\.\\\\./common\\\\|from '\\\\.\\\\./config\\\\|from '\\\\.\\\\.\\\\./common\\\\|from '\\\\.\\\\.\\\\./config\" /g/battle-link-project/battle-link-api/src/modules/)",
       "Bash(cd /g/battle-link-project/battle-link-api && npm run build 2>&1)",
       "Bash(cd G:/battle-link-project/battle-link && npm run build 2>&1 | tail -30)",
-      "Bash(ls G:/battle-link-project/apps/battle-link/.prettier* 2>/dev/null; ls G:/battle-link-project/apps/battle-link/.eslint* 2>/dev/null; ls G:/battle-link-project/apps/battle-link-api/.eslint* 2>/dev/null)"
+      "Bash(ls G:/battle-link-project/apps/battle-link/.prettier* 2>/dev/null; ls G:/battle-link-project/apps/battle-link/.eslint* 2>/dev/null; ls G:/battle-link-project/apps/battle-link-api/.eslint* 2>/dev/null)",
+      "Bash(nx serve:*)",
+      "Bash(nx build:*)",
+      "Bash(cd G:/battle-link-project/apps/battle-link-api && nest build 2>&1)"
     ]
   }
 }
