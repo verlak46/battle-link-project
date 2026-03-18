@@ -2,36 +2,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { Wargame } from '../../shared/models/IWargame';
-import { Venue, CreateVenuePayload } from '../../shared/models/IVenue';
+import {
+  User,
+  GeoLocation,
+  ExperienceLevel,
+  Game,
+  Place,
+  CreatePlacePayload,
+} from '@battle-link/shared-models';
 
-export type ExperienceLevel = 'beginner' | 'casual' | 'competitive';
-
-export interface UserLocation {
-  type: 'Point';
-  coordinates: [number, number];
-}
-
-export interface AuthUser {
-  _id: string;
-  provider: 'local' | 'google';
-  googleId?: string | null;
-  email: string;
-  name: string;
-  nick?: string;
-  picture?: string | null;
-  favoriteGames: string[];
-  experienceLevel?: ExperienceLevel;
-  location?: UserLocation | null;
-  onboardingCompleted: boolean;
-  isAdmin?: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
+export type { User as AuthUser, GeoLocation as UserLocation, ExperienceLevel } from '@battle-link/shared-models';
 
 export interface AuthResponse {
   token: string;
-  user: AuthUser;
+  user: User;
 }
 
 export interface AuthPasswordRequest {
@@ -44,7 +28,7 @@ export interface UpdateProfilePayload {
   nick?: string;
   favoriteGames?: string[];
   experienceLevel?: ExperienceLevel;
-  location?: UserLocation | null;
+  location?: GeoLocation | null;
 }
 
 interface ApiResponse<T> {
@@ -63,8 +47,8 @@ export class ApiService {
     return source.pipe(map((res) => res.data));
   }
 
-  getWargames(): Observable<Wargame[]> {
-    return this.unwrap(this.http.get<ApiResponse<Wargame[]>>(`${this.baseUrl}/wargames`));
+  getWargames(): Observable<Game[]> {
+    return this.unwrap(this.http.get<ApiResponse<Game[]>>(`${this.baseUrl}/wargames`));
   }
 
   authGoogle(token: string): Observable<AuthResponse> {
@@ -97,51 +81,51 @@ export class ApiService {
     );
   }
 
-  getProfile(): Observable<AuthUser> {
-    return this.unwrap(this.http.get<ApiResponse<AuthUser>>(`${this.baseUrl}/user/profile`));
+  getProfile(): Observable<User> {
+    return this.unwrap(this.http.get<ApiResponse<User>>(`${this.baseUrl}/user/profile`));
   }
 
-  completeOnboarding(payload: UpdateProfilePayload): Observable<AuthUser> {
+  completeOnboarding(payload: UpdateProfilePayload): Observable<User> {
     return this.unwrap(
-      this.http.post<ApiResponse<AuthUser>>(`${this.baseUrl}/user/onboarding`, payload),
+      this.http.post<ApiResponse<User>>(`${this.baseUrl}/user/onboarding`, payload),
     );
   }
 
-  updateProfile(payload: UpdateProfilePayload): Observable<AuthUser> {
+  updateProfile(payload: UpdateProfilePayload): Observable<User> {
     return this.unwrap(
-      this.http.patch<ApiResponse<AuthUser>>(`${this.baseUrl}/user/profile`, payload),
+      this.http.patch<ApiResponse<User>>(`${this.baseUrl}/user/profile`, payload),
     );
   }
 
-  getVenues(): Observable<Venue[]> {
-    return this.unwrap(this.http.get<ApiResponse<Venue[]>>(`${this.baseUrl}/venues`));
+  getVenues(): Observable<Place[]> {
+    return this.unwrap(this.http.get<ApiResponse<Place[]>>(`${this.baseUrl}/venues`));
   }
 
-  getVenue(id: string): Observable<Venue> {
-    return this.unwrap(this.http.get<ApiResponse<Venue>>(`${this.baseUrl}/venues/${id}`));
+  getVenue(id: string): Observable<Place> {
+    return this.unwrap(this.http.get<ApiResponse<Place>>(`${this.baseUrl}/venues/${id}`));
   }
 
-  createVenue(payload: CreateVenuePayload): Observable<Venue> {
-    return this.unwrap(this.http.post<ApiResponse<Venue>>(`${this.baseUrl}/venues`, payload));
+  createVenue(payload: CreatePlacePayload): Observable<Place> {
+    return this.unwrap(this.http.post<ApiResponse<Place>>(`${this.baseUrl}/venues`, payload));
   }
 
-  updateVenue(id: string, payload: Partial<CreateVenuePayload>): Observable<Venue> {
-    return this.unwrap(this.http.patch<ApiResponse<Venue>>(`${this.baseUrl}/venues/${id}`, payload));
+  updateVenue(id: string, payload: Partial<CreatePlacePayload>): Observable<Place> {
+    return this.unwrap(this.http.patch<ApiResponse<Place>>(`${this.baseUrl}/venues/${id}`, payload));
   }
 
   deleteVenue(id: string): Observable<void> {
     return this.unwrap(this.http.delete<ApiResponse<void>>(`${this.baseUrl}/venues/${id}`));
   }
 
-  getPendingVenues(): Observable<Venue[]> {
-    return this.unwrap(this.http.get<ApiResponse<Venue[]>>(`${this.baseUrl}/venues/pending`));
+  getPendingVenues(): Observable<Place[]> {
+    return this.unwrap(this.http.get<ApiResponse<Place[]>>(`${this.baseUrl}/venues/pending`));
   }
 
-  approveVenue(id: string): Observable<Venue> {
-    return this.unwrap(this.http.patch<ApiResponse<Venue>>(`${this.baseUrl}/venues/${id}/approve`, {}));
+  approveVenue(id: string): Observable<Place> {
+    return this.unwrap(this.http.patch<ApiResponse<Place>>(`${this.baseUrl}/venues/${id}/approve`, {}));
   }
 
-  rejectVenue(id: string): Observable<Venue> {
-    return this.unwrap(this.http.patch<ApiResponse<Venue>>(`${this.baseUrl}/venues/${id}/reject`, {}));
+  rejectVenue(id: string): Observable<Place> {
+    return this.unwrap(this.http.patch<ApiResponse<Place>>(`${this.baseUrl}/venues/${id}/reject`, {}));
   }
 }

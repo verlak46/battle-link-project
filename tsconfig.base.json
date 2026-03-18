@@ -2,13 +2,16 @@
   "$schema": "./node_modules/nx/schemas/tsconfig-schema.json",
   "compilerOptions": {
     "rootDir": ".",
+    "baseUrl": ".",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "importHelpers": true,
     "skipLibCheck": true,
-    "paths": {}
+    "paths": {
+      "@battle-link/shared-models": ["libs/shared-models/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

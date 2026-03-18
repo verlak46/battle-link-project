@@ -1,8 +1,1 @@
-export interface Wargame {
-  id: string;
-  name: string;
-  players: number;
-  scale: string;
-  publisher: string;
-  active: boolean;
-}
+export type { Game as Wargame } from '@battle-link/shared-models';
