@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>Venues pendientes</ion-title>
+    <ion-title>Places pendientes</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,22 +15,22 @@
     </div>
   } @else if (error()) {
     <p class="error-msg">{{ error() }}</p>
-  } @else if (venues().length === 0) {
-    <p class="empty-msg">No hay venues pendientes de revisión.</p>
+  } @else if (places().length === 0) {
+    <p class="empty-msg">No hay places pendientes de revisión.</p>
   } @else {
     <ion-list>
-      @for (venue of venues(); track venue._id) {
+      @for (place of places(); track place._id) {
         <ion-item lines="full">
           <ion-label>
-            <h2>{{ venue.name }}</h2>
-            <p>{{ venue.city }} — {{ venue.address }}</p>
-            <ion-note>{{ venue.type === 'store' ? 'Tienda' : 'Club' }}</ion-note>
+            <h2>{{ place.name }}</h2>
+            <p>{{ place.city }} — {{ place.address }}</p>
+            <ion-note>{{ place.type === 'store' ? 'Tienda' : 'Club' }}</ion-note>
           </ion-label>
           <div class="actions" slot="end">
-            <ion-button fill="solid" color="success" size="small" (click)="approve(venue)">
+            <ion-button fill="solid" color="success" size="small" (click)="approve(place)">
               Aprobar
             </ion-button>
-            <ion-button fill="outline" color="danger" size="small" (click)="reject(venue)">
+            <ion-button fill="outline" color="danger" size="small" (click)="reject(place)">
               Rechazar
             </ion-button>
           </div>

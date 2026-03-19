@@ -14,13 +14,13 @@ import {
   IonNote,
 } from '@ionic/angular/standalone';
 import { ApiService } from '../../../core/services/api.service';
-import { Venue } from '../../../shared/models/IVenue';
+import { Place } from '@battle-link/shared-models';
 import { getApiError } from '../../../core/utils/api-error';
 
 @Component({
-  selector: 'app-venues-pendientes',
-  templateUrl: './venues-pendientes.html',
-  styleUrl: './venues-pendientes.scss',
+  selector: 'app-places-pendientes',
+  templateUrl: './places-pendientes.html',
+  styleUrl: './places-pendientes.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     IonHeader,
@@ -37,10 +37,10 @@ import { getApiError } from '../../../core/utils/api-error';
     IonNote,
   ],
 })
-export class VenuesPendientesPage {
+export class PlacesPendientesPage {
   private readonly api = inject(ApiService);
 
-  venues = signal<Venue[]>([]);
+  places = signal<Place[]>([]);
   loading = signal(true);
   error = signal('');
 
@@ -50,9 +50,9 @@ export class VenuesPendientesPage {
 
   load() {
     this.loading.set(true);
-    this.api.getPendingVenues().subscribe({
+    this.api.getPendingPlaces().subscribe({
       next: (data) => {
-        this.venues.set(data);
+        this.places.set(data);
         this.loading.set(false);
       },
       error: (err: unknown) => {
@@ -62,15 +62,15 @@ export class VenuesPendientesPage {
     });
   }
 
-  approve(venue: Venue) {
-    this.api.approveVenue(venue._id).subscribe({
+  approve(place: Place) {
+    this.api.approvePlace(place._id).subscribe({
       next: () => this.load(),
       error: (err: unknown) => this.error.set(getApiError(err)),
     });
   }
 
-  reject(venue: Venue) {
-    this.api.rejectVenue(venue._id).subscribe({
+  reject(place: Place) {
+    this.api.rejectPlace(place._id).subscribe({
       next: () => this.load(),
       error: (err: unknown) => this.error.set(getApiError(err)),
     });

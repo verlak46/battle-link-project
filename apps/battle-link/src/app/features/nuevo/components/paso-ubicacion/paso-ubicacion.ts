@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, NgZone, ViewChild, inject, input, output } from '@angular/core';
 import { IonInput, IonItem, IonLabel, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
-import { Venue } from '../../../../shared/models/IVenue';
+import { Place } from '@battle-link/shared-models';
 
 @Component({
   selector: 'app-paso-ubicacion',
@@ -8,12 +8,12 @@ import { Venue } from '../../../../shared/models/IVenue';
     <ion-item>
       <ion-label position="stacked">Tienda / Club (opcional)</ion-label>
       <ion-select
-        [value]="venueId()"
-        (ionChange)="onVenueChange($any($event).detail.value)"
+        [value]="placeId()"
+        (ionChange)="onPlaceChange($any($event).detail.value)"
         placeholder="Sin tienda registrada"
         interface="action-sheet">
         <ion-select-option [value]="null">Sin tienda registrada</ion-select-option>
-        @for (v of venues(); track v._id) {
+        @for (v of places(); track v._id) {
           <ion-select-option [value]="v._id">{{ v.name }} — {{ v.city }}</ion-select-option>
         }
       </ion-select>
@@ -52,12 +52,12 @@ export class PasoUbicacionComponent implements AfterViewInit {
 
   ciudad = input('');
   direccion = input('');
-  venueId = input<string | null>(null);
-  venues = input<Venue[]>([]);
+  placeId = input<string | null>(null);
+  places = input<Place[]>([]);
 
   ciudadChange = output<string>();
   direccionChange = output<string>();
-  venueIdChange = output<string | null>();
+  placeIdChange = output<string | null>();
 
   ngAfterViewInit() {
     this.direccionInputRef.getInputElement().then((el) => {
@@ -83,13 +83,13 @@ export class PasoUbicacionComponent implements AfterViewInit {
     });
   }
 
-  onVenueChange(id: string | null) {
-    this.venueIdChange.emit(id);
+  onPlaceChange(id: string | null) {
+    this.placeIdChange.emit(id);
     if (id) {
-      const venue = this.venues().find((v) => v._id === id);
-      if (venue) {
-        this.ciudadChange.emit(venue.city);
-        this.direccionChange.emit(venue.address);
+      const place = this.places().find((v) => v._id === id);
+      if (place) {
+        this.ciudadChange.emit(place.city);
+        this.direccionChange.emit(place.address);
       }
     }
   }

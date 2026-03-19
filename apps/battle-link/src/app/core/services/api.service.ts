@@ -97,35 +97,35 @@ export class ApiService {
     );
   }
 
-  getVenues(): Observable<Place[]> {
-    return this.unwrap(this.http.get<ApiResponse<Place[]>>(`${this.baseUrl}/venues`));
+  getPlaces(): Observable<Place[]> {
+    return this.unwrap(this.http.get<ApiResponse<Place[]>>(`${this.baseUrl}/places`));
   }
 
-  getVenue(id: string): Observable<Place> {
-    return this.unwrap(this.http.get<ApiResponse<Place>>(`${this.baseUrl}/venues/${id}`));
+  getPlace(id: string): Observable<Place> {
+    return this.unwrap(this.http.get<ApiResponse<Place>>(`${this.baseUrl}/places/${id}`));
   }
 
-  createVenue(payload: CreatePlacePayload): Observable<Place> {
-    return this.unwrap(this.http.post<ApiResponse<Place>>(`${this.baseUrl}/venues`, payload));
+  createPlace(payload: CreatePlacePayload): Observable<Place> {
+    return this.unwrap(this.http.post<ApiResponse<Place>>(`${this.baseUrl}/places`, payload));
   }
 
-  updateVenue(id: string, payload: Partial<CreatePlacePayload>): Observable<Place> {
-    return this.unwrap(this.http.patch<ApiResponse<Place>>(`${this.baseUrl}/venues/${id}`, payload));
+  updatePlace(id: string, payload: Partial<CreatePlacePayload>): Observable<Place> {
+    return this.unwrap(this.http.patch<ApiResponse<Place>>(`${this.baseUrl}/places/${id}`, payload));
   }
 
-  deleteVenue(id: string): Observable<void> {
-    return this.unwrap(this.http.delete<ApiResponse<void>>(`${this.baseUrl}/venues/${id}`));
+  deletePlace(id: string): Observable<void> {
+    return this.unwrap(this.http.delete<ApiResponse<void>>(`${this.baseUrl}/places/${id}`));
   }
 
-  getPendingVenues(): Observable<Place[]> {
-    return this.unwrap(this.http.get<ApiResponse<Place[]>>(`${this.baseUrl}/venues/pending`));
+  getPendingPlaces(): Observable<Place[]> {
+    return this.unwrap(this.http.get<ApiResponse<Place[]>>(`${this.baseUrl}/places/pending`));
   }
 
-  approveVenue(id: string): Observable<Place> {
-    return this.unwrap(this.http.patch<ApiResponse<Place>>(`${this.baseUrl}/venues/${id}/approve`, {}));
+  approvePlace(id: string): Observable<Place> {
+    return this.unwrap(this.http.patch<ApiResponse<Place>>(`${this.baseUrl}/places/${id}/approve`, {}));
   }
 
-  rejectVenue(id: string): Observable<Place> {
-    return this.unwrap(this.http.patch<ApiResponse<Place>>(`${this.baseUrl}/venues/${id}/reject`, {}));
+  rejectPlace(id: string): Observable<Place> {
+    return this.unwrap(this.http.patch<ApiResponse<Place>>(`${this.baseUrl}/places/${id}/reject`, {}));
   }
 }

@@ -8,64 +8,64 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { VenuesService } from './venues.service';
-import { CreateVenueDto } from './dto/create-venue.dto';
-import { UpdateVenueDto } from './dto/update-venue.dto';
+import { PlacesService } from './places.service';
+import { CreatePlaceDto } from './dto/create-place.dto';
+import { UpdatePlaceDto } from './dto/update-place.dto';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { AdminGuard } from '../../common/guards/admin.guard';
 import { CurrentUser, JwtPayload } from '../../common/decorators/current-user.decorator';
 
-@Controller('venues')
-export class VenuesController {
-  constructor(private readonly venuesService: VenuesService) {}
+@Controller('places')
+export class PlacesController {
+  constructor(private readonly placesService: PlacesService) {}
 
   @Get()
   findAll() {
-    return this.venuesService.findApproved();
+    return this.placesService.findApproved();
   }
 
   @UseGuards(AdminGuard)
   @Get('pending')
   findPending() {
-    return this.venuesService.findPending();
+    return this.placesService.findPending();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.venuesService.findById(id);
+    return this.placesService.findById(id);
   }
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Body() dto: CreateVenueDto, @CurrentUser() user: JwtPayload) {
-    return this.venuesService.create(dto, user.sub);
+  create(@Body() dto: CreatePlaceDto, @CurrentUser() user: JwtPayload) {
+    return this.placesService.create(dto, user.sub);
   }
 
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() dto: UpdateVenueDto,
+    @Body() dto: UpdatePlaceDto,
     @CurrentUser() user: JwtPayload,
   ) {
-    return this.venuesService.update(id, dto, user.sub);
+    return this.placesService.update(id, dto, user.sub);
   }
 
   @UseGuards(AdminGuard)
   @Patch(':id/approve')
   approve(@Param('id') id: string) {
-    return this.venuesService.approve(id);
+    return this.placesService.approve(id);
   }
 
   @UseGuards(AdminGuard)
   @Patch(':id/reject')
   reject(@Param('id') id: string) {
-    return this.venuesService.reject(id);
+    return this.placesService.reject(id);
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string, @CurrentUser() user: JwtPayload) {
-    return this.venuesService.remove(id, user.sub, false);
+    return this.placesService.remove(id, user.sub, false);
   }
 }

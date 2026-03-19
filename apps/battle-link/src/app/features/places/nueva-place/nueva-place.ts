@@ -30,13 +30,13 @@ import {
 import { GoogleMap, MapMarker } from '@angular/google-maps';
 import { ApiService } from '../../../core/services/api.service';
 import { getApiError } from '../../../core/utils/api-error';
-import { VenueType } from '../../../shared/models/IVenue';
+import { PlaceType } from '@battle-link/shared-models';
 import { ImageUploadComponent } from '../../../shared/components/image-upload/image-upload';
 
 @Component({
-  selector: 'app-nueva-venue',
-  templateUrl: './nueva-venue.html',
-  styleUrl: './nueva-venue.scss',
+  selector: 'app-nueva-place',
+  templateUrl: './nueva-place.html',
+  styleUrl: './nueva-place.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule,
@@ -60,7 +60,7 @@ import { ImageUploadComponent } from '../../../shared/components/image-upload/im
     ImageUploadComponent,
   ],
 })
-export class NuevaVenuePage implements AfterViewInit {
+export class NuevaPlacePage implements AfterViewInit {
   @ViewChild('addressInput') private addressInputRef!: IonInput;
 
   private readonly api = inject(ApiService);
@@ -68,7 +68,7 @@ export class NuevaVenuePage implements AfterViewInit {
   private readonly zone = inject(NgZone);
 
   name = signal('');
-  type = signal<VenueType>('store');
+  type = signal<PlaceType>('store');
   city = signal('');
   address = signal('');
   description = signal('');
@@ -154,7 +154,7 @@ export class NuevaVenuePage implements AfterViewInit {
     this.error.set('');
 
     this.api
-      .createVenue({
+      .createPlace({
         name: this.name().trim(),
         type: this.type(),
         city: this.city().trim(),

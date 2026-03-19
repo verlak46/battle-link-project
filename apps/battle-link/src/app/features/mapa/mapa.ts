@@ -14,7 +14,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { addIcons } from 'ionicons';
 import { addOutline } from 'ionicons/icons';
 import { ApiService } from '../../core/services/api.service';
-import { Venue } from '../../shared/models/IVenue';
+import { Place } from '@battle-link/shared-models';
 
 @Component({
   selector: 'app-mapa',
@@ -40,11 +40,11 @@ export class MapaPage implements OnInit {
 
   private readonly api = inject(ApiService);
 
-  venues = toSignal(this.api.getVenues(), { initialValue: [] as Venue[] });
+  places = toSignal(this.api.getPlaces(), { initialValue: [] as Place[] });
 
   center = signal<google.maps.LatLngLiteral>({ lat: 40.4168, lng: -3.7038 });
   zoom = signal(12);
-  selectedVenue = signal<Venue | null>(null);
+  selectedPlace = signal<Place | null>(null);
 
   mapOptions: google.maps.MapOptions = {
     disableDefaultUI: false,
@@ -68,15 +68,15 @@ export class MapaPage implements OnInit {
     }
   }
 
-  markerPosition(venue: Venue): google.maps.LatLngLiteral {
+  markerPosition(place: Place): google.maps.LatLngLiteral {
     return {
-      lat: venue.location.coordinates[1],
-      lng: venue.location.coordinates[0],
+      lat: place.location.coordinates[1],
+      lng: place.location.coordinates[0],
     };
   }
 
-  openInfo(marker: MapMarker, venue: Venue) {
-    this.selectedVenue.set(venue);
+  openInfo(marker: MapMarker, place: Place) {
+    this.selectedPlace.set(place);
     this.infoWindow.open(marker);
   }
 }

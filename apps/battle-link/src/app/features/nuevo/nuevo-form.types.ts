@@ -16,7 +16,7 @@ export interface NuevoFormData {
   titulo: string;
   descripcion: string;
   maxJugadores: string;
-  venueId?: string;
+  placeId?: string;
   imageUrl?: string;
 }
 

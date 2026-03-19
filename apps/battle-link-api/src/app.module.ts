@@ -6,7 +6,7 @@ import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { WargamesModule } from './modules/wargames/wargames.module';
-import { VenuesModule } from './modules/venues/venues.module';
+import { PlacesModule } from './modules/places/places.module';
 import { envValidation } from './config/env.validation';
 
 @Module({
@@ -28,7 +28,7 @@ import { envValidation } from './config/env.validation';
     AuthModule,
     UsersModule,
     WargamesModule,
-    VenuesModule,
+    PlacesModule,
   ],
   providers: [
     {

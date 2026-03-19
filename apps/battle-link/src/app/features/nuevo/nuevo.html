@@ -48,11 +48,11 @@
             <app-paso-ubicacion
               [ciudad]="form().ciudad"
               [direccion]="form().direccion"
-              [venueId]="form().venueId ?? null"
-              [venues]="venues()"
+              [placeId]="form().placeId ?? null"
+              [places]="places()"
               (ciudadChange)="patch({ ciudad: $event })"
               (direccionChange)="patch({ direccion: $event })"
-              (venueIdChange)="patch({ venueId: $event ?? undefined })">
+              (placeIdChange)="patch({ placeId: $event ?? undefined })">
             </app-paso-ubicacion>
           }
 

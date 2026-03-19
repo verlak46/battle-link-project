@@ -12,22 +12,22 @@
     width="100%"
     height="100%">
 
-    @for (venue of venues(); track venue._id) {
+    @for (place of places(); track place._id) {
       <map-marker
         #marker="mapMarker"
-        [position]="markerPosition(venue)"
-        [title]="venue.name"
-        (mapClick)="openInfo(marker, venue)">
+        [position]="markerPosition(place)"
+        [title]="place.name"
+        (mapClick)="openInfo(marker, place)">
       </map-marker>
     }
 
     <map-info-window>
-      @if (selectedVenue()) {
+      @if (selectedPlace()) {
         <div class="info-window">
-          <h3>{{ selectedVenue()!.name }}</h3>
-          <p class="type">{{ selectedVenue()!.type === 'store' ? 'Tienda' : 'Club' }}</p>
-          <p>{{ selectedVenue()!.address }}</p>
-          <p>{{ selectedVenue()!.city }}</p>
+          <h3>{{ selectedPlace()!.name }}</h3>
+          <p class="type">{{ selectedPlace()!.type === 'store' ? 'Tienda' : 'Club' }}</p>
+          <p>{{ selectedPlace()!.address }}</p>
+          <p>{{ selectedPlace()!.city }}</p>
         </div>
       }
     </map-info-window>
@@ -35,7 +35,7 @@
   </google-map>
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button routerLink="/venues/nueva">
+    <ion-fab-button routerLink="/places/nueva">
       <ion-icon name="add-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>

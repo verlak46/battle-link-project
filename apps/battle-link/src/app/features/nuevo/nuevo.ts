@@ -19,7 +19,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 
 import { TipoCreacion, NuevoFormData, PASOS_WIZARD } from './nuevo-form.types';
 import { ApiService } from '../../core/services/api.service';
-import { Venue } from '../../shared/models/IVenue';
+import { Place } from '@battle-link/shared-models';
 import { TipoSelectorComponent } from './components/tipo-selector/tipo-selector';
 import { StepHeaderComponent } from './components/step-header/step-header';
 import { StepNavComponent } from './components/step-nav/step-nav';
@@ -52,7 +52,7 @@ export class NuevoPage {
 
   tipo = signal<TipoCreacion>('partida');
   pasoActual = signal(1);
-  venues = toSignal(this.api.getVenues(), { initialValue: [] as Venue[] });
+  places = toSignal(this.api.getPlaces(), { initialValue: [] as Place[] });
 
   form = signal<NuevoFormData>({
     juego: '',

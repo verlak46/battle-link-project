@@ -1,6 +1,5 @@
 import {
   IsString,
-  IsNotEmpty,
   IsEnum,
   IsOptional,
   IsArray,
@@ -23,25 +22,27 @@ class LocationDto {
   coordinates: [number, number];
 }
 
-export class CreateVenueDto {
+export class UpdatePlaceDto {
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  name: string;
+  name?: string;
 
+  @IsOptional()
   @IsEnum(['store', 'club'])
-  type: 'store' | 'club';
+  type?: 'store' | 'club';
 
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  city: string;
+  city?: string;
 
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  address: string;
+  address?: string;
 
+  @IsOptional()
   @ValidateNested()
   @Type(() => LocationDto)
-  location: LocationDto;
+  location?: LocationDto;
 
   @IsOptional()
   @IsString()

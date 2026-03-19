@@ -29,7 +29,9 @@
       "Bash(find /g/battle-link-project/apps/battle-link-api/src -type f \\\\\\( -name \"*.ts\" \\\\\\) | xargs grep -l \"event\\\\|tournament\\\\|game\" | head -20)",
       "Bash(cd G:/battle-link-project && npx nx build battle-link --configuration=production 2>&1 | tail -30)",
       "Bash(cd G:/battle-link-project && npx nx test battle-link 2>&1 | tail -20)",
-      "Bash(cd G:/battle-link-project && npx nx test battle-link --verbose 2>&1 | grep -E \"\\(FAIL|Error|Cannot|error\\)\" | head -30)"
+      "Bash(cd G:/battle-link-project && npx nx test battle-link --verbose 2>&1 | grep -E \"\\(FAIL|Error|Cannot|error\\)\" | head -30)",
+      "Bash(git mv:*)",
+      "Bash(git rm:*)"
     ]
   }
 }

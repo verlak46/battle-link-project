@@ -27,16 +27,16 @@ export const routes: Routes = [
       import('./features/onboarding/onboarding').then((m) => m.OnboardingPage),
   },
   {
-    path: 'venues/nueva',
+    path: 'places/nueva',
     canActivate: [authGuard],
     loadComponent: () =>
-      import('./features/venues/nueva-venue/nueva-venue').then((m) => m.NuevaVenuePage),
+      import('./features/places/nueva-place/nueva-place').then((m) => m.NuevaPlacePage),
   },
   {
-    path: 'admin/venues',
+    path: 'admin/places',
     canActivate: [adminGuard],
     loadComponent: () =>
-      import('./features/admin/venues-pendientes/venues-pendientes').then((m) => m.VenuesPendientesPage),
+      import('./features/admin/places-pendientes/places-pendientes').then((m) => m.PlacesPendientesPage),
   },
   {
     path: '',
