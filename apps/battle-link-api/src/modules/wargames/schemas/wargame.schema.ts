@@ -22,6 +22,9 @@ export class Wargame {
 
   @Prop()
   year: number;
+
+  @Prop()
+  imageUrl?: string;
 }
 
 export const WargameSchema = SchemaFactory.createForClass(Wargame);

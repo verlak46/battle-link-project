@@ -62,9 +62,11 @@
               [titulo]="form().titulo"
               [descripcion]="form().descripcion"
               [maxJugadores]="form().maxJugadores"
+              [imageUrl]="form().imageUrl"
               (tituloChange)="patch({ titulo: $event })"
               (descripcionChange)="patch({ descripcion: $event })"
-              (maxJugadoresChange)="patch({ maxJugadores: $event })">
+              (maxJugadoresChange)="patch({ maxJugadores: $event })"
+              (imageUrlChange)="patch({ imageUrl: $event })">
             </app-paso-detalles>
           }
 

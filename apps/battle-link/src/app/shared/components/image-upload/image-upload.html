@@ -1,0 +1,26 @@
+<div class="image-upload">
+  @if (imageUrl()) {
+    <div class="image-preview">
+      <img [src]="imageUrl()" alt="Imagen seleccionada" />
+    </div>
+  } @else {
+    <div class="image-placeholder">
+      <ion-icon name="image-outline"></ion-icon>
+    </div>
+  }
+
+  <label class="upload-btn" [class.uploading]="uploading()">
+    @if (uploading()) {
+      <ion-spinner name="crescent"></ion-spinner>
+      Subiendo...
+    } @else {
+      {{ imageUrl() ? 'Cambiar imagen' : 'Añadir imagen' }}
+    }
+    <input
+      type="file"
+      accept="image/*"
+      hidden
+      [disabled]="uploading()"
+      (change)="onFileSelected($event)" />
+  </label>
+</div>

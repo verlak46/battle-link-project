@@ -11,7 +11,25 @@
       "Bash(nx serve:*)",
       "Bash(nx build:*)",
       "Bash(cd G:/battle-link-project/apps/battle-link-api && nest build 2>&1)",
-      "Bash(cd G:/battle-link-project && grep -c '\"node_modules\"' package-lock.json)"
+      "Bash(cd G:/battle-link-project && grep -c '\"node_modules\"' package-lock.json)",
+      "Bash(cd \"G:/battle-link-project\" && npx ng config projects.battle-link 2>&1 | head -60)",
+      "Bash(cd \"G:/battle-link-project\" && npx ng config projects.battle-link.architect.test 2>&1)",
+      "Bash(cd \"G:/battle-link-project\" && npx ng config projects.battle-link.architect.test 2>&1; find apps/battle-link -name \"*.json\" | xargs grep -l \"unit-test\\\\|vitest\" 2>/dev/null)",
+      "Bash(cd \"G:/battle-link-project\" && cat node_modules/@angular/build/src/builders/unit-test/schema.json 2>/dev/null | python3 -m json.tool | grep -A2 '\"vite\\\\|alias\\\\|resolve\\\\|setup\\\\|plugin' 2>/dev/null | head -40)",
+      "Bash(cd \"G:/battle-link-project\" && node -e \"const s = require\\('./node_modules/@angular/build/src/builders/unit-test/schema.json'\\); console.log\\(JSON.stringify\\(Object.keys\\(s.properties\\), null, 2\\)\\)\")",
+      "Bash(cd \"G:/battle-link-project\" && node -e \"const s = require\\('./node_modules/@angular/build/src/builders/unit-test/schema.json'\\); console.log\\(JSON.stringify\\(s.properties.runnerConfig, null, 2\\)\\)\")",
+      "Bash(cd \"G:/battle-link-project\" && node -e \"const a = require\\('./angular.json'\\); console.log\\(JSON.stringify\\(a.projects['battle-link'].architect.test, null, 2\\)\\)\")",
+      "Bash(cd \"G:/battle-link-project\" && npx ng config projects.battle-link.architect.test.options.runnerConfig \"apps/battle-link/vitest.config.ts\" 2>&1)",
+      "Bash(cd \"G:/battle-link-project\" && npx nx test battle-link 2>&1)",
+      "Bash(cd \"G:/battle-link-project\" && npx nx test battle-link 2>&1 | tail -50)",
+      "Bash(node -e \"const d=require\\('G:/battle-link-project/node_modules/@ionic/core/package.json'\\); console.log\\(d.type, d.main, Object.keys\\(d.exports||{}\\).slice\\(0,5\\)\\)\")",
+      "Bash(node -e \"const d=require\\('G:/battle-link-project/node_modules/@ionic/core/package.json'\\); console.log\\(JSON.stringify\\(d.exports, null, 2\\)\\)\" 2>&1 | head -30)",
+      "Bash(node -e \"console.log\\(require\\('G:/battle-link-project/node_modules/vitest/package.json'\\).version\\)\")",
+      "Bash(cd \"G:/battle-link-project\" && grep -r \"from '@ionic/angular/standalone'\" apps/battle-link/src --include=\"*.ts\" -h | sort -u)",
+      "Bash(find /g/battle-link-project/apps/battle-link-api/src -type f \\\\\\( -name \"*.ts\" \\\\\\) | xargs grep -l \"event\\\\|tournament\\\\|game\" | head -20)",
+      "Bash(cd G:/battle-link-project && npx nx build battle-link --configuration=production 2>&1 | tail -30)",
+      "Bash(cd G:/battle-link-project && npx nx test battle-link 2>&1 | tail -20)",
+      "Bash(cd G:/battle-link-project && npx nx test battle-link --verbose 2>&1 | grep -E \"\\(FAIL|Error|Cannot|error\\)\" | head -30)"
     ]
   }
 }

@@ -7,6 +7,7 @@ export interface Event {
   _id: string;
   title: string;
   description?: string;
+  imageUrl?: string;
   type: EventType;
   status: EventStatus;
   game: string;
@@ -30,6 +31,7 @@ export interface CreateEventPayload {
   maxPlayers: number;
   startDate: string;
   description?: string;
+  imageUrl?: string;
   endDate?: string;
   location?: GeoLocation;
   placeId?: string;

@@ -1,6 +1,7 @@
 import { Component, input, output } from '@angular/core';
 import { IonItem, IonLabel, IonInput, IonTextarea } from '@ionic/angular/standalone';
 import { TipoCreacion } from '../../nuevo-form.types';
+import { ImageUploadComponent } from '../../../../shared/components/image-upload/image-upload';
 
 @Component({
   selector: 'app-paso-detalles',
@@ -36,16 +37,23 @@ import { TipoCreacion } from '../../nuevo-form.types';
         min="1">
       </ion-input>
     </ion-item>
+    <app-image-upload
+      entityType="events"
+      [imageUrl]="imageUrl()"
+      (imageUrlChange)="imageUrlChange.emit($event)">
+    </app-image-upload>
   `,
-  imports: [IonItem, IonLabel, IonInput, IonTextarea],
+  imports: [IonItem, IonLabel, IonInput, IonTextarea, ImageUploadComponent],
 })
 export class PasoDetallesComponent {
   tipo = input.required<TipoCreacion>();
   titulo = input('');
   descripcion = input('');
   maxJugadores = input('');
+  imageUrl = input<string | undefined>(undefined);
 
   tituloChange = output<string>();
   descripcionChange = output<string>();
   maxJugadoresChange = output<string>();
+  imageUrlChange = output<string>();
 }

@@ -39,6 +39,9 @@ export class Venue {
   @Prop()
   website?: string;
 
+  @Prop()
+  imageUrl?: string;
+
   @Prop({ type: [String], default: [] })
   wargames: string[];
 

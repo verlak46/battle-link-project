@@ -64,6 +64,7 @@ export class NuevoPage {
     titulo: '',
     descripcion: '',
     maxJugadores: '',
+    imageUrl: undefined,
   });
 
   esPasoValido = computed(() => {

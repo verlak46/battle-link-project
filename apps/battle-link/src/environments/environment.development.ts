@@ -10,4 +10,8 @@ export const environment = {
     appId: '1:891797326304:web:042570aa8a90e1ea6d4385',
     measurementId: 'G-K0REY589ET',
   },
+  cloudinary: {
+    cloudName: 'dwxboiwqc',
+    uploadPreset: 'battle-link',
+  },
 };

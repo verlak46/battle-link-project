@@ -31,6 +31,7 @@ import { GoogleMap, MapMarker } from '@angular/google-maps';
 import { ApiService } from '../../../core/services/api.service';
 import { getApiError } from '../../../core/utils/api-error';
 import { VenueType } from '../../../shared/models/IVenue';
+import { ImageUploadComponent } from '../../../shared/components/image-upload/image-upload';
 
 @Component({
   selector: 'app-nueva-venue',
@@ -56,6 +57,7 @@ import { VenueType } from '../../../shared/models/IVenue';
     IonSpinner,
     GoogleMap,
     MapMarker,
+    ImageUploadComponent,
   ],
 })
 export class NuevaVenuePage implements AfterViewInit {
@@ -75,6 +77,7 @@ export class NuevaVenuePage implements AfterViewInit {
   lat = signal<number | null>(null);
   lng = signal<number | null>(null);
 
+  imageUrl = signal<string | undefined>(undefined);
   loading = signal(false);
   error = signal('');
   success = signal(false);
@@ -160,6 +163,7 @@ export class NuevaVenuePage implements AfterViewInit {
         description: this.description().trim() || undefined,
         phone: this.phone().trim() || undefined,
         website: this.website().trim() || undefined,
+        imageUrl: this.imageUrl(),
       })
       .subscribe({
         next: () => {

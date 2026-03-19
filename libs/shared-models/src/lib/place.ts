@@ -13,6 +13,7 @@ export interface Place {
   description?: string;
   phone?: string;
   website?: string;
+  imageUrl?: string;
   wargames: string[];
   location: GeoLocation;
   createdBy: string;
@@ -29,5 +30,6 @@ export interface CreatePlacePayload {
   description?: string;
   phone?: string;
   website?: string;
+  imageUrl?: string;
   wargames?: string[];
 }

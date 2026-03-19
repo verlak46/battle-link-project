@@ -90,6 +90,13 @@
     </ion-input>
   </ion-item>
 
+  <app-image-upload
+    entityType="venues"
+    [imageUrl]="imageUrl()"
+    (imageUrlChange)="imageUrl.set($event)"
+    (uploadError)="error.set($event)">
+  </app-image-upload>
+
   @if (error()) {
     <p class="error-msg">{{ error() }}</p>
   }

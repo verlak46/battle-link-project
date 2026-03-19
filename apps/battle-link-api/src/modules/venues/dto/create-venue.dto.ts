@@ -8,6 +8,7 @@ import {
   IsNumber,
   ArrayMinSize,
   ArrayMaxSize,
+  IsUrl,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -58,4 +59,8 @@ export class CreateVenueDto {
   @IsArray()
   @IsString({ each: true })
   wargames?: string[];
+
+  @IsOptional()
+  @IsUrl()
+  imageUrl?: string;
 }

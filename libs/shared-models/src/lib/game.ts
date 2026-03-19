@@ -5,4 +5,5 @@ export interface Game {
   scale: string;
   publisher: string;
   active: boolean;
+  imageUrl?: string;
 }

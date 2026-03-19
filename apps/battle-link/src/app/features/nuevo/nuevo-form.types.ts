@@ -17,6 +17,7 @@ export interface NuevoFormData {
   descripcion: string;
   maxJugadores: string;
   venueId?: string;
+  imageUrl?: string;
 }
 
 export const PASOS_WIZARD: PasoWizard[] = [

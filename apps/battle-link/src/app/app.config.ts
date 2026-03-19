@@ -10,7 +10,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
-const firebaseApp = initializeApp(environment.firebase);
+export const firebaseApp = initializeApp(environment.firebase);
 export const auth = getAuth(firebaseApp);
 export const firestore = getFirestore(firebaseApp);
 

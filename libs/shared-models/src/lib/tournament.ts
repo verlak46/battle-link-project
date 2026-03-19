@@ -14,6 +14,7 @@ export interface Tournament {
   _id: string;
   title: string;
   description?: string;
+  imageUrl?: string;
   game: string;
   format: TournamentFormat;
   status: TournamentStatus;
@@ -39,6 +40,7 @@ export interface CreateTournamentPayload {
   maxPlayers: number;
   startDate: string;
   description?: string;
+  imageUrl?: string;
   endDate?: string;
   location?: GeoLocation;
   placeId?: string;
