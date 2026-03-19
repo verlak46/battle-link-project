@@ -2,14 +2,14 @@ import { TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { of } from 'rxjs';
-import { PasoJuegoComponent } from './paso-juego';
-import { TipoCreacion } from '../../nuevo-form.types';
+import { StepGameComponent } from './step-game';
+import { TipoCreacion } from '../../new-form.types';
 import { ApiService } from '../../../../core/services/api.service';
 import { Wargame } from '../../../../shared/models/IWargame';
 
 @Component({
   template: `
-    <app-paso-juego
+    <app-step-game
       [tipo]="tipo"
       [juego]="juego"
       [sistema]="sistema"
@@ -17,7 +17,7 @@ import { Wargame } from '../../../../shared/models/IWargame';
       (sistemaChange)="lastSistema = $event"
     />
   `,
-  imports: [PasoJuegoComponent],
+  imports: [StepGameComponent],
 })
 class TestHostComponent {
   tipo: TipoCreacion = 'partida';
@@ -27,7 +27,7 @@ class TestHostComponent {
   lastSistema: string | null = null;
 }
 
-describe('PasoJuegoComponent', () => {
+describe('StepGameComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TestHostComponent],

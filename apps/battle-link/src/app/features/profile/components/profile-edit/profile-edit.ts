@@ -13,8 +13,8 @@ import { AuthService } from '../../../../core/services/auth.service';
 import { ApiService, ExperienceLevel } from '../../../../core/services/api.service';
 import { getApiError } from '../../../../core/utils/api-error';
 import { Wargame } from '../../../../shared/models/IWargame';
-import { PasoJuegosOnboardingComponent } from '../../../onboarding/components/paso-juegos/paso-juegos';
-import { PasoUbicacionOnboardingComponent } from '../../../onboarding/components/paso-ubicacion/paso-ubicacion';
+import { OnboardingStepGamesComponent } from '../../../onboarding/components/step-games/step-games';
+import { OnboardingStepLocationComponent } from '../../../onboarding/components/step-location/step-location';
 
 @Component({
   selector: 'app-profile-edit',
@@ -28,8 +28,8 @@ import { PasoUbicacionOnboardingComponent } from '../../../onboarding/components
     IonSegment,
     IonSegmentButton,
     IonSpinner,
-    PasoJuegosOnboardingComponent,
-    PasoUbicacionOnboardingComponent,
+    OnboardingStepGamesComponent,
+    OnboardingStepLocationComponent,
   ],
 })
 export class ProfileEditComponent implements OnInit {

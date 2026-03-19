@@ -2,7 +2,7 @@ import { Component, input, output } from '@angular/core';
 import { IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { checkmarkOutline } from 'ionicons/icons';
-import { PasoWizard } from '../../nuevo-form.types';
+import { PasoWizard } from '../../new-form.types';
 
 @Component({
   selector: 'app-step-header',

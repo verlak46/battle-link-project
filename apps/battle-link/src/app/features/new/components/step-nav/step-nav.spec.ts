@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { StepNavComponent } from './step-nav';
-import { TipoCreacion } from '../../nuevo-form.types';
+import { TipoCreacion } from '../../new-form.types';
 
 @Component({
   template: `

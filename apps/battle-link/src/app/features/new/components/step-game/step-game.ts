@@ -1,12 +1,12 @@
 import { Component, inject, input, output } from '@angular/core';
 import { IonItem, IonLabel, IonInput, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { TipoCreacion } from '../../nuevo-form.types';
+import { TipoCreacion } from '../../new-form.types';
 import { ApiService } from '../../../../core/services/api.service';
 import { Wargame } from '../../../../shared/models/IWargame';
 
 @Component({
-  selector: 'app-paso-juego',
+  selector: 'app-step-game',
   template: `
     <ion-item>
       <ion-label position="stacked">
@@ -35,7 +35,7 @@ import { Wargame } from '../../../../shared/models/IWargame';
   `,
   imports: [IonItem, IonLabel, IonInput, IonSelect, IonSelectOption],
 })
-export class PasoJuegoComponent {
+export class StepGameComponent {
   private readonly api = inject(ApiService);
 
   tipo = input.required<TipoCreacion>();

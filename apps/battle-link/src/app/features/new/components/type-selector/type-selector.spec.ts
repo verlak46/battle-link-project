@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { provideIonicAngular } from '@ionic/angular/standalone';
-import { TipoSelectorComponent } from './tipo-selector';
-import { TipoCreacion } from '../../nuevo-form.types';
+import { TypeSelectorComponent } from './type-selector';
+import { TipoCreacion } from '../../new-form.types';
 
 @Component({
-  template: `<app-tipo-selector [tipo]="tipo" (tipoChange)="onTipoChange($event)" />`,
-  imports: [TipoSelectorComponent],
+  template: `<app-type-selector [tipo]="tipo" (tipoChange)="onTipoChange($event)" />`,
+  imports: [TypeSelectorComponent],
 })
 class TestHostComponent {
   tipo: TipoCreacion = 'partida';
@@ -14,7 +14,7 @@ class TestHostComponent {
   onTipoChange(t: TipoCreacion) { this.emitted = t; }
 }
 
-describe('TipoSelectorComponent', () => {
+describe('TypeSelectorComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TestHostComponent],

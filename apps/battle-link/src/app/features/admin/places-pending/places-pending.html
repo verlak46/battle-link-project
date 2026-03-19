@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>Places pendientes</ion-title>
+    <ion-title>Localizaciones pendientes</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,7 +16,7 @@
   } @else if (error()) {
     <p class="error-msg">{{ error() }}</p>
   } @else if (places().length === 0) {
-    <p class="empty-msg">No hay places pendientes de revisión.</p>
+    <p class="empty-msg">No hay localizaciones pendientes de revisión.</p>
   } @else {
     <ion-list>
       @for (place of places(); track place._id) {

@@ -2,7 +2,7 @@ import { Component, input, output } from '@angular/core';
 import { IonButton, IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { chevronForwardOutline, chevronBackOutline, checkmarkOutline } from 'ionicons/icons';
-import { TipoCreacion } from '../../nuevo-form.types';
+import { TipoCreacion } from '../../new-form.types';
 
 @Component({
   selector: 'app-step-nav',

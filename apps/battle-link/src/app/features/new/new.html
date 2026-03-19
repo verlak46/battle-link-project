@@ -6,10 +6,10 @@
 
 <ion-content class="ion-padding">
 
-  <app-tipo-selector
+  <app-type-selector
     [tipo]="tipo()"
     (tipoChange)="tipo.set($event)">
-  </app-tipo-selector>
+  </app-type-selector>
 
   <div class="stepper">
     @for (paso of pasos; track paso.id) {
@@ -26,26 +26,26 @@
         <div class="step__body">
 
           @if (paso.id === 1) {
-            <app-paso-juego
+            <app-step-game
               [tipo]="tipo()"
               [juego]="form().juego"
               [sistema]="form().sistema"
               (juegoChange)="patch({ juego: $event })"
               (sistemaChange)="patch({ sistema: $event })">
-            </app-paso-juego>
+            </app-step-game>
           }
 
           @if (paso.id === 2) {
-            <app-paso-fecha
+            <app-step-date
               [fecha]="form().fecha"
               [hora]="form().hora"
               (fechaChange)="patch({ fecha: $event })"
               (horaChange)="patch({ hora: $event })">
-            </app-paso-fecha>
+            </app-step-date>
           }
 
           @if (paso.id === 3) {
-            <app-paso-ubicacion
+            <app-step-location
               [ciudad]="form().ciudad"
               [direccion]="form().direccion"
               [placeId]="form().placeId ?? null"
@@ -53,11 +53,11 @@
               (ciudadChange)="patch({ ciudad: $event })"
               (direccionChange)="patch({ direccion: $event })"
               (placeIdChange)="patch({ placeId: $event ?? undefined })">
-            </app-paso-ubicacion>
+            </app-step-location>
           }
 
           @if (paso.id === 4) {
-            <app-paso-detalles
+            <app-step-details
               [tipo]="tipo()"
               [titulo]="form().titulo"
               [descripcion]="form().descripcion"
@@ -67,7 +67,7 @@
               (descripcionChange)="patch({ descripcion: $event })"
               (maxJugadoresChange)="patch({ maxJugadores: $event })"
               (imageUrlChange)="patch({ imageUrl: $event })">
-            </app-paso-detalles>
+            </app-step-details>
           }
 
           <app-step-nav

@@ -3,7 +3,7 @@ import { IonButton, IonSpinner } from '@ionic/angular/standalone';
 import { DecimalPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-onboarding-paso-ubicacion',
+  selector: 'app-onboarding-step-location',
   template: `
     <section>
       <h3>Ubicación</h3>
@@ -46,7 +46,7 @@ import { DecimalPipe } from '@angular/common';
   `],
   imports: [IonButton, IonSpinner, DecimalPipe],
 })
-export class PasoUbicacionOnboardingComponent {
+export class OnboardingStepLocationComponent {
   location = input<[number, number] | null>(null);
   locationLoading = input(false);
 

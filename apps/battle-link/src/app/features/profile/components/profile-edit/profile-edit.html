@@ -21,17 +21,17 @@
     </ion-segment-button>
   </ion-segment>
 
-  <app-onboarding-paso-juegos
+  <app-onboarding-step-games
     [wargames]="wargames()"
     [selectedIds]="favoriteGamesIds()"
     (selectedIdsChange)="favoriteGamesIds.set($event)">
-  </app-onboarding-paso-juegos>
+  </app-onboarding-step-games>
 
-  <app-onboarding-paso-ubicacion
+  <app-onboarding-step-location
     [location]="location()"
     [locationLoading]="locationLoading()"
     (usarUbicacion)="usarUbicacionActual()">
-  </app-onboarding-paso-ubicacion>
+  </app-onboarding-step-location>
 
   @if (errorMessage()) {
     <p class="perfil-edit__error">{{ errorMessage() }}</p>

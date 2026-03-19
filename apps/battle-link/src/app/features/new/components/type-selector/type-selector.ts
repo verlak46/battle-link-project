@@ -4,10 +4,10 @@ import {
   IonSegmentButton,
   IonLabel,
 } from '@ionic/angular/standalone';
-import { TipoCreacion } from '../../nuevo-form.types';
+import { TipoCreacion } from '../../new-form.types';
 
 @Component({
-  selector: 'app-tipo-selector',
+  selector: 'app-type-selector',
   template: `
     <ion-segment [value]="tipo()" (ionChange)="tipoChange.emit($any($event).detail.value)" class="tipo-segment">
       <ion-segment-button value="partida">
@@ -23,7 +23,7 @@ import { TipoCreacion } from '../../nuevo-form.types';
   `],
   imports: [IonSegment, IonSegmentButton, IonLabel],
 })
-export class TipoSelectorComponent {
+export class TypeSelectorComponent {
   tipo = input.required<TipoCreacion>();
   tipoChange = output<TipoCreacion>();
 }

@@ -2,7 +2,7 @@ import { Component, input, output } from '@angular/core';
 import { IonItem, IonLabel, IonInput } from '@ionic/angular/standalone';
 
 @Component({
-  selector: 'app-paso-fecha',
+  selector: 'app-step-date',
   template: `
     <ion-item>
       <ion-label position="stacked">Fecha *</ion-label>
@@ -23,7 +23,7 @@ import { IonItem, IonLabel, IonInput } from '@ionic/angular/standalone';
   `,
   imports: [IonItem, IonLabel, IonInput],
 })
-export class PasoFechaComponent {
+export class StepDateComponent {
   fecha = input('');
   hora = input('');
 

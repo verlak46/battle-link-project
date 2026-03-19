@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { provideIonicAngular } from '@ionic/angular/standalone';
-import { PasoDetallesComponent } from './paso-detalles';
-import { TipoCreacion } from '../../nuevo-form.types';
+import { StepDetailsComponent } from './step-details';
+import { TipoCreacion } from '../../new-form.types';
 
 @Component({
   template: `
-    <app-paso-detalles
+    <app-step-details
       [tipo]="tipo"
       [titulo]="titulo"
       [descripcion]="descripcion"
@@ -16,7 +16,7 @@ import { TipoCreacion } from '../../nuevo-form.types';
       (maxJugadoresChange)="lastMax = $event"
     />
   `,
-  imports: [PasoDetallesComponent],
+  imports: [StepDetailsComponent],
 })
 class TestHostComponent {
   tipo: TipoCreacion = 'partida';
@@ -28,7 +28,7 @@ class TestHostComponent {
   lastMax: string | null = null;
 }
 
-describe('PasoDetallesComponent', () => {
+describe('StepDetailsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TestHostComponent],

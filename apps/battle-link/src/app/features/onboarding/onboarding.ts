@@ -7,10 +7,10 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { ApiService, ExperienceLevel } from '../../core/services/api.service';
 import { Wargame } from '../../shared/models/IWargame';
-import { StepHeaderComponent } from '../nuevo/components/step-header/step-header';
-import { PasoPerfilOnboardingComponent } from './components/paso-perfil/paso-perfil';
-import { PasoJuegosOnboardingComponent } from './components/paso-juegos/paso-juegos';
-import { PasoUbicacionOnboardingComponent } from './components/paso-ubicacion/paso-ubicacion';
+import { StepHeaderComponent } from '../new/components/step-header/step-header';
+import { OnboardingStepProfileComponent } from './components/step-profile/step-profile';
+import { OnboardingStepGamesComponent } from './components/step-games/step-games';
+import { OnboardingStepLocationComponent } from './components/step-location/step-location';
 import { OnboardingStepNavComponent } from './components/step-nav/onboarding-step-nav';
 import { getApiError } from '../../core/utils/api-error';
 
@@ -25,9 +25,9 @@ import { getApiError } from '../../core/utils/api-error';
     IonContent,
     IonSpinner,
     StepHeaderComponent,
-    PasoPerfilOnboardingComponent,
-    PasoJuegosOnboardingComponent,
-    PasoUbicacionOnboardingComponent,
+    OnboardingStepProfileComponent,
+    OnboardingStepGamesComponent,
+    OnboardingStepLocationComponent,
     OnboardingStepNavComponent,
   ],
 })

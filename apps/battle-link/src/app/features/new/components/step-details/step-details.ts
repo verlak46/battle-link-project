@@ -1,10 +1,10 @@
 import { Component, input, output } from '@angular/core';
 import { IonItem, IonLabel, IonInput, IonTextarea } from '@ionic/angular/standalone';
-import { TipoCreacion } from '../../nuevo-form.types';
+import { TipoCreacion } from '../../new-form.types';
 import { ImageUploadComponent } from '../../../../shared/components/image-upload/image-upload';
 
 @Component({
-  selector: 'app-paso-detalles',
+  selector: 'app-step-details',
   template: `
     <ion-item>
       <ion-label position="stacked">
@@ -45,7 +45,7 @@ import { ImageUploadComponent } from '../../../../shared/components/image-upload
   `,
   imports: [IonItem, IonLabel, IonInput, IonTextarea, ImageUploadComponent],
 })
-export class PasoDetallesComponent {
+export class StepDetailsComponent {
   tipo = input.required<TipoCreacion>();
   titulo = input('');
   descripcion = input('');

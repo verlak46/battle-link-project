@@ -8,7 +8,7 @@ import {
 import { Wargame } from '../../../../shared/models/IWargame';
 
 @Component({
-  selector: 'app-onboarding-paso-juegos',
+  selector: 'app-onboarding-step-games',
   template: `
     <section>
       <h3>Juegos favoritos</h3>
@@ -41,7 +41,7 @@ import { Wargame } from '../../../../shared/models/IWargame';
   `],
   imports: [IonList, IonItem, IonLabel, IonChip],
 })
-export class PasoJuegosOnboardingComponent {
+export class OnboardingStepGamesComponent {
   wargames = input<Wargame[]>([]);
   selectedIds = input<string[]>([]);
 

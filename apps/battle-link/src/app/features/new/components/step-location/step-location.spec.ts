@@ -1,27 +1,27 @@
 import { TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { provideIonicAngular } from '@ionic/angular/standalone';
-import { PasoFechaComponent } from './paso-fecha';
+import { StepLocationComponent } from './step-location';
 
 @Component({
   template: `
-    <app-paso-fecha
-      [fecha]="fecha"
-      [hora]="hora"
-      (fechaChange)="lastFecha = $event"
-      (horaChange)="lastHora = $event"
+    <app-step-location
+      [ciudad]="ciudad"
+      [direccion]="direccion"
+      (ciudadChange)="lastCiudad = $event"
+      (direccionChange)="lastDireccion = $event"
     />
   `,
-  imports: [PasoFechaComponent],
+  imports: [StepLocationComponent],
 })
 class TestHostComponent {
-  fecha = '';
-  hora = '';
-  lastFecha: string | null = null;
-  lastHora: string | null = null;
+  ciudad = '';
+  direccion = '';
+  lastCiudad: string | null = null;
+  lastDireccion: string | null = null;
 }
 
-describe('PasoFechaComponent', () => {
+describe('StepLocationComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TestHostComponent],
@@ -41,31 +41,31 @@ describe('PasoFechaComponent', () => {
     expect(fixture.nativeElement.querySelectorAll('ion-item').length).toBe(2);
   });
 
-  it('should show "Fecha" label', () => {
+  it('should show "Ciudad" label', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
     fixture.detectChanges();
-    expect(fixture.nativeElement.textContent).toContain('Fecha');
+    expect(fixture.nativeElement.textContent).toContain('Ciudad');
   });
 
-  it('should show "Hora" label', () => {
+  it('should render map placeholder', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
     fixture.detectChanges();
-    expect(fixture.nativeElement.textContent).toContain('Hora');
+    expect(fixture.nativeElement.querySelector('.map-placeholder')).toBeTruthy();
   });
 
-  it('should emit fechaChange on ionInput', () => {
+  it('should emit ciudadChange on ionInput', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
     fixture.detectChanges();
     const inputs = fixture.nativeElement.querySelectorAll('ion-input');
-    inputs[0].dispatchEvent(new CustomEvent('ionInput', { detail: { value: '2026-05-01' }, bubbles: true }));
-    expect(fixture.componentInstance.lastFecha).toBe('2026-05-01');
+    inputs[0].dispatchEvent(new CustomEvent('ionInput', { detail: { value: 'Sevilla' }, bubbles: true }));
+    expect(fixture.componentInstance.lastCiudad).toBe('Sevilla');
   });
 
-  it('should emit horaChange on ionInput', () => {
+  it('should emit direccionChange on ionInput', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
     fixture.detectChanges();
     const inputs = fixture.nativeElement.querySelectorAll('ion-input');
-    inputs[1].dispatchEvent(new CustomEvent('ionInput', { detail: { value: '18:00' }, bubbles: true }));
-    expect(fixture.componentInstance.lastHora).toBe('18:00');
+    inputs[1].dispatchEvent(new CustomEvent('ionInput', { detail: { value: 'Calle Sierpes 1' }, bubbles: true }));
+    expect(fixture.componentInstance.lastDireccion).toBe('Calle Sierpes 1');
   });
 });

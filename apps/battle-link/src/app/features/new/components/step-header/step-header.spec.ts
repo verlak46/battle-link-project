@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { StepHeaderComponent } from './step-header';
-import { PasoWizard } from '../../nuevo-form.types';
+import { PasoWizard } from '../../new-form.types';
 
 const PASO_MOCK: PasoWizard = { id: 2, titulo: 'Fecha', icono: 'calendar-outline' };
 

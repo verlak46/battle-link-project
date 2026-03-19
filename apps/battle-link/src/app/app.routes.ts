@@ -36,7 +36,7 @@ export const routes: Routes = [
     path: 'admin/places',
     canActivate: [adminGuard],
     loadComponent: () =>
-      import('./features/admin/places-pendientes/places-pendientes').then((m) => m.PlacesPendientesPage),
+      import('./features/admin/places-pending/places-pending').then((m) => m.PlacesPendingPage),
   },
   {
     path: '',

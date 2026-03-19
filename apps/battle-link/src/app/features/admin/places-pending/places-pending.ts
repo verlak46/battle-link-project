@@ -37,7 +37,7 @@ import { getApiError } from '../../../core/utils/api-error';
     IonNote,
   ],
 })
-export class PlacesPendientesPage {
+export class PlacesPendingPage {
   private readonly api = inject(ApiService);
 
   places = signal<Place[]>([]);

@@ -20,13 +20,13 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { TipoCreacion, NuevoFormData, PASOS_WIZARD } from './new-form.types';
 import { ApiService } from '../../core/services/api.service';
 import { Place } from '@battle-link/shared-models';
-import { TipoSelectorComponent } from './components/tipo-selector/tipo-selector';
+import { TypeSelectorComponent } from './components/type-selector/type-selector';
 import { StepHeaderComponent } from './components/step-header/step-header';
 import { StepNavComponent } from './components/step-nav/step-nav';
-import { PasoJuegoComponent } from './components/paso-juego/paso-juego';
-import { PasoFechaComponent } from './components/paso-fecha/paso-fecha';
-import { PasoUbicacionComponent } from './components/paso-ubicacion/paso-ubicacion';
-import { PasoDetallesComponent } from './components/paso-detalles/paso-detalles';
+import { StepGameComponent } from './components/step-game/step-game';
+import { StepDateComponent } from './components/step-date/step-date';
+import { StepLocationComponent } from './components/step-location/step-location';
+import { StepDetailsComponent } from './components/step-details/step-details';
 
 @Component({
   selector: 'app-new',
@@ -37,13 +37,13 @@ import { PasoDetallesComponent } from './components/paso-detalles/paso-detalles'
     IonToolbar,
     IonTitle,
     IonContent,
-    TipoSelectorComponent,
+    TypeSelectorComponent,
     StepHeaderComponent,
     StepNavComponent,
-    PasoJuegoComponent,
-    PasoFechaComponent,
-    PasoUbicacionComponent,
-    PasoDetallesComponent,
+    StepGameComponent,
+    StepDateComponent,
+    StepLocationComponent,
+    StepDetailsComponent,
   ],
 })
 export class NewPage {

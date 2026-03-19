@@ -3,7 +3,7 @@ import { IonInput, IonItem, IonLabel, IonSelect, IonSelectOption } from '@ionic/
 import { Place } from '@battle-link/shared-models';
 
 @Component({
-  selector: 'app-paso-ubicacion',
+  selector: 'app-step-location',
   template: `
     <ion-item>
       <ion-label position="stacked">Tienda / Club (opcional)</ion-label>
@@ -45,7 +45,7 @@ import { Place } from '@battle-link/shared-models';
   `],
   imports: [IonItem, IonLabel, IonInput, IonSelect, IonSelectOption],
 })
-export class PasoUbicacionComponent implements AfterViewInit {
+export class StepLocationComponent implements AfterViewInit {
   @ViewChild('direccionInput') private direccionInputRef!: IonInput;
 
   private readonly zone = inject(NgZone);

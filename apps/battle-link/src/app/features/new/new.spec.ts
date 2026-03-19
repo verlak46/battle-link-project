@@ -170,10 +170,10 @@ describe('NewPage', () => {
   });
 
   describe('subcomponents rendered', () => {
-    it('should render app-tipo-selector', () => {
+    it('should render app-type-selector', () => {
       const fixture = TestBed.createComponent(NewPage);
       fixture.detectChanges();
-      expect(fixture.nativeElement.querySelector('app-tipo-selector')).toBeTruthy();
+      expect(fixture.nativeElement.querySelector('app-type-selector')).toBeTruthy();
     });
 
     it('should render 4 app-step-header elements', () => {
@@ -182,10 +182,10 @@ describe('NewPage', () => {
       expect(fixture.nativeElement.querySelectorAll('app-step-header').length).toBe(4);
     });
 
-    it('should render app-paso-juego on step 1', () => {
+    it('should render app-step-game on step 1', () => {
       const fixture = TestBed.createComponent(NewPage);
       fixture.detectChanges();
-      expect(fixture.nativeElement.querySelector('app-paso-juego')).toBeTruthy();
+      expect(fixture.nativeElement.querySelector('app-step-game')).toBeTruthy();
     });
 
     it('should render app-step-nav on active step', () => {

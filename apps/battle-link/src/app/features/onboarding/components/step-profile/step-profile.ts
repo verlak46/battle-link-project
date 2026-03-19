@@ -9,7 +9,7 @@ import {
 import { ExperienceLevel } from '../../../../core/services/api.service';
 
 @Component({
-  selector: 'app-onboarding-paso-perfil',
+  selector: 'app-onboarding-step-profile',
   template: `
     <section>
       <h3>Sobre ti</h3>
@@ -73,7 +73,7 @@ import { ExperienceLevel } from '../../../../core/services/api.service';
   `],
   imports: [IonItem, IonLabel, IonInput, IonSegment, IonSegmentButton],
 })
-export class PasoPerfilOnboardingComponent {
+export class OnboardingStepProfileComponent {
   name = input('');
   nick = input('');
   experienceLevel = input<ExperienceLevel | null>(null);

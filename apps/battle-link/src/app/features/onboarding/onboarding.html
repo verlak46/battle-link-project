@@ -24,26 +24,26 @@
             </div>
           } @else {
             @if (paso.id === 1) {
-              <app-onboarding-paso-perfil
+              <app-onboarding-step-profile
                 [name]="name()"
                 [nick]="nick()"
                 [experienceLevel]="experienceLevel()"
                 (nameChange)="name.set($event)"
                 (nickChange)="nick.set($event)"
                 (experienceLevelChange)="experienceLevel.set($event)">
-              </app-onboarding-paso-perfil>
+              </app-onboarding-step-profile>
             } @else if (paso.id === 2) {
-              <app-onboarding-paso-juegos
+              <app-onboarding-step-games
                 [wargames]="wargames()"
                 [selectedIds]="favoriteGamesIds()"
                 (selectedIdsChange)="favoriteGamesIds.set($event)">
-              </app-onboarding-paso-juegos>
+              </app-onboarding-step-games>
             } @else if (paso.id === 3) {
-              <app-onboarding-paso-ubicacion
+              <app-onboarding-step-location
                 [location]="location()"
                 [locationLoading]="locationLoading()"
                 (usarUbicacion)="usarUbicacionActual()">
-              </app-onboarding-paso-ubicacion>
+              </app-onboarding-step-location>
             }
           }
 
