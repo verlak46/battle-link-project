@@ -17,7 +17,7 @@ import {
 } from 'ionicons/icons';
 import { toSignal } from '@angular/core/rxjs-interop';
 
-import { TipoCreacion, NuevoFormData, PASOS_WIZARD } from './nuevo-form.types';
+import { TipoCreacion, NuevoFormData, PASOS_WIZARD } from './new-form.types';
 import { ApiService } from '../../core/services/api.service';
 import { Place } from '@battle-link/shared-models';
 import { TipoSelectorComponent } from './components/tipo-selector/tipo-selector';
@@ -29,9 +29,9 @@ import { PasoUbicacionComponent } from './components/paso-ubicacion/paso-ubicaci
 import { PasoDetallesComponent } from './components/paso-detalles/paso-detalles';
 
 @Component({
-  selector: 'app-nuevo',
-  templateUrl: './nuevo.html',
-  styleUrl: './nuevo.scss',
+  selector: 'app-new',
+  templateUrl: './new.html',
+  styleUrl: './new.scss',
   imports: [
     IonHeader,
     IonToolbar,
@@ -46,7 +46,7 @@ import { PasoDetallesComponent } from './components/paso-detalles/paso-detalles'
     PasoDetallesComponent,
   ],
 })
-export class NuevoPage {
+export class NewPage {
   private readonly api = inject(ApiService);
   readonly pasos = PASOS_WIZARD;
 

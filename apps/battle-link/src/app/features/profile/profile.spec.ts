@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { provideIonicAngular } from '@ionic/angular/standalone';
-import { PerfilPage } from './perfil';
+import { ProfilePage } from './profile';
 import { AuthService } from '../../core/services/auth.service';
 
-describe('PerfilPage', () => {
+describe('ProfilePage', () => {
   let authMock: AuthService;
   let logoutCalled = 0;
 
@@ -23,25 +23,25 @@ describe('PerfilPage', () => {
     } as Partial<AuthService> as AuthService;
 
     await TestBed.configureTestingModule({
-      imports: [PerfilPage],
+      imports: [ProfilePage],
       providers: [provideIonicAngular(), provideRouter([]), { provide: AuthService, useValue: authMock }],
     }).compileComponents();
   });
 
   it('should create', () => {
-    const fixture = TestBed.createComponent(PerfilPage);
+    const fixture = TestBed.createComponent(ProfilePage);
     expect(fixture.componentInstance).toBeTruthy();
   });
 
   it('should render ion-header with title "Perfil"', () => {
-    const fixture = TestBed.createComponent(PerfilPage);
+    const fixture = TestBed.createComponent(ProfilePage);
     fixture.detectChanges();
     const el = fixture.nativeElement as HTMLElement;
     expect(el.querySelector('ion-title')?.textContent?.trim()).toBe('Perfil');
   });
 
   it('should show user display name and email', () => {
-    const fixture = TestBed.createComponent(PerfilPage);
+    const fixture = TestBed.createComponent(ProfilePage);
     fixture.detectChanges();
     const el = fixture.nativeElement as HTMLElement;
     expect(el.textContent).toContain('Test User');
@@ -49,7 +49,7 @@ describe('PerfilPage', () => {
   });
 
   it('should call logout when button is clicked', async () => {
-    const fixture = TestBed.createComponent(PerfilPage);
+    const fixture = TestBed.createComponent(ProfilePage);
     fixture.detectChanges();
     const el = fixture.nativeElement as HTMLElement;
     const button = Array.from(el.querySelectorAll('ion-button')).find((b) =>

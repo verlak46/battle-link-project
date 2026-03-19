@@ -31,7 +31,8 @@
       "Bash(cd G:/battle-link-project && npx nx test battle-link 2>&1 | tail -20)",
       "Bash(cd G:/battle-link-project && npx nx test battle-link --verbose 2>&1 | grep -E \"\\(FAIL|Error|Cannot|error\\)\" | head -30)",
       "Bash(git mv:*)",
-      "Bash(git rm:*)"
+      "Bash(git rm:*)",
+      "Bash(grep -rn \"BuscarPage\\\\|MapaPage\\\\|NuevoPage\\\\|PerfilPage\\\\|PerfilEditComponent\\\\|app-buscar\\\\|app-mapa\\\\|app-nuevo\\\\|app-perfil\\\\b\\\\|app-perfil-edit\\\\|features/buscar\\\\|features/mapa\\\\|features/nuevo\\\\|features/perfil\\\\|tab=\\\\\"mapa\\\\\"\\\\|tab=\\\\\"buscar\\\\\"\\\\|tab=\\\\\"nuevo\\\\\"\\\\|tab=\\\\\"perfil\\\\\"\\\\|redirectTo.*mapa\\\\|'mapa'\\\\|'buscar'\\\\|'nuevo'\\\\|'perfil'\" --include=\"*.ts\" --include=\"*.html\" apps/battle-link/src/app/ 2>/dev/null | grep -v \"node_modules\\\\|\\\\.nx\\\\|dist\\\\|\\\\.scss\")"
     ]
   }
 }

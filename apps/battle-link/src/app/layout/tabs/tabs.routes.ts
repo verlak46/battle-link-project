@@ -7,19 +7,19 @@ export const tabsRoutes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'mapa',
+        path: 'map',
         loadComponent: () =>
-          import('../../features/mapa/mapa').then((m) => m.MapaPage),
+          import('../../features/map/map').then((m) => m.MapPage),
       },
       {
-        path: 'buscar',
+        path: 'search',
         loadComponent: () =>
-          import('../../features/buscar/buscar').then((m) => m.BuscarPage),
+          import('../../features/search/search').then((m) => m.SearchPage),
       },
       {
-        path: 'nuevo',
+        path: 'new',
         loadComponent: () =>
-          import('../../features/nuevo/nuevo').then((m) => m.NuevoPage),
+          import('../../features/new/new').then((m) => m.NewPage),
       },
       {
         path: 'chat',
@@ -27,13 +27,13 @@ export const tabsRoutes: Routes = [
           import('../../features/chat/chat').then((m) => m.ChatPage),
       },
       {
-        path: 'perfil',
+        path: 'profile',
         loadComponent: () =>
-          import('../../features/perfil/perfil').then((m) => m.PerfilPage),
+          import('../../features/profile/profile').then((m) => m.ProfilePage),
       },
       {
         path: '',
-        redirectTo: 'mapa',
+        redirectTo: 'map',
         pathMatch: 'full',
       },
     ],

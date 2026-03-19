@@ -17,9 +17,9 @@ import { PasoJuegosOnboardingComponent } from '../../../onboarding/components/pa
 import { PasoUbicacionOnboardingComponent } from '../../../onboarding/components/paso-ubicacion/paso-ubicacion';
 
 @Component({
-  selector: 'app-perfil-edit',
-  templateUrl: './perfil-edit.html',
-  styleUrl: './perfil-edit.scss',
+  selector: 'app-profile-edit',
+  templateUrl: './profile-edit.html',
+  styleUrl: './profile-edit.scss',
   imports: [
     IonItem,
     IonLabel,
@@ -32,7 +32,7 @@ import { PasoUbicacionOnboardingComponent } from '../../../onboarding/components
     PasoUbicacionOnboardingComponent,
   ],
 })
-export class PerfilEditComponent implements OnInit {
+export class ProfileEditComponent implements OnInit {
   private readonly auth = inject(AuthService);
   private readonly api = inject(ApiService);
 

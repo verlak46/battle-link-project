@@ -12,18 +12,18 @@ describe('tabsRoutes', () => {
     expect(children.length).toBe(6);
   });
 
-  it('should include routes for mapa, buscar, nuevo, chat, perfil', () => {
+  it('should include routes for map, search, new, chat, profile', () => {
     const paths = children.map((r) => r.path);
-    expect(paths).toContain('mapa');
-    expect(paths).toContain('buscar');
-    expect(paths).toContain('nuevo');
+    expect(paths).toContain('map');
+    expect(paths).toContain('search');
+    expect(paths).toContain('new');
     expect(paths).toContain('chat');
-    expect(paths).toContain('perfil');
+    expect(paths).toContain('profile');
   });
 
-  it('should redirect empty path to mapa', () => {
+  it('should redirect empty path to map', () => {
     const redirect = children.find((r) => r.path === '' && r.redirectTo);
-    expect(redirect?.redirectTo).toBe('mapa');
+    expect(redirect?.redirectTo).toBe('map');
   });
 
   it('tab routes should use loadComponent (lazy loading)', () => {

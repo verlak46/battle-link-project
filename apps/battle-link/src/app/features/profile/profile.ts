@@ -14,12 +14,12 @@ import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { arrowBack, logOutOutline, mailOutline, personCircleOutline } from 'ionicons/icons';
 import { AuthService } from '../../core/services/auth.service';
-import { PerfilEditComponent } from './components/perfil-edit/perfil-edit';
+import { ProfileEditComponent } from './components/profile-edit/profile-edit';
 
 @Component({
-  selector: 'app-perfil',
-  templateUrl: './perfil.html',
-  styleUrl: './perfil.scss',
+  selector: 'app-profile',
+  templateUrl: './profile.html',
+  styleUrl: './profile.scss',
   imports: [
     IonHeader,
     IonToolbar,
@@ -30,10 +30,10 @@ import { PerfilEditComponent } from './components/perfil-edit/perfil-edit';
     IonButton,
     IonIcon,
     IonButtons,
-    PerfilEditComponent,
+    ProfileEditComponent,
   ],
 })
-export class PerfilPage implements OnInit {
+export class ProfilePage implements OnInit {
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
 

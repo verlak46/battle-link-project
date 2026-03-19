@@ -17,9 +17,9 @@ import { ApiService } from '../../core/services/api.service';
 import { Place } from '@battle-link/shared-models';
 
 @Component({
-  selector: 'app-mapa',
-  templateUrl: './mapa.html',
-  styleUrl: './mapa.scss',
+  selector: 'app-map',
+  templateUrl: './map.html',
+  styleUrl: './map.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     IonHeader,
@@ -35,7 +35,7 @@ import { Place } from '@battle-link/shared-models';
     MapInfoWindow,
   ],
 })
-export class MapaPage implements OnInit {
+export class MapPage implements OnInit {
   @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
 
   private readonly api = inject(ApiService);

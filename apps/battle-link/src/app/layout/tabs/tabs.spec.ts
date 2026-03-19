@@ -32,13 +32,13 @@ describe('TabsPage', () => {
     expect(buttons.length).toBe(5);
   });
 
-  it('should have tabs: mapa, buscar, nuevo, chat, perfil', () => {
+  it('should have tabs: map, search, new, chat, profile', () => {
     const fixture = TestBed.createComponent(TabsPage);
     fixture.detectChanges();
     const el = fixture.nativeElement as HTMLElement;
     const tabs = Array.from(el.querySelectorAll('ion-tab-button')).map((b) =>
       b.getAttribute('tab')
     );
-    expect(tabs).toEqual(['mapa', 'buscar', 'nuevo', 'chat', 'perfil']);
+    expect(tabs).toEqual(['map', 'search', 'new', 'chat', 'profile']);
   });
 });
