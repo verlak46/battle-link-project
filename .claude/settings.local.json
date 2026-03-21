@@ -40,7 +40,8 @@
       "Bash(done)",
       "Bash(grep -rn \"paso-detalles\\\\|paso-fecha\\\\|paso-juego\\\\|paso-ubicacion\\\\|tipo-selector\\\\|PasoDetalles\\\\|PasoFecha\\\\|PasoJuego\\\\|PasoUbicacion\\\\|TipoSelector\\\\|paso-juegos\\\\|paso-perfil\\\\|PasoJuegos\\\\|PasoPerfil\\\\|PasoUbicacion\" --include=\"*.ts\" --include=\"*.html\" apps/battle-link/src/app/ 2>/dev/null | grep -v \"node_modules\\\\|\\\\.nx\\\\|dist\")",
       "Bash(grep -rn \"nuevo-form.types\\\\|nuevo/components\" --include=\"*.ts\" apps/battle-link/src/app/ 2>/dev/null | grep -v \"node_modules\\\\|\\\\.nx\\\\|dist\")",
-      "Bash(grep -rn \"paso-detalles\\\\|paso-fecha\\\\|paso-juego\\\\|paso-ubicacion\\\\|tipo-selector\\\\|PasoDetalles\\\\|PasoFecha\\\\|PasoJuego\\\\|PasoUbicacion\\\\|TipoSelector\\\\|paso-juegos\\\\|paso-perfil\\\\|PasoJuegos\\\\|PasoPerfil\\\\|nuevo-form.types\\\\|nuevo/components\" --include=\"*.ts\" --include=\"*.html\" apps/battle-link/src/app/ 2>/dev/null | grep -v \"node_modules\\\\|\\\\.nx\\\\|dist\")"
+      "Bash(grep -rn \"paso-detalles\\\\|paso-fecha\\\\|paso-juego\\\\|paso-ubicacion\\\\|tipo-selector\\\\|PasoDetalles\\\\|PasoFecha\\\\|PasoJuego\\\\|PasoUbicacion\\\\|TipoSelector\\\\|paso-juegos\\\\|paso-perfil\\\\|PasoJuegos\\\\|PasoPerfil\\\\|nuevo-form.types\\\\|nuevo/components\" --include=\"*.ts\" --include=\"*.html\" apps/battle-link/src/app/ 2>/dev/null | grep -v \"node_modules\\\\|\\\\.nx\\\\|dist\")",
+      "Bash(cd \"G:/battle-link-project/apps/battle-link-api\" && node scripts/seed-wargames.js)"
     ]
   }
 }

@@ -2,33 +2,271 @@
   {
     "id": "warhammer40k",
     "name": "Warhammer 40,000",
-    "players": 2,
-    "scale": "28mm",
     "publisher": "Games Workshop",
-    "active": true
+    "minPlayers": 2,
+    "maxPlayers": 2,
+    "year": 1987,
+    "imageUrl": ""
   },
   {
     "id": "ageofsigmar",
     "name": "Age of Sigmar",
-    "players": 2,
-    "scale": "28mm",
     "publisher": "Games Workshop",
-    "active": true
+    "minPlayers": 2,
+    "maxPlayers": 2,
+    "year": 2015,
+    "imageUrl": ""
   },
   {
     "id": "boltaction",
     "name": "Bolt Action",
-    "players": 2,
-    "scale": "28mm",
     "publisher": "Warlord Games",
-    "active": true
+    "minPlayers": 2,
+    "maxPlayers": 2,
+    "year": 2012,
+    "imageUrl": ""
   },
   {
     "id": "killteam",
     "name": "Kill Team",
-    "players": 2,
-    "scale": "28mm",
     "publisher": "Games Workshop",
-    "active": true
+    "minPlayers": 2,
+    "maxPlayers": 2,
+    "year": 2018,
+    "imageUrl": ""
+  },
+  {
+    "id": "theoldworld",
+    "name": "Warhammer: The Old World",
+    "publisher": "Games Workshop",
+    "minPlayers": 2,
+    "maxPlayers": 2,
+    "year": 2024,
+    "imageUrl": ""
+  },
+  {
+    "id": "horusheresy",
+    "name": "Horus Heresy",
+    "publisher": "Games Workshop",
+    "minPlayers": 2,
+    "maxPlayers": 2,
+    "year": 2022,
+    "imageUrl": ""
+  },
+  {
+    "id": "necromunda",
+    "name": "Necromunda",
+    "publisher": "Games Workshop",
+    "minPlayers": 2,
+    "maxPlayers": 6,
+    "year": 2017,
+    "imageUrl": ""
+  },
+  {
+    "id": "warcry",
+    "name": "Warcry",
+    "publisher": "Games Workshop",
+    "minPlayers": 2,
+    "maxPlayers": 4,
+    "year": 2019,
+    "imageUrl": ""
+  },
+  {
+    "id": "legionsimperialis",
+    "name": "Legions Imperialis",
+    "publisher": "Games Workshop",
+    "minPlayers": 2,
+    "maxPlayers": 2,
+    "year": 2023,
+    "imageUrl": ""
+  },
+  {
+    "id": "middleearth",
+    "name": "Middle-earth Strategy Battle Game",
+    "publisher": "Games Workshop",
+    "minPlayers": 2,
+    "maxPlayers": 4,
+    "year": 2018,
+    "imageUrl": ""
+  },
+  {
+    "id": "bloodbowl",
+    "name": "Blood Bowl",
+    "publisher": "Games Workshop",
+    "minPlayers": 2,
+    "maxPlayers": 2,
+    "year": 2016,
+    "imageUrl": ""
+  },
+  {
+    "id": "infinity",
+    "name": "Infinity",
+    "publisher": "Corvus Belli",
+    "minPlayers": 2,
+    "maxPlayers": 2,
+    "year": 2005,
+    "imageUrl": ""
+  },
+  {
+    "id": "warmachine",
+    "name": "Warmachine",
+    "publisher": "Privateer Press",
+    "minPlayers": 2,
+    "maxPlayers": 2,
+    "year": 2003,
+    "imageUrl": ""
+  },
+  {
+    "id": "flamesofwar",
+    "name": "Flames of War",
+    "publisher": "Battlefront Miniatures",
+    "minPlayers": 2,
+    "maxPlayers": 2,
+    "year": 2002,
+    "imageUrl": ""
+  },
+  {
+    "id": "starwarslegion",
+    "name": "Star Wars: Legion",
+    "publisher": "Atomic Mass Games",
+    "minPlayers": 2,
+    "maxPlayers": 2,
+    "year": 2018,
+    "imageUrl": ""
+  },
+  {
+    "id": "xwing",
+    "name": "X-Wing Miniatures Game",
+    "publisher": "Atomic Mass Games",
+    "minPlayers": 2,
+    "maxPlayers": 2,
+    "year": 2012,
+    "imageUrl": ""
+  },
+  {
+    "id": "kingsofwar",
+    "name": "Kings of War",
+    "publisher": "Mantic Games",
+    "minPlayers": 2,
+    "maxPlayers": 2,
+    "year": 2010,
+    "imageUrl": ""
+  },
+  {
+    "id": "malifaux",
+    "name": "Malifaux",
+    "publisher": "Wyrd Miniatures",
+    "minPlayers": 2,
+    "maxPlayers": 4,
+    "year": 2009,
+    "imageUrl": ""
+  },
+  {
+    "id": "saga",
+    "name": "SAGA",
+    "publisher": "Studio Tomahawk",
+    "minPlayers": 2,
+    "maxPlayers": 4,
+    "year": 2011,
+    "imageUrl": ""
+  },
+  {
+    "id": "frostgrave",
+    "name": "Frostgrave",
+    "publisher": "Osprey Games",
+    "minPlayers": 2,
+    "maxPlayers": 6,
+    "year": 2015,
+    "imageUrl": ""
+  },
+  {
+    "id": "conquest",
+    "name": "Conquest: The Last Argument of Kings",
+    "publisher": "Para Bellum Wargames",
+    "minPlayers": 2,
+    "maxPlayers": 2,
+    "year": 2019,
+    "imageUrl": ""
+  },
+  {
+    "id": "asoiaf",
+    "name": "A Song of Ice & Fire: Tabletop Miniatures Game",
+    "publisher": "CMON",
+    "minPlayers": 2,
+    "maxPlayers": 2,
+    "year": 2018,
+    "imageUrl": ""
+  },
+  {
+    "id": "battletech",
+    "name": "BattleTech",
+    "publisher": "Catalyst Game Labs",
+    "minPlayers": 2,
+    "maxPlayers": 4,
+    "year": 1984,
+    "imageUrl": ""
+  },
+  {
+    "id": "dropzonecommander",
+    "name": "Dropzone Commander",
+    "publisher": "TTCombat",
+    "minPlayers": 2,
+    "maxPlayers": 2,
+    "year": 2012,
+    "imageUrl": ""
+  },
+  {
+    "id": "trenchcrusade",
+    "name": "Trench Crusade",
+    "publisher": "Trench Crusade",
+    "minPlayers": 2,
+    "maxPlayers": 4,
+    "year": 2024,
+    "imageUrl": ""
+  },
+  {
+    "id": "oathmark",
+    "name": "Oathmark: Battles of the Lost Age",
+    "publisher": "Osprey Games",
+    "minPlayers": 2,
+    "maxPlayers": 2,
+    "year": 2020,
+    "imageUrl": ""
+  },
+  {
+    "id": "starwarsarmada",
+    "name": "Star Wars: Armada",
+    "publisher": "Atomic Mass Games",
+    "minPlayers": 2,
+    "maxPlayers": 2,
+    "year": 2015,
+    "imageUrl": ""
+  },
+  {
+    "id": "onepagerulesgrimdark",
+    "name": "Grimdark Future",
+    "publisher": "One Page Rules",
+    "minPlayers": 2,
+    "maxPlayers": 2,
+    "year": 2017,
+    "imageUrl": ""
+  },
+  {
+    "id": "deadzone",
+    "name": "Deadzone",
+    "publisher": "Mantic Games",
+    "minPlayers": 2,
+    "maxPlayers": 2,
+    "year": 2013,
+    "imageUrl": ""
+  },
+  {
+    "id": "starfinder",
+    "name": "Starfinder Battles",
+    "publisher": "Paizo",
+    "minPlayers": 2,
+    "maxPlayers": 4,
+    "year": 2017,
+    "imageUrl": ""
   }
 ]
