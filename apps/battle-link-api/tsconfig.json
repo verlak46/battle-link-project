@@ -1,5 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist", "tmp", "test", "**/*spec.ts"],
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,
