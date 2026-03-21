@@ -27,10 +27,10 @@ export const routes: Routes = [
       import('./features/onboarding/onboarding').then((m) => m.OnboardingPage),
   },
   {
-    path: 'places/nueva',
+    path: 'places/  ',
     canActivate: [authGuard],
     loadComponent: () =>
-      import('./features/places/nueva-place/nueva-place').then((m) => m.NuevaPlacePage),
+      import('./features/places/new-place/new-place').then((m) => m.NewPlacePage),
   },
   {
     path: 'admin/places',

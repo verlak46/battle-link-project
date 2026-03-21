@@ -34,9 +34,9 @@ import { PlaceType } from '@battle-link/shared-models';
 import { ImageUploadComponent } from '../../../shared/components/image-upload/image-upload';
 
 @Component({
-  selector: 'app-nueva-place',
-  templateUrl: './nueva-place.html',
-  styleUrl: './nueva-place.scss',
+  selector: 'app-new-place',
+  templateUrl: './new-place.html',
+  styleUrl: './new-place.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule,
@@ -60,7 +60,7 @@ import { ImageUploadComponent } from '../../../shared/components/image-upload/im
     ImageUploadComponent,
   ],
 })
-export class NuevaPlacePage implements AfterViewInit {
+export class NewPlacePage implements AfterViewInit {
   @ViewChild('addressInput') private addressInputRef!: IonInput;
 
   private readonly api = inject(ApiService);
