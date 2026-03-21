@@ -18,9 +18,9 @@ import { Place } from '@battle-link/shared-models';
 import { getApiError } from '../../../core/utils/api-error';
 
 @Component({
-  selector: 'app-places-pendientes',
-  templateUrl: './places-pendientes.html',
-  styleUrl: './places-pendientes.scss',
+  selector: 'app-places-pending',
+  templateUrl: './places-pending.html',
+  styleUrl: './places-pending.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     IonHeader,
