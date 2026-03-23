@@ -9,6 +9,7 @@ import { IonItem, IonLabel, IonInput } from '@ionic/angular/standalone';
       <ion-input
         type="date"
         [value]="date()"
+        [min]="today"
         (ionInput)="dateChange.emit($any($event).detail.value)">
       </ion-input>
     </ion-item>
@@ -24,6 +25,8 @@ import { IonItem, IonLabel, IonInput } from '@ionic/angular/standalone';
   imports: [IonItem, IonLabel, IonInput],
 })
 export class StepDateComponent {
+  readonly today = new Date().toISOString().split('T')[0];
+
   date = input('');
   time = input('');
 
