@@ -15,28 +15,28 @@ describe('NewPage', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  describe('tipo signal', () => {
+  describe('type signal', () => {
     it('should default to "partida"', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
-      expect(comp.tipo()).toBe('partida');
+      expect(comp.type()).toBe('partida');
     });
 
-    it('should update tipo via signal set', () => {
+    it('should update type via signal set', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
-      comp.tipo.set('evento');
-      expect(comp.tipo()).toBe('evento');
+      comp.type.set('evento');
+      expect(comp.type()).toBe('evento');
     });
 
-    it('should show "Nueva Partida" title when tipo is partida', () => {
+    it('should show "Nueva Partida" title when type is partida', () => {
       const fixture = TestBed.createComponent(NewPage);
       fixture.detectChanges();
       const el = fixture.nativeElement as HTMLElement;
       expect(el.querySelector('ion-title')?.textContent?.trim()).toBe('Nueva Partida');
     });
 
-    it('should show "Nuevo Evento" title when tipo is evento', () => {
+    it('should show "Nuevo Evento" title when type is evento', () => {
       const fixture = TestBed.createComponent(NewPage);
-      fixture.componentInstance.tipo.set('evento');
+      fixture.componentInstance.type.set('evento');
       fixture.detectChanges();
       expect(fixture.nativeElement.querySelector('ion-title')?.textContent?.trim()).toBe('Nuevo Evento');
     });
@@ -46,126 +46,126 @@ describe('NewPage', () => {
     it('should initialize with empty strings', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
       const f = comp.form();
-      expect(f.juego).toBe('');
-      expect(f.fecha).toBe('');
-      expect(f.ciudad).toBe('');
-      expect(f.titulo).toBe('');
+      expect(f.game).toBe('');
+      expect(f.date).toBe('');
+      expect(f.city).toBe('');
+      expect(f.title).toBe('');
     });
 
     it('patch() should update only the provided fields', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
-      comp.patch({ juego: 'Infinity' });
-      expect(comp.form().juego).toBe('Infinity');
-      expect(comp.form().sistema).toBe('');
+      comp.patch({ game: 'Infinity' });
+      expect(comp.form().game).toBe('Infinity');
+      expect(comp.form().system).toBe('');
     });
   });
 
   describe('wizard navigation', () => {
     it('should start on step 1', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
-      expect(comp.pasoActual()).toBe(1);
+      expect(comp.currentStep()).toBe(1);
     });
 
     it('should have 4 steps defined', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
-      expect(comp.pasos.length).toBe(4);
+      expect(comp.steps.length).toBe(4);
     });
 
-    it('should not advance if step 1 is invalid (juego empty)', () => {
+    it('should not advance if step 1 is invalid (game empty)', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
-      comp.siguiente();
-      expect(comp.pasoActual()).toBe(1);
+      comp.next();
+      expect(comp.currentStep()).toBe(1);
     });
 
-    it('should advance to step 2 when juego is filled', () => {
+    it('should advance to step 2 when game is filled', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
-      comp.patch({ juego: 'Warhammer 40K' });
-      comp.siguiente();
-      expect(comp.pasoActual()).toBe(2);
+      comp.patch({ game: 'Warhammer 40K' });
+      comp.next();
+      expect(comp.currentStep()).toBe(2);
     });
 
-    it('should go back with anterior()', () => {
+    it('should go back with previous()', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
-      comp.patch({ juego: 'D&D' });
-      comp.siguiente();
-      comp.anterior();
-      expect(comp.pasoActual()).toBe(1);
+      comp.patch({ game: 'D&D' });
+      comp.next();
+      comp.previous();
+      expect(comp.currentStep()).toBe(1);
     });
 
-    it('should not go below step 1 with anterior()', () => {
+    it('should not go below step 1 with previous()', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
-      comp.anterior();
-      expect(comp.pasoActual()).toBe(1);
+      comp.previous();
+      expect(comp.currentStep()).toBe(1);
     });
 
-    it('should allow jumping back to a completed step with irAPaso()', () => {
+    it('should allow jumping back to a completed step with goToStep()', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
-      comp.patch({ juego: 'Bolt Action' });
-      comp.siguiente();
-      comp.irAPaso(1);
-      expect(comp.pasoActual()).toBe(1);
+      comp.patch({ game: 'Bolt Action' });
+      comp.next();
+      comp.goToStep(1);
+      expect(comp.currentStep()).toBe(1);
     });
 
-    it('should not jump forward with irAPaso()', () => {
+    it('should not jump forward with goToStep()', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
-      comp.irAPaso(3);
-      expect(comp.pasoActual()).toBe(1);
+      comp.goToStep(3);
+      expect(comp.currentStep()).toBe(1);
     });
   });
 
-  describe('esPasoValido computed', () => {
-    it('step 1 invalid when juego is empty', () => {
+  describe('isStepValid computed', () => {
+    it('step 1 invalid when game is empty', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
-      expect(comp.esPasoValido()).toBe(false);
+      expect(comp.isStepValid()).toBe(false);
     });
 
-    it('step 1 valid when juego has value', () => {
+    it('step 1 valid when game has value', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
-      comp.patch({ juego: 'Infinity' });
-      expect(comp.esPasoValido()).toBe(true);
+      comp.patch({ game: 'Infinity' });
+      expect(comp.isStepValid()).toBe(true);
     });
 
-    it('step 2 valid when fecha has value', () => {
+    it('step 2 valid when date has value', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
-      comp.patch({ juego: 'Infinity' });
-      comp.siguiente();
-      comp.patch({ fecha: '2026-04-01' });
-      expect(comp.esPasoValido()).toBe(true);
+      comp.patch({ game: 'Infinity' });
+      comp.next();
+      comp.patch({ date: '2026-04-01' });
+      expect(comp.isStepValid()).toBe(true);
     });
 
-    it('step 3 valid when ciudad has value', () => {
+    it('step 3 valid when city has value', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
-      comp.patch({ juego: 'Infinity' });
-      comp.siguiente();
-      comp.patch({ fecha: '2026-04-01' });
-      comp.siguiente();
-      comp.patch({ ciudad: 'Madrid' });
-      expect(comp.esPasoValido()).toBe(true);
+      comp.patch({ game: 'Infinity' });
+      comp.next();
+      comp.patch({ date: '2026-04-01' });
+      comp.next();
+      comp.patch({ city: 'Madrid' });
+      expect(comp.isStepValid()).toBe(true);
     });
 
-    it('step 4 valid when titulo has value', () => {
+    it('step 4 valid when title has value', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
-      comp.patch({ juego: 'Infinity' });
-      comp.siguiente();
-      comp.patch({ fecha: '2026-04-01' });
-      comp.siguiente();
-      comp.patch({ ciudad: 'Madrid' });
-      comp.siguiente();
-      comp.patch({ titulo: 'Torneo de primavera' });
-      expect(comp.esPasoValido()).toBe(true);
+      comp.patch({ game: 'Infinity' });
+      comp.next();
+      comp.patch({ date: '2026-04-01' });
+      comp.next();
+      comp.patch({ city: 'Madrid' });
+      comp.next();
+      comp.patch({ title: 'Torneo de primavera' });
+      expect(comp.isStepValid()).toBe(true);
     });
   });
 
-  describe('esUltimoPaso computed', () => {
+  describe('isLastStep computed', () => {
     it('should be false on step 1', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
-      expect(comp.esUltimoPaso()).toBe(false);
+      expect(comp.isLastStep()).toBe(false);
     });
 
     it('should be true on step 4', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
-      comp.pasoActual.set(4);
-      expect(comp.esUltimoPaso()).toBe(true);
+      comp.currentStep.set(4);
+      expect(comp.isLastStep()).toBe(true);
     });
   });
 

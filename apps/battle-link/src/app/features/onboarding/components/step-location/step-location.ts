@@ -14,8 +14,7 @@ import { DecimalPipe } from '@angular/common';
       <ion-button
         expand="block"
         color="secondary"
-        (click)="usarUbicacion.emit()
-"
+        (click)="useLocation.emit()"
         [disabled]="locationLoading()"
       >
         @if (locationLoading()) {
@@ -50,6 +49,5 @@ export class OnboardingStepLocationComponent {
   location = input<[number, number] | null>(null);
   locationLoading = input(false);
 
-  usarUbicacion = output<void>();
+  useLocation = output<void>();
 }
-

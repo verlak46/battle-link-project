@@ -1,28 +1,28 @@
-export type TipoCreacion = 'partida' | 'evento';
+export type CreationType = 'partida' | 'evento';
 
-export interface PasoWizard {
+export interface WizardStep {
   id: number;
-  titulo: string;
-  icono: string;
+  title: string;
+  icon: string;
 }
 
-export interface NuevoFormData {
-  juego: string;
-  sistema: string;
-  fecha: string;
-  hora: string;
-  ciudad: string;
-  direccion: string;
-  titulo: string;
-  descripcion: string;
-  maxJugadores: string;
+export interface NewFormData {
+  game: string;
+  system: string;
+  date: string;
+  time: string;
+  city: string;
+  address: string;
+  title: string;
+  description: string;
+  maxPlayers: string;
   placeId?: string;
   imageUrl?: string;
 }
 
-export const PASOS_WIZARD: PasoWizard[] = [
-  { id: 1, titulo: 'Juego', icono: 'game-controller-outline' },
-  { id: 2, titulo: 'Fecha', icono: 'calendar-outline' },
-  { id: 3, titulo: 'Ubicación', icono: 'location-outline' },
-  { id: 4, titulo: 'Detalles', icono: 'list-outline' },
+export const WIZARD_STEPS: WizardStep[] = [
+  { id: 1, title: 'Juego', icon: 'game-controller-outline' },
+  { id: 2, title: 'Fecha', icon: 'calendar-outline' },
+  { id: 3, title: 'Ubicación', icon: 'location-outline' },
+  { id: 4, title: 'Detalles', icon: 'list-outline' },
 ];

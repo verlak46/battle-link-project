@@ -6,24 +6,24 @@
 
 <ion-content class="ion-padding">
   <div class="stepper">
-    @for (paso of pasos; track paso.id) {
+    @for (wizardStep of steps; track wizardStep.id) {
 
       <app-step-header
-        [paso]="paso"
-        [total]="totalPasos"
-        [active]="step() === paso.id"
-        [done]="step() > paso.id"
-        (clicked)="step() > paso.id ? step.set(paso.id) : null">
+        [step]="wizardStep"
+        [total]="totalSteps"
+        [active]="step() === wizardStep.id"
+        [done]="step() > wizardStep.id"
+        (clicked)="step() > wizardStep.id ? step.set(wizardStep.id) : null">
       </app-step-header>
 
-      @if (step() === paso.id) {
+      @if (step() === wizardStep.id) {
         <div class="step__body">
           @if (loading()) {
             <div class="onboarding__loading">
               <ion-spinner></ion-spinner>
             </div>
           } @else {
-            @if (paso.id === 1) {
+            @if (wizardStep.id === 1) {
               <app-onboarding-step-profile
                 [name]="name()"
                 [nick]="nick()"
@@ -32,17 +32,17 @@
                 (nickChange)="nick.set($event)"
                 (experienceLevelChange)="experienceLevel.set($event)">
               </app-onboarding-step-profile>
-            } @else if (paso.id === 2) {
+            } @else if (wizardStep.id === 2) {
               <app-onboarding-step-games
                 [wargames]="wargames()"
                 [selectedIds]="favoriteGamesIds()"
                 (selectedIdsChange)="favoriteGamesIds.set($event)">
               </app-onboarding-step-games>
-            } @else if (paso.id === 3) {
+            } @else if (wizardStep.id === 3) {
               <app-onboarding-step-location
                 [location]="location()"
                 [locationLoading]="locationLoading()"
-                (usarUbicacion)="usarUbicacionActual()">
+                (useLocation)="useCurrentLocation()">
               </app-onboarding-step-location>
             }
           }
@@ -52,17 +52,16 @@
           }
 
           <app-onboarding-step-nav
-            [valido]="esPasoValido()"
-            [esUltimoPaso]="esUltimoPaso()"
-            [mostrarAnterior]="step() > 1"
+            [valid]="isStepValid()"
+            [isLastStep]="isLastStep()"
+            [showPrevious]="step() > 1"
             [loading]="loading()"
-            (anterior)="anterior()"
-            (siguiente)="siguiente()"
-            (finalizar)="finalizar()">
+            (previous)="previous()"
+            (next)="next()"
+            (finalize)="finalize()">
           </app-onboarding-step-nav>
         </div>
       }
     }
   </div>
 </ion-content>
-

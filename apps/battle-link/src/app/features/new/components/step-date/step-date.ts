@@ -8,25 +8,25 @@ import { IonItem, IonLabel, IonInput } from '@ionic/angular/standalone';
       <ion-label position="stacked">Fecha *</ion-label>
       <ion-input
         type="date"
-        [value]="fecha()"
-        (ionInput)="fechaChange.emit($any($event).detail.value)">
+        [value]="date()"
+        (ionInput)="dateChange.emit($any($event).detail.value)">
       </ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Hora (opcional)</ion-label>
       <ion-input
         type="time"
-        [value]="hora()"
-        (ionInput)="horaChange.emit($any($event).detail.value)">
+        [value]="time()"
+        (ionInput)="timeChange.emit($any($event).detail.value)">
       </ion-input>
     </ion-item>
   `,
   imports: [IonItem, IonLabel, IonInput],
 })
 export class StepDateComponent {
-  fecha = input('');
-  hora = input('');
+  date = input('');
+  time = input('');
 
-  fechaChange = output<string>();
-  horaChange = output<string>();
+  dateChange = output<string>();
+  timeChange = output<string>();
 }

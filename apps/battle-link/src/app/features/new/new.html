@@ -1,83 +1,83 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{ tipo() === 'partida' ? 'Nueva Partida' : 'Nuevo Evento' }}</ion-title>
+    <ion-title>{{ type() === 'partida' ? 'Nueva Partida' : 'Nuevo Evento' }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
 
   <app-type-selector
-    [tipo]="tipo()"
-    (tipoChange)="tipo.set($event)">
+    [type]="type()"
+    (typeChange)="type.set($event)">
   </app-type-selector>
 
   <div class="stepper">
-    @for (paso of pasos; track paso.id) {
+    @for (step of steps; track step.id) {
 
       <app-step-header
-        [paso]="paso"
-        [total]="pasos.length"
-        [active]="pasoActual() === paso.id"
-        [done]="pasoActual() > paso.id"
-        (clicked)="irAPaso($event)">
+        [step]="step"
+        [total]="steps.length"
+        [active]="currentStep() === step.id"
+        [done]="currentStep() > step.id"
+        (clicked)="goToStep($event)">
       </app-step-header>
 
-      @if (pasoActual() === paso.id) {
+      @if (currentStep() === step.id) {
         <div class="step__body">
 
-          @if (paso.id === 1) {
+          @if (step.id === 1) {
             <app-step-game
-              [tipo]="tipo()"
-              [juego]="form().juego"
-              [sistema]="form().sistema"
-              (juegoChange)="patch({ juego: $event })"
-              (sistemaChange)="patch({ sistema: $event })">
+              [type]="type()"
+              [game]="form().game"
+              [system]="form().system"
+              (gameChange)="patch({ game: $event })"
+              (systemChange)="patch({ system: $event })">
             </app-step-game>
           }
 
-          @if (paso.id === 2) {
+          @if (step.id === 2) {
             <app-step-date
-              [fecha]="form().fecha"
-              [hora]="form().hora"
-              (fechaChange)="patch({ fecha: $event })"
-              (horaChange)="patch({ hora: $event })">
+              [date]="form().date"
+              [time]="form().time"
+              (dateChange)="patch({ date: $event })"
+              (timeChange)="patch({ time: $event })">
             </app-step-date>
           }
 
-          @if (paso.id === 3) {
+          @if (step.id === 3) {
             <app-step-location
-              [ciudad]="form().ciudad"
-              [direccion]="form().direccion"
+              [city]="form().city"
+              [address]="form().address"
               [placeId]="form().placeId ?? null"
               [places]="places()"
-              (ciudadChange)="patch({ ciudad: $event })"
-              (direccionChange)="patch({ direccion: $event })"
+              (cityChange)="patch({ city: $event })"
+              (addressChange)="patch({ address: $event })"
               (placeIdChange)="patch({ placeId: $event ?? undefined })">
             </app-step-location>
           }
 
-          @if (paso.id === 4) {
+          @if (step.id === 4) {
             <app-step-details
-              [tipo]="tipo()"
-              [titulo]="form().titulo"
-              [descripcion]="form().descripcion"
-              [maxJugadores]="form().maxJugadores"
+              [type]="type()"
+              [title]="form().title"
+              [description]="form().description"
+              [maxPlayers]="form().maxPlayers"
               [imageUrl]="form().imageUrl"
-              (tituloChange)="patch({ titulo: $event })"
-              (descripcionChange)="patch({ descripcion: $event })"
-              (maxJugadoresChange)="patch({ maxJugadores: $event })"
+              (titleChange)="patch({ title: $event })"
+              (descriptionChange)="patch({ description: $event })"
+              (maxPlayersChange)="patch({ maxPlayers: $event })"
               (imageUrlChange)="patch({ imageUrl: $event })">
             </app-step-details>
           }
 
           <app-step-nav
-            [tipo]="tipo()"
-            [valido]="esPasoValido()"
-            [esUltimoPaso]="esUltimoPaso()"
-            [mostrarAnterior]="pasoActual() > 1"
-            (anterior)="anterior()"
-            (siguiente)="siguiente()"
-            (confirmar)="confirmar()">
+            [type]="type()"
+            [valid]="isStepValid()"
+            [isLastStep]="isLastStep()"
+            [showPrevious]="currentStep() > 1"
+            (previous)="previous()"
+            (next)="next()"
+            (confirm)="confirm()">
           </app-step-nav>
 
         </div>

@@ -66,7 +66,7 @@ export class ProfileEditComponent implements OnInit {
     this.experienceLevel.set(level);
   }
 
-  usarUbicacionActual(): void {
+  useCurrentLocation(): void {
     if (!('geolocation' in navigator)) {
       this.errorMessage.set('La geolocalización no está disponible en este navegador.');
       return;

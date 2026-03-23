@@ -2,27 +2,27 @@ import { Component, input, output } from '@angular/core';
 import { IonButton, IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { chevronForwardOutline, chevronBackOutline, checkmarkOutline } from 'ionicons/icons';
-import { TipoCreacion } from '../../new-form.types';
+import { CreationType } from '../../new-form.types';
 
 @Component({
   selector: 'app-step-nav',
   template: `
     <div class="step__actions">
-      @if (mostrarAnterior()) {
-        <ion-button fill="outline" (click)="anterior.emit()">
+      @if (showPrevious()) {
+        <ion-button fill="outline" (click)="previous.emit()">
           <ion-icon slot="start" name="chevron-back-outline"></ion-icon>
           Anterior
         </ion-button>
       }
-      @if (!esUltimoPaso()) {
-        <ion-button [disabled]="!valido()" (click)="siguiente.emit()" class="btn-siguiente">
+      @if (!isLastStep()) {
+        <ion-button [disabled]="!valid()" (click)="next.emit()" class="btn-siguiente">
           Siguiente
           <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
         </ion-button>
       } @else {
-        <ion-button [disabled]="!valido()" (click)="confirmar.emit()" color="success" class="btn-siguiente">
+        <ion-button [disabled]="!valid()" (click)="confirm.emit()" color="success" class="btn-siguiente">
           <ion-icon slot="start" name="checkmark-outline"></ion-icon>
-          {{ tipo() === 'partida' ? 'Crear Partida' : 'Crear Evento' }}
+          {{ type() === 'partida' ? 'Crear Partida' : 'Crear Evento' }}
         </ion-button>
       }
     </div>
@@ -40,14 +40,14 @@ import { TipoCreacion } from '../../new-form.types';
   imports: [IonButton, IonIcon],
 })
 export class StepNavComponent {
-  tipo = input.required<TipoCreacion>();
-  valido = input(false);
-  esUltimoPaso = input(false);
-  mostrarAnterior = input(false);
+  type = input.required<CreationType>();
+  valid = input(false);
+  isLastStep = input(false);
+  showPrevious = input(false);
 
-  anterior = output<void>();
-  siguiente = output<void>();
-  confirmar = output<void>();
+  previous = output<void>();
+  next = output<void>();
+  confirm = output<void>();
 
   constructor() {
     addIcons({ chevronForwardOutline, chevronBackOutline, checkmarkOutline });

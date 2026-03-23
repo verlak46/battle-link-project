@@ -1,7 +1,7 @@
 import { Component, inject, input, output } from '@angular/core';
 import { IonItem, IonLabel, IonInput, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { TipoCreacion } from '../../new-form.types';
+import { CreationType } from '../../new-form.types';
 import { ApiService } from '../../../../core/services/api.service';
 import { Wargame } from '../../../../shared/models/IWargame';
 
@@ -10,16 +10,16 @@ import { Wargame } from '../../../../shared/models/IWargame';
   template: `
     <ion-item>
       <ion-label position="stacked">
-        {{ tipo() === 'partida' ? 'Juego / Sistema' : 'Nombre del juego' }} *
+        {{ type() === 'partida' ? 'Juego / Sistema' : 'Nombre del juego' }} *
       </ion-label>
       <ion-select
-        [value]="juego()"
-        (ionChange)="juegoChange.emit($any($event).detail.value)"
+        [value]="game()"
+        (ionChange)="gameChange.emit($any($event).detail.value)"
         interface="popover"
         placeholder="Selecciona un wargame">
-        @for (game of wargames(); track game.id) {
-          <ion-select-option [value]="game.id">
-            {{ game.name }}
+        @for (wargame of wargames(); track wargame.id) {
+          <ion-select-option [value]="wargame.id">
+            {{ wargame.name }}
           </ion-select-option>
         }
       </ion-select>
@@ -27,8 +27,8 @@ import { Wargame } from '../../../../shared/models/IWargame';
     <ion-item>
       <ion-label position="stacked">Edición / Sistema (opcional)</ion-label>
       <ion-input
-        [value]="sistema()"
-        (ionInput)="sistemaChange.emit($any($event).detail.value)"
+        [value]="system()"
+        (ionInput)="systemChange.emit($any($event).detail.value)"
         placeholder="Ej. 10ª edición, Pathfinder 2e...">
       </ion-input>
     </ion-item>
@@ -38,12 +38,12 @@ import { Wargame } from '../../../../shared/models/IWargame';
 export class StepGameComponent {
   private readonly api = inject(ApiService);
 
-  tipo = input.required<TipoCreacion>();
-  juego = input('');
-  sistema = input('');
+  type = input.required<CreationType>();
+  game = input('');
+  system = input('');
 
-  juegoChange = output<string>();
-  sistemaChange = output<string>();
+  gameChange = output<string>();
+  systemChange = output<string>();
 
   wargames = toSignal(this.api.getWargames(), {
     initialValue: [] as Wargame[],

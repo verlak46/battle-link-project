@@ -2,31 +2,31 @@ import { Component, input, output } from '@angular/core';
 import { IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { checkmarkOutline } from 'ionicons/icons';
-import { PasoWizard } from '../../new-form.types';
+import { WizardStep } from '../../new-form.types';
 
 @Component({
   selector: 'app-step-header',
   template: `
-    @if (paso().id > 1) {
+    @if (step().id > 1) {
       <div class="step__connector"></div>
     }
     <div
       class="step__header"
       [class.step__header--clickable]="done()"
-      (click)="done() && clicked.emit(paso().id)"
+      (click)="done() && clicked.emit(step().id)"
     >
       <div class="step__bubble">
         @if (done()) {
           <ion-icon name="checkmark-outline"></ion-icon>
         } @else {
-          <span>{{ paso().id }}</span>
+          <span>{{ step().id }}</span>
         }
       </div>
       <div class="step__meta">
-        <p class="step__num">Paso {{ paso().id }} de {{ total() }}</p>
+        <p class="step__num">Paso {{ step().id }} de {{ total() }}</p>
         <h3 class="step__title">
-          <ion-icon [name]="paso().icono"></ion-icon>
-          {{ paso().titulo }}
+          <ion-icon [name]="step().icon"></ion-icon>
+          {{ step().title }}
         </h3>
       </div>
     </div>
@@ -40,7 +40,7 @@ import { PasoWizard } from '../../new-form.types';
   },
 })
 export class StepHeaderComponent {
-  paso = input.required<PasoWizard>();
+  step = input.required<WizardStep>();
   total = input.required<number>();
   active = input(false);
   done = input(false);

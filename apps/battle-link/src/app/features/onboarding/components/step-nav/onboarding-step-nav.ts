@@ -5,24 +5,24 @@ import { IonButton } from '@ionic/angular/standalone';
   selector: 'app-onboarding-step-nav',
   template: `
     <div class="step__actions">
-      @if (mostrarAnterior()) {
-        <ion-button fill="outline" (click)="anterior.emit()">
+      @if (showPrevious()) {
+        <ion-button fill="outline" (click)="previous.emit()">
           Anterior
         </ion-button>
       }
-      @if (!esUltimoPaso()) {
+      @if (!isLastStep()) {
         <ion-button
           color="primary"
-          (click)="siguiente.emit()"
-          [disabled]="!valido()"
+          (click)="next.emit()"
+          [disabled]="!valid()"
         >
           Siguiente
         </ion-button>
       } @else {
         <ion-button
           color="success"
-          (click)="finalizar.emit()"
-          [disabled]="!valido() || loading()"
+          (click)="finalize.emit()"
+          [disabled]="!valid() || loading()"
         >
           Finalizar
         </ion-button>
@@ -40,13 +40,12 @@ import { IonButton } from '@ionic/angular/standalone';
   imports: [IonButton],
 })
 export class OnboardingStepNavComponent {
-  valido = input(false);
-  esUltimoPaso = input(false);
-  mostrarAnterior = input(false);
+  valid = input(false);
+  isLastStep = input(false);
+  showPrevious = input(false);
   loading = input(false);
 
-  anterior = output<void>();
-  siguiente = output<void>();
-  finalizar = output<void>();
+  previous = output<void>();
+  next = output<void>();
+  finalize = output<void>();
 }
-

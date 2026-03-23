@@ -17,7 +17,7 @@ import {
 } from 'ionicons/icons';
 import { toSignal } from '@angular/core/rxjs-interop';
 
-import { TipoCreacion, NuevoFormData, PASOS_WIZARD } from './new-form.types';
+import { CreationType, NewFormData, WIZARD_STEPS } from './new-form.types';
 import { ApiService } from '../../core/services/api.service';
 import { Place } from '@battle-link/shared-models';
 import { TypeSelectorComponent } from './components/type-selector/type-selector';
@@ -48,37 +48,37 @@ import { StepDetailsComponent } from './components/step-details/step-details';
 })
 export class NewPage {
   private readonly api = inject(ApiService);
-  readonly pasos = PASOS_WIZARD;
+  readonly steps = WIZARD_STEPS;
 
-  tipo = signal<TipoCreacion>('partida');
-  pasoActual = signal(1);
+  type = signal<CreationType>('partida');
+  currentStep = signal(1);
   places = toSignal(this.api.getPlaces(), { initialValue: [] as Place[] });
 
-  form = signal<NuevoFormData>({
-    juego: '',
-    sistema: '',
-    fecha: '',
-    hora: '',
-    ciudad: '',
-    direccion: '',
-    titulo: '',
-    descripcion: '',
-    maxJugadores: '',
+  form = signal<NewFormData>({
+    game: '',
+    system: '',
+    date: '',
+    time: '',
+    city: '',
+    address: '',
+    title: '',
+    description: '',
+    maxPlayers: '',
     imageUrl: undefined,
   });
 
-  esPasoValido = computed(() => {
+  isStepValid = computed(() => {
     const f = this.form();
-    switch (this.pasoActual()) {
-      case 1: return f.juego.trim().length > 0;
-      case 2: return f.fecha.trim().length > 0;
-      case 3: return f.ciudad.trim().length > 0;
-      case 4: return f.titulo.trim().length > 0;
+    switch (this.currentStep()) {
+      case 1: return f.game.trim().length > 0;
+      case 2: return f.date.trim().length > 0;
+      case 3: return f.city.trim().length > 0;
+      case 4: return f.title.trim().length > 0;
       default: return false;
     }
   });
 
-  esUltimoPaso = computed(() => this.pasoActual() === this.pasos.length);
+  isLastStep = computed(() => this.currentStep() === this.steps.length);
 
   constructor() {
     addIcons({
@@ -92,31 +92,31 @@ export class NewPage {
     });
   }
 
-  patch(partial: Partial<NuevoFormData>) {
+  patch(partial: Partial<NewFormData>) {
     this.form.update((f) => ({ ...f, ...partial }));
   }
 
-  irAPaso(paso: number) {
-    if (paso < this.pasoActual()) {
-      this.pasoActual.set(paso);
+  goToStep(step: number) {
+    if (step < this.currentStep()) {
+      this.currentStep.set(step);
     }
   }
 
-  siguiente() {
-    if (!this.esPasoValido()) return;
-    if (!this.esUltimoPaso()) {
-      this.pasoActual.update((p) => p + 1);
+  next() {
+    if (!this.isStepValid()) return;
+    if (!this.isLastStep()) {
+      this.currentStep.update((s) => s + 1);
     }
   }
 
-  anterior() {
-    if (this.pasoActual() > 1) {
-      this.pasoActual.update((p) => p - 1);
+  previous() {
+    if (this.currentStep() > 1) {
+      this.currentStep.update((s) => s - 1);
     }
   }
 
-  confirmar() {
-    if (!this.esPasoValido()) return;
-    console.log('Crear', this.tipo(), this.form());
+  confirm() {
+    if (!this.isStepValid()) return;
+    console.log('Crear', this.type(), this.form());
   }
 }

@@ -56,17 +56,17 @@ export class OnboardingPage implements OnInit {
     return 'Competitivo';
   }
 
-  pasos = [
-    { id: 1, titulo: 'Perfil', icono: 'person-circle-outline' },
-    { id: 2, titulo: 'Juegos favoritos', icono: 'game-controller-outline' },
-    { id: 3, titulo: 'Ubicación', icono: 'location-outline' },
+  steps = [
+    { id: 1, title: 'Perfil', icon: 'person-circle-outline' },
+    { id: 2, title: 'Juegos favoritos', icon: 'game-controller-outline' },
+    { id: 3, title: 'Ubicación', icon: 'location-outline' },
   ];
 
-  totalPasos = this.pasos.length;
+  totalSteps = this.steps.length;
 
-  esUltimoPaso = computed(() => this.step() === this.totalPasos);
+  isLastStep = computed(() => this.step() === this.totalSteps);
 
-  esPasoValido = computed(() => {
+  isStepValid = computed(() => {
     switch (this.step()) {
       case 1:
         return this.name().trim().length > 0 && this.nick().trim().length >= 3 && !!this.experienceLevel();
@@ -99,20 +99,20 @@ export class OnboardingPage implements OnInit {
 
   }
 
-  siguiente() {
-    if (!this.esPasoValido()) return;
-    if (!this.esUltimoPaso()) {
+  next() {
+    if (!this.isStepValid()) return;
+    if (!this.isLastStep()) {
       this.step.update((s) => s + 1);
     }
   }
 
-  anterior() {
+  previous() {
     if (this.step() > 1) {
       this.step.update((s) => s - 1);
     }
   }
 
-  usarUbicacionActual() {
+  useCurrentLocation() {
     if (!('geolocation' in navigator)) {
       this.errorMessage.set('La geolocalización no está disponible en este navegador.');
       return;
@@ -131,8 +131,8 @@ export class OnboardingPage implements OnInit {
     );
   }
 
-  async finalizar() {
-    if (!this.esPasoValido()) return;
+  async finalize() {
+    if (!this.isStepValid()) return;
     this.loading.set(true);
     this.errorMessage.set(null);
 

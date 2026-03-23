@@ -22,8 +22,8 @@ import { Place } from '@battle-link/shared-models';
     <ion-item>
       <ion-label position="stacked">Ciudad *</ion-label>
       <ion-input
-        [value]="ciudad()"
-        (ionInput)="ciudadChange.emit($any($event).detail.value)"
+        [value]="city()"
+        (ionInput)="cityChange.emit($any($event).detail.value)"
         placeholder="Ej. Madrid, Barcelona..."
         clearInput>
       </ion-input>
@@ -32,9 +32,9 @@ import { Place } from '@battle-link/shared-models';
     <ion-item>
       <ion-label position="stacked">Dirección / Local (opcional)</ion-label>
       <ion-input
-        #direccionInput
-        [value]="direccion()"
-        (ionInput)="direccionChange.emit($any($event).detail.value)"
+        #addressInput
+        [value]="address()"
+        (ionInput)="addressChange.emit($any($event).detail.value)"
         placeholder="Ej. Calle Mayor 12, Club Dragón"
         autocomplete="off">
       </ion-input>
@@ -46,21 +46,21 @@ import { Place } from '@battle-link/shared-models';
   imports: [IonItem, IonLabel, IonInput, IonSelect, IonSelectOption],
 })
 export class StepLocationComponent implements AfterViewInit {
-  @ViewChild('direccionInput') private direccionInputRef!: IonInput;
+  @ViewChild('addressInput') private addressInputRef!: IonInput;
 
   private readonly zone = inject(NgZone);
 
-  ciudad = input('');
-  direccion = input('');
+  city = input('');
+  address = input('');
   placeId = input<string | null>(null);
   places = input<Place[]>([]);
 
-  ciudadChange = output<string>();
-  direccionChange = output<string>();
+  cityChange = output<string>();
+  addressChange = output<string>();
   placeIdChange = output<string | null>();
 
   ngAfterViewInit() {
-    this.direccionInputRef.getInputElement().then((el) => {
+    this.addressInputRef.getInputElement().then((el) => {
       const autocomplete = new google.maps.places.Autocomplete(el, {
         types: ['address'],
         fields: ['formatted_address', 'address_components'],
@@ -70,13 +70,13 @@ export class StepLocationComponent implements AfterViewInit {
         const place = autocomplete.getPlace();
         this.zone.run(() => {
           if (place.formatted_address) {
-            this.direccionChange.emit(place.formatted_address);
+            this.addressChange.emit(place.formatted_address);
           }
           const cityComp = place.address_components?.find((c) =>
             c.types.includes('locality') || c.types.includes('administrative_area_level_2'),
           );
           if (cityComp) {
-            this.ciudadChange.emit(cityComp.long_name);
+            this.cityChange.emit(cityComp.long_name);
           }
         });
       });
@@ -88,8 +88,8 @@ export class StepLocationComponent implements AfterViewInit {
     if (id) {
       const place = this.places().find((v) => v._id === id);
       if (place) {
-        this.ciudadChange.emit(place.city);
-        this.direccionChange.emit(place.address);
+        this.cityChange.emit(place.city);
+        this.addressChange.emit(place.address);
       }
     }
   }

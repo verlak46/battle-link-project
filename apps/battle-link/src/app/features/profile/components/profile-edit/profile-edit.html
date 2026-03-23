@@ -30,7 +30,7 @@
   <app-onboarding-step-location
     [location]="location()"
     [locationLoading]="locationLoading()"
-    (usarUbicacion)="usarUbicacionActual()">
+    (useLocation)="useCurrentLocation()">
   </app-onboarding-step-location>
 
   @if (errorMessage()) {
