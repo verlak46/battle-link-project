@@ -1,5 +1,8 @@
 import { AfterViewInit, Component, NgZone, ViewChild, inject, input, output } from '@angular/core';
-import { IonInput, IonItem, IonLabel, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
+import { RouterLink } from '@angular/router';
+import { IonButton, IonIcon, IonInput, IonItem, IonLabel, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { addCircleOutline } from 'ionicons/icons';
 import { Place } from '@battle-link/shared-models';
 
 @Component({
@@ -18,6 +21,15 @@ import { Place } from '@battle-link/shared-models';
         }
       </ion-select>
     </ion-item>
+
+    @if (!placeId()) {
+      <div class="register-place">
+        <ion-button fill="clear" size="small" routerLink="/places/new">
+          <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+          Registrar nueva tienda / club
+        </ion-button>
+      </div>
+    }
 
     @if (!placeId()) {
       <ion-item>
@@ -54,13 +66,23 @@ import { Place } from '@battle-link/shared-models';
   `,
   styles: [`
     ion-item { margin-bottom: 4px; }
+    .register-place {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: -4px;
+      margin-bottom: 8px;
+    }
   `],
-  imports: [IonItem, IonLabel, IonInput, IonSelect, IonSelectOption],
+  imports: [IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonButton, IonIcon, RouterLink],
 })
 export class StepLocationComponent implements AfterViewInit {
   @ViewChild('addressInput') private addressInputRef!: IonInput;
 
   private readonly zone = inject(NgZone);
+
+  constructor() {
+    addIcons({ addCircleOutline });
+  }
 
   city = input('');
   address = input('');

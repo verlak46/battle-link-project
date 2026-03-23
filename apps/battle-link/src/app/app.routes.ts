@@ -27,7 +27,7 @@ export const routes: Routes = [
       import('./features/onboarding/onboarding').then((m) => m.OnboardingPage),
   },
   {
-    path: 'places/  ',
+    path: 'places/new',
     canActivate: [authGuard],
     loadComponent: () =>
       import('./features/places/new-place/new-place').then((m) => m.NewPlacePage),
