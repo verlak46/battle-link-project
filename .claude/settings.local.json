@@ -45,7 +45,9 @@
       "Bash(find /G/battle-link-project/apps/battle-link/src/app/shared/models -type f -name \"*.ts\" 2>/dev/null | head -20)",
       "Bash(find /g/battle-link-project/apps/battle-link/src -name \"*.ts\" -type f | xargs grep -l \"wargame\\\\|game\\\\|card\\\\|list\" -i | head -20)",
       "Bash(find /G/battle-link-project/libs/shared-models -type f -name \"*.ts\" 2>/dev/null | head -30)",
-      "Bash(node -e \"const m = require\\('./node_modules/@angular/google-maps/index.js'\\); console.log\\(Object.keys\\(m\\).filter\\(k => k.toLowerCase\\(\\).includes\\('provide'\\) || k.toLowerCase\\(\\).includes\\('config'\\) || k.toLowerCase\\(\\).includes\\('loader'\\)\\)\\)\" 2>/dev/null || grep -r \"provideGoogle\\\\|GOOGLE_MAPS_API\\\\|LazyLoader\" \"G:/battle-link-project/node_modules/@angular/google-maps/index.d.ts\" 2>/dev/null | head -10)"
+      "Bash(node -e \"const m = require\\('./node_modules/@angular/google-maps/index.js'\\); console.log\\(Object.keys\\(m\\).filter\\(k => k.toLowerCase\\(\\).includes\\('provide'\\) || k.toLowerCase\\(\\).includes\\('config'\\) || k.toLowerCase\\(\\).includes\\('loader'\\)\\)\\)\" 2>/dev/null || grep -r \"provideGoogle\\\\|GOOGLE_MAPS_API\\\\|LazyLoader\" \"G:/battle-link-project/node_modules/@angular/google-maps/index.d.ts\" 2>/dev/null | head -10)",
+      "Bash(find \"G:/battle-link-project/libs/shared-models\" -name \"index.ts\" -o -name \".ts\" | xargs grep -l \"export\" 2>/dev/null | head -5)",
+      "Bash(cat \"G:/battle-link-project/libs/shared-models/src/index.ts\" 2>/dev/null || cat \"G:/battle-link-project/libs/shared-models/index.ts\" 2>/dev/null || find \"G:/battle-link-project/libs/shared-models\" -name \"*.ts\" | head -1 | xargs cat)"
     ]
   }
 }
