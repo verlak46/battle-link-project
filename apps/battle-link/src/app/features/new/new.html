@@ -49,10 +49,12 @@
               [city]="form().city"
               [address]="form().address"
               [placeId]="form().placeId ?? null"
+              [placeName]="form().placeName ?? ''"
               [places]="places()"
               (cityChange)="patch({ city: $event })"
               (addressChange)="patch({ address: $event })"
-              (placeIdChange)="patch({ placeId: $event ?? undefined })">
+              (placeIdChange)="patch({ placeId: $event ?? undefined })"
+              (placeNameChange)="patch({ placeName: $event || undefined })">
             </app-step-location>
           }
 

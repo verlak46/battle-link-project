@@ -19,6 +19,18 @@ import { Place } from '@battle-link/shared-models';
       </ion-select>
     </ion-item>
 
+    @if (!placeId()) {
+      <ion-item>
+        <ion-label position="stacked">Nombre del lugar (opcional)</ion-label>
+        <ion-input
+          [value]="placeName()"
+          (ionInput)="placeNameChange.emit($any($event).detail.value)"
+          placeholder="Ej. Club Dragón Rojo, sótano de casa..."
+          clearInput>
+        </ion-input>
+      </ion-item>
+    }
+
     <ion-item>
       <ion-label position="stacked">Ciudad *</ion-label>
       <ion-input
@@ -53,11 +65,13 @@ export class StepLocationComponent implements AfterViewInit {
   city = input('');
   address = input('');
   placeId = input<string | null>(null);
+  placeName = input<string>('');
   places = input<Place[]>([]);
 
   cityChange = output<string>();
   addressChange = output<string>();
   placeIdChange = output<string | null>();
+  placeNameChange = output<string>();
 
   ngAfterViewInit() {
     this.addressInputRef.getInputElement().then((el) => {
@@ -90,7 +104,10 @@ export class StepLocationComponent implements AfterViewInit {
       if (place) {
         this.cityChange.emit(place.city);
         this.addressChange.emit(place.address);
+        this.placeNameChange.emit(place.name);
       }
+    } else {
+      this.placeNameChange.emit('');
     }
   }
 }

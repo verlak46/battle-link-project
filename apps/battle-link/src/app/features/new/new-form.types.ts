@@ -17,6 +17,7 @@ export interface NewFormData {
   description: string;
   maxPlayers: string;
   placeId?: string;
+  placeName?: string;
   imageUrl?: string;
 }
 
