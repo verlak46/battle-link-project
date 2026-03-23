@@ -8,8 +8,8 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
-  mapOutline,
-  searchOutline,
+  homeOutline,
+  compassOutline,
   addCircle,
   chatbubblesOutline,
   personOutline,
@@ -24,8 +24,8 @@ import {
 export class TabsPage {
   constructor() {
     addIcons({
-      mapOutline,
-      searchOutline,
+      homeOutline,
+      compassOutline,
       addCircle,
       chatbubblesOutline,
       personOutline,

@@ -1,0 +1,174 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Explorar</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [class.map-mode]="viewMode() === 'map'">
+
+  @if (viewMode() === 'list') {
+
+    <div class="explore-list">
+      <ion-searchbar
+        placeholder="Buscar partidas, torneos, juegos..."
+        (ionInput)="onSearch($event)"
+        [value]="searchQuery()"
+        debounce="300">
+      </ion-searchbar>
+
+      @if (filteredItems().length === 0) {
+        <div class="empty-search">
+          <p>No se encontraron resultados para "{{ searchQuery() }}"</p>
+        </div>
+      }
+
+      @for (item of filteredItems(); track item.data._id) {
+        <ion-card class="explore-card">
+
+          @switch (item.kind) {
+
+            @case ('event') {
+              <ion-card-header>
+                <div class="card-kind-badge">
+                  <ion-chip color="primary">
+                    <ion-icon name="calendar-outline" slot="start"></ion-icon>
+                    <ion-label>Partida</ion-label>
+                  </ion-chip>
+                </div>
+                <ion-card-title>{{ item.data.title }}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <div class="card-meta">
+                  <ion-chip color="medium">
+                    <ion-label>{{ item.data.game }}</ion-label>
+                  </ion-chip>
+                  <ion-chip color="medium">
+                    <ion-label>{{ item.data.type }}</ion-label>
+                  </ion-chip>
+                </div>
+                @if (item.data.description) {
+                  <p class="card-description">{{ item.data.description }}</p>
+                }
+                <p class="card-info">
+                  <ion-icon name="calendar-outline"></ion-icon>
+                  {{ item.data.startDate | date:'EEE d MMM, HH:mm':'':'es' }}
+                </p>
+                @if (item.data.placeName) {
+                  <p class="card-info">
+                    <ion-icon name="storefront-outline"></ion-icon>
+                    {{ item.data.placeName }}
+                  </p>
+                }
+                <p class="card-info">
+                  <ion-icon name="people-outline"></ion-icon>
+                  {{ item.data.currentPlayers }} / {{ item.data.maxPlayers }} jugadores
+                </p>
+              </ion-card-content>
+            }
+
+            @case ('tournament') {
+              <ion-card-header>
+                <div class="card-kind-badge">
+                  <ion-chip color="warning">
+                    <ion-icon name="trophy-outline" slot="start"></ion-icon>
+                    <ion-label>Torneo</ion-label>
+                  </ion-chip>
+                </div>
+                <ion-card-title>{{ item.data.title }}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <div class="card-meta">
+                  <ion-chip color="medium">
+                    <ion-label>{{ item.data.game }}</ion-label>
+                  </ion-chip>
+                  <ion-chip color="medium">
+                    <ion-label>{{ item.data.format }}</ion-label>
+                  </ion-chip>
+                </div>
+                @if (item.data.description) {
+                  <p class="card-description">{{ item.data.description }}</p>
+                }
+                <p class="card-info">
+                  <ion-icon name="calendar-outline"></ion-icon>
+                  {{ item.data.startDate | date:'EEE d MMM':'':'es' }}
+                </p>
+                @if (item.data.placeName) {
+                  <p class="card-info">
+                    <ion-icon name="storefront-outline"></ion-icon>
+                    {{ item.data.placeName }}
+                  </p>
+                }
+                <p class="card-info">
+                  <ion-icon name="people-outline"></ion-icon>
+                  {{ item.data.currentPlayers }} / {{ item.data.maxPlayers }} plazas
+                </p>
+                @if (item.data.entryFee != null) {
+                  <p class="entry-fee">
+                    Inscripción: {{ item.data.entryFee === 0 ? 'Gratuita' : item.data.entryFee + '€' }}
+                  </p>
+                }
+              </ion-card-content>
+            }
+
+          }
+        </ion-card>
+      }
+    </div>
+
+    <div class="view-toggle-btn">
+      <ion-button shape="round" (click)="viewMode.set('map')">
+        <ion-icon name="map-outline" slot="start"></ion-icon>
+        Ver mapa
+      </ion-button>
+    </div>
+
+  } @else {
+
+    <google-map
+      [center]="center()"
+      [zoom]="zoom()"
+      [options]="mapOptions"
+      width="100%"
+      height="100%">
+
+      @for (item of filteredItems(); track item.data._id) {
+        @if (markerPosition(item); as pos) {
+          <map-marker
+            #marker="mapMarker"
+            [position]="pos"
+            [title]="item.data.title"
+            (mapClick)="openInfo(marker, item)">
+          </map-marker>
+        }
+      }
+
+      <map-info-window>
+        @if (selectedItem()) {
+          <div class="info-window">
+            <h3>{{ selectedItem()!.data.title }}</h3>
+            <p class="info-kind">
+              {{ selectedItem()!.kind === 'event' ? 'Partida' : 'Torneo' }}
+              · {{ selectedItem()!.data.game }}
+            </p>
+            <p class="info-date">
+              {{ selectedItem()!.data.startDate | date:'d MMM yyyy':'':'es' }}
+            </p>
+            @if (selectedItem()!.data.placeName) {
+              <p class="info-place">{{ selectedItem()!.data.placeName }}</p>
+            }
+          </div>
+        }
+      </map-info-window>
+
+    </google-map>
+
+    <div class="view-toggle-btn">
+      <ion-button shape="round" (click)="viewMode.set('list')">
+        <ion-icon name="list-outline" slot="start"></ion-icon>
+        Ver listado
+      </ion-button>
+    </div>
+
+  }
+
+</ion-content>

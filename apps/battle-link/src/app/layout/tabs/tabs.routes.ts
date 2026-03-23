@@ -7,14 +7,14 @@ export const tabsRoutes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'map',
+        path: 'home',
         loadComponent: () =>
-          import('../../features/map/map').then((m) => m.MapPage),
+          import('../../features/home/home').then((m) => m.HomePage),
       },
       {
-        path: 'search',
+        path: 'explore',
         loadComponent: () =>
-          import('../../features/search/search').then((m) => m.SearchPage),
+          import('../../features/explore/explore').then((m) => m.ExplorePage),
       },
       {
         path: 'new',
@@ -33,7 +33,7 @@ export const tabsRoutes: Routes = [
       },
       {
         path: '',
-        redirectTo: 'map',
+        redirectTo: 'home',
         pathMatch: 'full',
       },
     ],
