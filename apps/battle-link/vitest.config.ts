@@ -2,9 +2,12 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   resolve: {
-    alias: {
-      '@ionic/core/components': '@ionic/core/components/index.js',
-    },
+    alias: [
+      {
+        find: /^@ionic\/core\/components$/,
+        replacement: '@ionic/core/components/index.js',
+      },
+    ],
   },
   test: {
     server: {

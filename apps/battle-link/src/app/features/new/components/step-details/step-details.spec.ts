@@ -2,29 +2,32 @@ import { TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { StepDetailsComponent } from './step-details';
-import { TipoCreacion } from '../../new-form.types';
+import { CreationType } from '../../new-form.types';
+import { StorageService } from '../../../../core/services/storage.service';
+import { AuthService } from '../../../../core/services/auth.service';
+import { signal } from '@angular/core';
 
 @Component({
   template: `
     <app-step-details
-      [tipo]="tipo"
-      [titulo]="titulo"
-      [descripcion]="descripcion"
-      [maxJugadores]="maxJugadores"
-      (tituloChange)="lastTitulo = $event"
-      (descripcionChange)="lastDescripcion = $event"
-      (maxJugadoresChange)="lastMax = $event"
+      [type]="type"
+      [title]="title"
+      [description]="description"
+      [maxPlayers]="maxPlayers"
+      (titleChange)="lastTitle = $event"
+      (descriptionChange)="lastDescription = $event"
+      (maxPlayersChange)="lastMax = $event"
     />
   `,
   imports: [StepDetailsComponent],
 })
 class TestHostComponent {
-  tipo: TipoCreacion = 'partida';
-  titulo = '';
-  descripcion = '';
-  maxJugadores = '';
-  lastTitulo: string | null = null;
-  lastDescripcion: string | null = null;
+  type: CreationType = 'partida';
+  title = '';
+  description = '';
+  maxPlayers = '';
+  lastTitle: string | null = null;
+  lastDescription: string | null = null;
   lastMax: string | null = null;
 }
 
@@ -32,7 +35,11 @@ describe('StepDetailsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TestHostComponent],
-      providers: [provideIonicAngular()],
+      providers: [
+        provideIonicAngular(),
+        { provide: StorageService, useValue: { upload: () => {} } },
+        { provide: AuthService, useValue: { user: signal(null) } },
+      ],
     }).compileComponents();
   });
 
@@ -48,34 +55,34 @@ describe('StepDetailsComponent', () => {
     expect(fixture.nativeElement.querySelectorAll('ion-item').length).toBe(3);
   });
 
-  it('should show "Título de la partida" when tipo is partida', () => {
+  it('should show "Título de la partida" when type is partida', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
     fixture.detectChanges();
     expect(fixture.nativeElement.textContent).toContain('Título de la partida');
   });
 
-  it('should show "Título del evento" when tipo is evento', () => {
+  it('should show "Título del evento" when type is evento', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
-    fixture.componentInstance.tipo = 'evento';
+    fixture.componentInstance.type = 'evento';
     fixture.detectChanges();
     expect(fixture.nativeElement.textContent).toContain('Título del evento');
   });
 
-  it('should render ion-textarea for descripcion', () => {
+  it('should render ion-textarea for description', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('ion-textarea')).toBeTruthy();
   });
 
-  it('should emit tituloChange on ionInput', () => {
+  it('should emit titleChange on ionInput', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
     fixture.detectChanges();
     const inputs = fixture.nativeElement.querySelectorAll('ion-input');
     inputs[0].dispatchEvent(new CustomEvent('ionInput', { detail: { value: 'Torneo primavera' }, bubbles: true }));
-    expect(fixture.componentInstance.lastTitulo).toBe('Torneo primavera');
+    expect(fixture.componentInstance.lastTitle).toBe('Torneo primavera');
   });
 
-  it('should emit maxJugadoresChange on ionInput', () => {
+  it('should emit maxPlayersChange on ionInput', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
     fixture.detectChanges();
     const inputs = fixture.nativeElement.querySelectorAll('ion-input');

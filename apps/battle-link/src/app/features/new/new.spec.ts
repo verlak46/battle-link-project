@@ -1,12 +1,30 @@
 import { TestBed } from '@angular/core/testing';
 import { provideIonicAngular } from '@ionic/angular/standalone';
+import { provideRouter } from '@angular/router';
+import { of } from 'rxjs';
 import { NewPage } from './new';
+import { ApiService } from '../../core/services/api.service';
+import { StorageService } from '../../core/services/storage.service';
+import { AuthService } from '../../core/services/auth.service';
+import { signal } from '@angular/core';
 
 describe('NewPage', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [NewPage],
-      providers: [provideIonicAngular()],
+      providers: [
+        provideIonicAngular(),
+        provideRouter([]),
+        {
+          provide: ApiService,
+          useValue: {
+            getPlaces: () => of([]),
+            getWargames: () => of([]),
+          } satisfies Partial<ApiService>,
+        },
+        { provide: StorageService, useValue: { upload: () => of('') } },
+        { provide: AuthService, useValue: { user: signal(null) } },
+      ],
     }).compileComponents();
   });
 

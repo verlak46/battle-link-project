@@ -2,30 +2,30 @@ import { TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { StepNavComponent } from './step-nav';
-import { TipoCreacion } from '../../new-form.types';
+import { CreationType } from '../../new-form.types';
 
 @Component({
   template: `
     <app-step-nav
-      [tipo]="tipo"
-      [valido]="valido"
-      [esUltimoPaso]="esUltimoPaso"
-      [mostrarAnterior]="mostrarAnterior"
-      (anterior)="anteriorCount = anteriorCount + 1"
-      (siguiente)="siguienteCount = siguienteCount + 1"
-      (confirmar)="confirmarCount = confirmarCount + 1"
+      [type]="type"
+      [valid]="valid"
+      [isLastStep]="isLastStep"
+      [showPrevious]="showPrevious"
+      (previous)="previousCount = previousCount + 1"
+      (next)="nextCount = nextCount + 1"
+      (confirm)="confirmCount = confirmCount + 1"
     />
   `,
   imports: [StepNavComponent],
 })
 class TestHostComponent {
-  tipo: TipoCreacion = 'partida';
-  valido = true;
-  esUltimoPaso = false;
-  mostrarAnterior = false;
-  anteriorCount = 0;
-  siguienteCount = 0;
-  confirmarCount = 0;
+  type: CreationType = 'partida';
+  valid = true;
+  isLastStep = false;
+  showPrevious = false;
+  previousCount = 0;
+  nextCount = 0;
+  confirmCount = 0;
 }
 
 describe('StepNavComponent', () => {
@@ -50,24 +50,24 @@ describe('StepNavComponent', () => {
     expect(buttons.some((b) => b.textContent?.includes('Siguiente'))).toBe(true);
   });
 
-  it('should show "Crear Partida" on last step with tipo partida', () => {
+  it('should show "Crear Partida" on last step with type partida', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
-    fixture.componentInstance.esUltimoPaso = true;
+    fixture.componentInstance.isLastStep = true;
     fixture.detectChanges();
     const el = fixture.nativeElement as HTMLElement;
     expect(el.textContent).toContain('Crear Partida');
   });
 
-  it('should show "Crear Evento" on last step with tipo evento', () => {
+  it('should show "Crear Evento" on last step with type evento', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
-    fixture.componentInstance.esUltimoPaso = true;
-    fixture.componentInstance.tipo = 'evento';
+    fixture.componentInstance.isLastStep = true;
+    fixture.componentInstance.type = 'evento';
     fixture.detectChanges();
     const el = fixture.nativeElement as HTMLElement;
     expect(el.textContent).toContain('Crear Evento');
   });
 
-  it('should hide "Anterior" button when mostrarAnterior is false', () => {
+  it('should hide "Anterior" button when showPrevious is false', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
     fixture.detectChanges();
     const el = fixture.nativeElement as HTMLElement;
@@ -75,28 +75,28 @@ describe('StepNavComponent', () => {
     expect(buttons.some((b) => b.textContent?.includes('Anterior'))).toBe(false);
   });
 
-  it('should show "Anterior" button when mostrarAnterior is true', () => {
+  it('should show "Anterior" button when showPrevious is true', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
-    fixture.componentInstance.mostrarAnterior = true;
+    fixture.componentInstance.showPrevious = true;
     fixture.detectChanges();
     const el = fixture.nativeElement as HTMLElement;
     const buttons = Array.from(el.querySelectorAll('ion-button'));
     expect(buttons.some((b) => b.textContent?.includes('Anterior'))).toBe(true);
   });
 
-  it('should emit anterior when Anterior is clicked', () => {
+  it('should emit previous when Anterior is clicked', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
-    fixture.componentInstance.mostrarAnterior = true;
+    fixture.componentInstance.showPrevious = true;
     fixture.detectChanges();
     const el = fixture.nativeElement as HTMLElement;
     const anteriorBtn = Array.from(el.querySelectorAll('ion-button')).find((b) =>
       b.textContent?.includes('Anterior')
     ) as HTMLElement;
     anteriorBtn.click();
-    expect(fixture.componentInstance.anteriorCount).toBe(1);
+    expect(fixture.componentInstance.previousCount).toBe(1);
   });
 
-  it('should emit siguiente when Siguiente is clicked', () => {
+  it('should emit next when Siguiente is clicked', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
     fixture.detectChanges();
     const el = fixture.nativeElement as HTMLElement;
@@ -104,16 +104,16 @@ describe('StepNavComponent', () => {
       b.textContent?.includes('Siguiente')
     ) as HTMLElement;
     siguienteBtn.click();
-    expect(fixture.componentInstance.siguienteCount).toBe(1);
+    expect(fixture.componentInstance.nextCount).toBe(1);
   });
 
-  it('should emit confirmar when Crear button is clicked', () => {
+  it('should emit confirm when Crear button is clicked', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
-    fixture.componentInstance.esUltimoPaso = true;
+    fixture.componentInstance.isLastStep = true;
     fixture.detectChanges();
     const el = fixture.nativeElement as HTMLElement;
     const crearBtn = el.querySelector('ion-button') as HTMLElement;
     crearBtn.click();
-    expect(fixture.componentInstance.confirmarCount).toBe(1);
+    expect(fixture.componentInstance.confirmCount).toBe(1);
   });
 });

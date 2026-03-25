@@ -3,28 +3,28 @@ import { Component } from '@angular/core';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { of } from 'rxjs';
 import { StepGameComponent } from './step-game';
-import { TipoCreacion } from '../../new-form.types';
+import { CreationType } from '../../new-form.types';
 import { ApiService } from '../../../../core/services/api.service';
 import { Wargame } from '../../../../shared/models/IWargame';
 
 @Component({
   template: `
     <app-step-game
-      [tipo]="tipo"
-      [juego]="juego"
-      [sistema]="sistema"
-      (juegoChange)="lastJuego = $event"
-      (sistemaChange)="lastSistema = $event"
+      [type]="type"
+      [game]="game"
+      [system]="system"
+      (gameChange)="lastGame = $event"
+      (systemChange)="lastSystem = $event"
     />
   `,
   imports: [StepGameComponent],
 })
 class TestHostComponent {
-  tipo: TipoCreacion = 'partida';
-  juego = '';
-  sistema = '';
-  lastJuego: string | null = null;
-  lastSistema: string | null = null;
+  type: CreationType = 'partida';
+  game = '';
+  system = '';
+  lastGame: string | null = null;
+  lastSystem: string | null = null;
 }
 
 describe('StepGameComponent', () => {
@@ -73,20 +73,20 @@ describe('StepGameComponent', () => {
     expect(fixture.nativeElement.querySelectorAll('ion-item').length).toBe(2);
   });
 
-  it('should show "Juego / Sistema" label when tipo is partida', () => {
+  it('should show "Juego / Sistema" label when type is partida', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
     fixture.detectChanges();
     expect(fixture.nativeElement.textContent).toContain('Juego / Sistema');
   });
 
-  it('should show "Nombre del juego" label when tipo is evento', () => {
+  it('should show "Nombre del juego" label when type is evento', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
-    fixture.componentInstance.tipo = 'evento';
+    fixture.componentInstance.type = 'evento';
     fixture.detectChanges();
     expect(fixture.nativeElement.textContent).toContain('Nombre del juego');
   });
 
-  it('should emit juegoChange on ionChange of select', () => {
+  it('should emit gameChange on ionChange of select', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
     fixture.detectChanges();
     const select = fixture.nativeElement.querySelector('ion-select') as HTMLElement;
@@ -96,10 +96,10 @@ describe('StepGameComponent', () => {
         bubbles: true,
       }),
     );
-    expect(fixture.componentInstance.lastJuego).toBe('warhammer40k');
+    expect(fixture.componentInstance.lastGame).toBe('warhammer40k');
   });
 
-  it('should emit sistemaChange on ionInput for second field', () => {
+  it('should emit systemChange on ionInput for second field', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
     fixture.detectChanges();
     const inputs = fixture.nativeElement.querySelectorAll('ion-input');
@@ -109,7 +109,7 @@ describe('StepGameComponent', () => {
         bubbles: true,
       }),
     );
-    expect(fixture.componentInstance.lastSistema).toBe('5ª edición');
+    expect(fixture.componentInstance.lastSystem).toBe('5ª edición');
   });
 
   it('should render select options from API service', () => {

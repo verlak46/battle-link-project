@@ -20,11 +20,17 @@ describe('ProfilePage', () => {
       logout: async () => {
         logoutCalled++;
       },
+      ready: Promise.resolve(),
+      refreshProfile: async () => {},
     } as Partial<AuthService> as AuthService;
 
     await TestBed.configureTestingModule({
       imports: [ProfilePage],
-      providers: [provideIonicAngular(), provideRouter([]), { provide: AuthService, useValue: authMock }],
+      providers: [
+        provideIonicAngular(),
+        provideRouter([{ path: 'login', component: ProfilePage }]),
+        { provide: AuthService, useValue: authMock },
+      ],
     }).compileComponents();
   });
 

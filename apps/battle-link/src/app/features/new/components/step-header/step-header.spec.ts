@@ -2,14 +2,14 @@ import { TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { StepHeaderComponent } from './step-header';
-import { PasoWizard } from '../../new-form.types';
+import { WizardStep } from '../../new-form.types';
 
-const PASO_MOCK: PasoWizard = { id: 2, titulo: 'Fecha', icono: 'calendar-outline' };
+const STEP_MOCK: WizardStep = { id: 2, title: 'Fecha', icon: 'calendar-outline' };
 
 @Component({
   template: `
     <app-step-header
-      [paso]="paso"
+      [step]="step"
       [total]="4"
       [active]="active"
       [done]="done"
@@ -19,7 +19,7 @@ const PASO_MOCK: PasoWizard = { id: 2, titulo: 'Fecha', icono: 'calendar-outline
   imports: [StepHeaderComponent],
 })
 class TestHostComponent {
-  paso = PASO_MOCK;
+  step = STEP_MOCK;
   active = false;
   done = false;
   lastClicked: number | null = null;
@@ -64,13 +64,13 @@ describe('StepHeaderComponent', () => {
 
   it('should NOT render connector for step 1', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
-    fixture.componentInstance.paso = { id: 1, titulo: 'Juego', icono: 'game-controller-outline' };
+    fixture.componentInstance.step = { id: 1, title: 'Juego', icon: 'game-controller-outline' };
     fixture.detectChanges();
     const el = fixture.nativeElement as HTMLElement;
     expect(el.querySelector('.step__connector')).toBeNull();
   });
 
-  it('should display paso titulo', () => {
+  it('should display step title', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
     fixture.detectChanges();
     const el = fixture.nativeElement as HTMLElement;

@@ -2,16 +2,16 @@ import { TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { TypeSelectorComponent } from './type-selector';
-import { TipoCreacion } from '../../new-form.types';
+import { CreationType } from '../../new-form.types';
 
 @Component({
-  template: `<app-type-selector [tipo]="tipo" (tipoChange)="onTipoChange($event)" />`,
+  template: `<app-type-selector [type]="type" (typeChange)="onTypeChange($event)" />`,
   imports: [TypeSelectorComponent],
 })
 class TestHostComponent {
-  tipo: TipoCreacion = 'partida';
-  emitted: TipoCreacion | null = null;
-  onTipoChange(t: TipoCreacion) { this.emitted = t; }
+  type: CreationType = 'partida';
+  emitted: CreationType | null = null;
+  onTypeChange(t: CreationType) { this.emitted = t; }
 }
 
 describe('TypeSelectorComponent', () => {
@@ -46,7 +46,7 @@ describe('TypeSelectorComponent', () => {
     expect(values).toContain('evento');
   });
 
-  it('should emit tipoChange when ionChange fires', () => {
+  it('should emit typeChange when ionChange fires', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
     fixture.detectChanges();
     const segment = fixture.nativeElement.querySelector('ion-segment') as HTMLElement;

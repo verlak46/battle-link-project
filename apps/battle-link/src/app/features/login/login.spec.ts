@@ -9,7 +9,7 @@ function createAuthMock() {
   const register = async (email: string, password: string) => undefined;
   const loginWithGoogle = async () => undefined;
   return {
-    user: () => null,
+    user: () => ({ onboardingCompleted: true } as unknown),
     loading: () => false,
     login,
     register,
@@ -35,7 +35,10 @@ describe('LoginPage', () => {
       imports: [LoginPage],
       providers: [
         provideIonicAngular(),
-        provideRouter([]),
+        provideRouter([
+          { path: '', component: LoginPage },
+          { path: 'onboarding', component: LoginPage },
+        ]),
         { provide: AuthService, useValue: authMock },
       ],
     }).compileComponents();
