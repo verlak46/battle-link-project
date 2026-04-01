@@ -7,6 +7,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { WargamesModule } from './modules/wargames/wargames.module';
 import { PlacesModule } from './modules/places/places.module';
+import { EventsModule } from './modules/events/events.module';
 import { envValidation } from './config/env.validation';
 
 @Module({
@@ -29,6 +30,7 @@ import { envValidation } from './config/env.validation';
     UsersModule,
     WargamesModule,
     PlacesModule,
+    EventsModule,
   ],
   providers: [
     {

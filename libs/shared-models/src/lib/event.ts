@@ -1,24 +1,28 @@
 import { GeoLocation } from './geo';
 
+export type CreationType = 'partida' | 'evento';
 export type EventStatus = 'draft' | 'published' | 'cancelled' | 'finished';
-export type EventType = 'friendly' | 'league' | 'tournament' | 'campaign';
 
 export interface Event {
   _id: string;
   title: string;
+  type: CreationType;
+  game: string;
+  system?: string;
+  startDate: string;
+  endDate?: string;
+  time?: string;
   description?: string;
   imageUrl?: string;
-  type: EventType;
-  status: EventStatus;
-  game: string;
-  maxPlayers: number;
+  contactUrl?: string;
+  maxPlayers?: number;
   currentPlayers: number;
+  city?: string;
+  address?: string;
   location?: GeoLocation;
   placeId?: string;
   placeName?: string;
-  startDate: string;
-  endDate?: string;
-  contactUrl?: string;
+  status: EventStatus;
   createdBy: string;
   participants: string[];
   createdAt: string;
@@ -27,14 +31,18 @@ export interface Event {
 
 export interface CreateEventPayload {
   title: string;
-  type: EventType;
+  type: CreationType;
   game: string;
-  maxPlayers: number;
+  system?: string;
   startDate: string;
+  endDate?: string;
+  time?: string;
   description?: string;
   imageUrl?: string;
-  endDate?: string;
   contactUrl?: string;
+  maxPlayers?: number;
+  city?: string;
+  address?: string;
   location?: GeoLocation;
   placeId?: string;
   placeName?: string;

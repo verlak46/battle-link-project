@@ -1,4 +1,4 @@
-export type CreationType = 'partida' | 'evento';
+export type { CreationType } from '@battle-link/shared-models';
 
 export interface WizardStep {
   id: number;

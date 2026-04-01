@@ -20,6 +20,7 @@ describe('NewPage', () => {
           useValue: {
             getPlaces: () => of([]),
             getWargames: () => of([]),
+            createEvent: () => of({}),
           } satisfies Partial<ApiService>,
         },
         { provide: StorageService, useValue: { upload: () => of('') } },

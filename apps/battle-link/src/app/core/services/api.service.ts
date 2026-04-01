@@ -9,9 +9,11 @@ import {
   Game,
   Place,
   CreatePlacePayload,
+  Event,
+  CreateEventPayload,
 } from '@battle-link/shared-models';
 
-export type { User as AuthUser, GeoLocation as UserLocation, ExperienceLevel } from '@battle-link/shared-models';
+export type { User as AuthUser, GeoLocation as UserLocation, ExperienceLevel, Event, CreateEventPayload } from '@battle-link/shared-models';
 
 export interface AuthResponse {
   token: string;
@@ -96,6 +98,14 @@ export class ApiService {
     return this.unwrap(
       this.http.patch<ApiResponse<User>>(`${this.baseUrl}/user/profile`, payload),
     );
+  }
+
+  createEvent(payload: CreateEventPayload): Observable<Event> {
+    return this.unwrap(this.http.post<ApiResponse<Event>>(`${this.baseUrl}/events`, payload));
+  }
+
+  getEvents(): Observable<Event[]> {
+    return this.unwrap(this.http.get<ApiResponse<Event[]>>(`${this.baseUrl}/events`));
   }
 
   getPlaces(): Observable<Place[]> {

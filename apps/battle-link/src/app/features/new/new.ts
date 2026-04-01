@@ -16,9 +16,11 @@ import {
   chevronBackOutline,
 } from 'ionicons/icons';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 
 import { CreationType, NewFormData, WIZARD_STEPS } from './new-form.types';
-import { ApiService } from '../../core/services/api.service';
+import { ApiService, CreateEventPayload } from '../../core/services/api.service';
 import { Place } from '@battle-link/shared-models';
 import { TypeSelectorComponent } from './components/type-selector/type-selector';
 import { StepHeaderComponent } from './components/step-header/step-header';
@@ -48,10 +50,13 @@ import { StepDetailsComponent } from './components/step-details/step-details';
 })
 export class NewPage {
   private readonly api = inject(ApiService);
+  private readonly router = inject(Router);
   readonly steps = WIZARD_STEPS;
 
   type = signal<CreationType>('partida');
   currentStep = signal(1);
+  saving = signal(false);
+  errorMessage = signal<string | null>(null);
   places = toSignal(this.api.getPlaces(), { initialValue: [] as Place[] });
 
   form = signal<NewFormData>({
@@ -117,8 +122,34 @@ export class NewPage {
     }
   }
 
-  confirm() {
+  async confirm(): Promise<void> {
     if (!this.isStepValid()) return;
-    console.log('Crear', this.type(), this.form());
+    this.saving.set(true);
+    this.errorMessage.set(null);
+    const f = this.form();
+    const payload: CreateEventPayload = {
+      title: f.title,
+      type: this.type(),
+      game: f.game,
+      system: f.system || undefined,
+      startDate: f.startDate,
+      endDate: f.endDate || undefined,
+      time: f.time || undefined,
+      description: f.description || undefined,
+      imageUrl: f.imageUrl,
+      contactUrl: f.contactUrl || undefined,
+      maxPlayers: f.maxPlayers ? parseInt(f.maxPlayers, 10) : undefined,
+      city: f.city || undefined,
+      address: f.address || undefined,
+      placeId: f.placeId,
+      placeName: f.placeName,
+    };
+    try {
+      await firstValueFrom(this.api.createEvent(payload));
+      await this.router.navigate(['/tabs', 'buscar']);
+    } catch {
+      this.errorMessage.set('No se pudo crear. Inténtalo de nuevo.');
+      this.saving.set(false);
+    }
   }
 }

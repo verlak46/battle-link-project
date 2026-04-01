@@ -76,9 +76,13 @@
             </app-step-details>
           }
 
+          @if (errorMessage()) {
+            <p class="new__error">{{ errorMessage() }}</p>
+          }
+
           <app-step-nav
             [type]="type()"
-            [valid]="isStepValid()"
+            [valid]="isStepValid() && !saving()"
             [isLastStep]="isLastStep()"
             [showPrevious]="currentStep() > 1"
             (previous)="previous()"
