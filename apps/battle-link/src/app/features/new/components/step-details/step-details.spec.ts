@@ -49,10 +49,10 @@ describe('StepDetailsComponent', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('should render 3 ion-item elements', () => {
+  it('should render 4 ion-item elements', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelectorAll('ion-item').length).toBe(3);
+    expect(fixture.nativeElement.querySelectorAll('ion-item').length).toBe(4);
   });
 
   it('should show "Título de la partida" when type is partida', () => {

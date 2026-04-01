@@ -37,6 +37,15 @@ import { ImageUploadComponent } from '../../../../shared/components/image-upload
         min="1">
       </ion-input>
     </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Enlace de contacto (opcional)</ion-label>
+      <ion-input
+        type="url"
+        [value]="contactUrl()"
+        (ionInput)="contactUrlChange.emit($any($event).detail.value)"
+        placeholder="https:// o https://wa.me/...">
+      </ion-input>
+    </ion-item>
     <app-image-upload
       entityType="events"
       [imageUrl]="imageUrl()"
@@ -50,10 +59,12 @@ export class StepDetailsComponent {
   title = input('');
   description = input('');
   maxPlayers = input('');
+  contactUrl = input('');
   imageUrl = input<string | undefined>(undefined);
 
   titleChange = output<string>();
   descriptionChange = output<string>();
   maxPlayersChange = output<string>();
+  contactUrlChange = output<string>();
   imageUrlChange = output<string>();
 }

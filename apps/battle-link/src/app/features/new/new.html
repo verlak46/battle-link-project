@@ -37,9 +37,11 @@
 
           @if (step.id === 2) {
             <app-step-date
-              [date]="form().date"
+              [startDate]="form().startDate"
+              [endDate]="form().endDate ?? ''"
               [time]="form().time"
-              (dateChange)="patch({ date: $event })"
+              (startDateChange)="patch({ startDate: $event })"
+              (endDateChange)="patch({ endDate: $event })"
               (timeChange)="patch({ time: $event })">
             </app-step-date>
           }
@@ -64,10 +66,12 @@
               [title]="form().title"
               [description]="form().description"
               [maxPlayers]="form().maxPlayers"
+              [contactUrl]="form().contactUrl ?? ''"
               [imageUrl]="form().imageUrl"
               (titleChange)="patch({ title: $event })"
               (descriptionChange)="patch({ description: $event })"
               (maxPlayersChange)="patch({ maxPlayers: $event })"
+              (contactUrlChange)="patch({ contactUrl: $event })"
               (imageUrlChange)="patch({ imageUrl: $event })">
             </app-step-details>
           }

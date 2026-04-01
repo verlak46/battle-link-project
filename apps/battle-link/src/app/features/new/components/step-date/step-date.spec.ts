@@ -6,18 +6,22 @@ import { StepDateComponent } from './step-date';
 @Component({
   template: `
     <app-step-date
-      [date]="date"
+      [startDate]="startDate"
+      [endDate]="endDate"
       [time]="time"
-      (dateChange)="lastDate = $event"
+      (startDateChange)="lastStartDate = $event"
+      (endDateChange)="lastEndDate = $event"
       (timeChange)="lastTime = $event"
     />
   `,
   imports: [StepDateComponent],
 })
 class TestHostComponent {
-  date = '';
+  startDate = '';
+  endDate = '';
   time = '';
-  lastDate: string | null = null;
+  lastStartDate: string | null = null;
+  lastEndDate: string | null = null;
   lastTime: string | null = null;
 }
 
@@ -35,16 +39,22 @@ describe('StepDateComponent', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('should render 2 ion-item elements', () => {
+  it('should render 3 ion-item elements', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelectorAll('ion-item').length).toBe(2);
+    expect(fixture.nativeElement.querySelectorAll('ion-item').length).toBe(3);
   });
 
-  it('should show "Fecha" label', () => {
+  it('should show "Fecha inicio" label', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
     fixture.detectChanges();
-    expect(fixture.nativeElement.textContent).toContain('Fecha');
+    expect(fixture.nativeElement.textContent).toContain('Fecha inicio');
+  });
+
+  it('should show "Fecha fin" label', () => {
+    const fixture = TestBed.createComponent(TestHostComponent);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain('Fecha fin');
   });
 
   it('should show "Hora" label', () => {
@@ -53,19 +63,27 @@ describe('StepDateComponent', () => {
     expect(fixture.nativeElement.textContent).toContain('Hora');
   });
 
-  it('should emit dateChange on ionInput', () => {
+  it('should emit startDateChange on ionInput', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
     fixture.detectChanges();
     const inputs = fixture.nativeElement.querySelectorAll('ion-input');
     inputs[0].dispatchEvent(new CustomEvent('ionInput', { detail: { value: '2026-05-01' }, bubbles: true }));
-    expect(fixture.componentInstance.lastDate).toBe('2026-05-01');
+    expect(fixture.componentInstance.lastStartDate).toBe('2026-05-01');
+  });
+
+  it('should emit endDateChange on ionInput', () => {
+    const fixture = TestBed.createComponent(TestHostComponent);
+    fixture.detectChanges();
+    const inputs = fixture.nativeElement.querySelectorAll('ion-input');
+    inputs[1].dispatchEvent(new CustomEvent('ionInput', { detail: { value: '2026-05-03' }, bubbles: true }));
+    expect(fixture.componentInstance.lastEndDate).toBe('2026-05-03');
   });
 
   it('should emit timeChange on ionInput', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
     fixture.detectChanges();
     const inputs = fixture.nativeElement.querySelectorAll('ion-input');
-    inputs[1].dispatchEvent(new CustomEvent('ionInput', { detail: { value: '18:00' }, bubbles: true }));
+    inputs[2].dispatchEvent(new CustomEvent('ionInput', { detail: { value: '18:00' }, bubbles: true }));
     expect(fixture.componentInstance.lastTime).toBe('18:00');
   });
 });

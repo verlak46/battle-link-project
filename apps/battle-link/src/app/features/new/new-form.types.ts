@@ -9,13 +9,15 @@ export interface WizardStep {
 export interface NewFormData {
   game: string;
   system: string;
-  date: string;
+  startDate: string;
+  endDate?: string;
   time: string;
   city: string;
   address: string;
   title: string;
   description: string;
   maxPlayers: string;
+  contactUrl?: string;
   placeId?: string;
   placeName?: string;
   imageUrl?: string;

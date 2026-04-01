@@ -57,13 +57,15 @@ export class NewPage {
   form = signal<NewFormData>({
     game: '',
     system: '',
-    date: '',
+    startDate: '',
+    endDate: '',
     time: '',
     city: '',
     address: '',
     title: '',
     description: '',
     maxPlayers: '',
+    contactUrl: '',
     imageUrl: undefined,
   });
 
@@ -71,7 +73,7 @@ export class NewPage {
     const f = this.form();
     switch (this.currentStep()) {
       case 1: return f.game.trim().length > 0;
-      case 2: return f.date.trim().length > 0;
+      case 2: return f.startDate.trim().length > 0;
       case 3: return f.city.trim().length > 0;
       case 4: return f.title.trim().length > 0;
       default: return false;

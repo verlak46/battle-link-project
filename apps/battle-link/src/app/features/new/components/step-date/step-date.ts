@@ -1,16 +1,25 @@
-import { Component, input, output } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { IonItem, IonLabel, IonInput } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-step-date',
   template: `
     <ion-item>
-      <ion-label position="stacked">Fecha *</ion-label>
+      <ion-label position="stacked">Fecha inicio *</ion-label>
       <ion-input
         type="date"
-        [value]="date()"
+        [value]="startDate()"
         [min]="today"
-        (ionInput)="dateChange.emit($any($event).detail.value)">
+        (ionInput)="startDateChange.emit($any($event).detail.value)">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Fecha fin (opcional)</ion-label>
+      <ion-input
+        type="date"
+        [value]="endDate()"
+        [min]="endDateMin()"
+        (ionInput)="endDateChange.emit($any($event).detail.value)">
       </ion-input>
     </ion-item>
     <ion-item>
@@ -27,9 +36,13 @@ import { IonItem, IonLabel, IonInput } from '@ionic/angular/standalone';
 export class StepDateComponent {
   readonly today = new Date().toISOString().split('T')[0];
 
-  date = input('');
+  startDate = input('');
+  endDate = input('');
   time = input('');
 
-  dateChange = output<string>();
+  endDateMin = computed(() => this.startDate() || this.today);
+
+  startDateChange = output<string>();
+  endDateChange = output<string>();
   timeChange = output<string>();
 }

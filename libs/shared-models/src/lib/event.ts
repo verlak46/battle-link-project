@@ -18,6 +18,7 @@ export interface Event {
   placeName?: string;
   startDate: string;
   endDate?: string;
+  contactUrl?: string;
   createdBy: string;
   participants: string[];
   createdAt: string;
@@ -33,6 +34,7 @@ export interface CreateEventPayload {
   description?: string;
   imageUrl?: string;
   endDate?: string;
+  contactUrl?: string;
   location?: GeoLocation;
   placeId?: string;
   placeName?: string;

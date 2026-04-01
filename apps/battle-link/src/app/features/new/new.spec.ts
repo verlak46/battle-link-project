@@ -65,7 +65,7 @@ describe('NewPage', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
       const f = comp.form();
       expect(f.game).toBe('');
-      expect(f.date).toBe('');
+      expect(f.startDate).toBe('');
       expect(f.city).toBe('');
       expect(f.title).toBe('');
     });
@@ -143,11 +143,11 @@ describe('NewPage', () => {
       expect(comp.isStepValid()).toBe(true);
     });
 
-    it('step 2 valid when date has value', () => {
+    it('step 2 valid when startDate has value', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
       comp.patch({ game: 'Infinity' });
       comp.next();
-      comp.patch({ date: '2026-04-01' });
+      comp.patch({ startDate: '2026-04-01' });
       expect(comp.isStepValid()).toBe(true);
     });
 
@@ -155,7 +155,7 @@ describe('NewPage', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
       comp.patch({ game: 'Infinity' });
       comp.next();
-      comp.patch({ date: '2026-04-01' });
+      comp.patch({ startDate: '2026-04-01' });
       comp.next();
       comp.patch({ city: 'Madrid' });
       expect(comp.isStepValid()).toBe(true);
@@ -165,7 +165,7 @@ describe('NewPage', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
       comp.patch({ game: 'Infinity' });
       comp.next();
-      comp.patch({ date: '2026-04-01' });
+      comp.patch({ startDate: '2026-04-01' });
       comp.next();
       comp.patch({ city: 'Madrid' });
       comp.next();
