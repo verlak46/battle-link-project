@@ -6,8 +6,8 @@
     (uploadError)="errorMessage.set($event)">
   </app-image-upload>
 
+  <h3>Nick de jugador</h3>
   <ion-item>
-    <ion-label position="stacked">Nick de jugador</ion-label>
     <ion-input
       [value]="nick()"
       (ionInput)="nick.set($any($event.target).value ?? '')"
