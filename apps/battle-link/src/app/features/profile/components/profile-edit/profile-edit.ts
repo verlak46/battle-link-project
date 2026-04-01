@@ -15,6 +15,7 @@ import { getApiError } from '../../../../core/utils/api-error';
 import { Wargame } from '../../../../shared/models/IWargame';
 import { OnboardingStepGamesComponent } from '../../../onboarding/components/step-games/step-games';
 import { OnboardingStepLocationComponent } from '../../../onboarding/components/step-location/step-location';
+import { ImageUploadComponent } from '../../../../shared/components/image-upload/image-upload';
 
 @Component({
   selector: 'app-profile-edit',
@@ -30,6 +31,7 @@ import { OnboardingStepLocationComponent } from '../../../onboarding/components/
     IonSpinner,
     OnboardingStepGamesComponent,
     OnboardingStepLocationComponent,
+    ImageUploadComponent,
   ],
 })
 export class ProfileEditComponent implements OnInit {
@@ -39,6 +41,7 @@ export class ProfileEditComponent implements OnInit {
   closed = output<void>();
 
   nick = signal('');
+  picture = signal<string | undefined>(undefined);
   experienceLevel = signal<ExperienceLevel | null>(null);
   favoriteGamesIds = signal<string[]>([]);
   wargames = toSignal(this.api.getWargames(), { initialValue: [] as Wargame[] });
@@ -51,6 +54,7 @@ export class ProfileEditComponent implements OnInit {
     const current = this.auth.user();
     if (current) {
       this.nick.set(current.nick ?? '');
+      this.picture.set(current.picture ?? undefined);
       this.experienceLevel.set(current.experienceLevel ?? null);
       this.favoriteGamesIds.set(current.favoriteGames ?? []);
       const coords = current.location?.coordinates;
@@ -100,6 +104,7 @@ export class ProfileEditComponent implements OnInit {
         experienceLevel: this.experienceLevel() ?? undefined,
         favoriteGames: this.favoriteGamesIds(),
         location: locationPayload,
+        picture: this.picture(),
       });
       this.closed.emit();
     } catch (err) {

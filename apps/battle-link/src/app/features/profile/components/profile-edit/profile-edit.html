@@ -1,4 +1,11 @@
 <div class="perfil-edit">
+  <app-image-upload
+    entityType="avatars"
+    [imageUrl]="picture()"
+    (imageUrlChange)="picture.set($event)"
+    (uploadError)="errorMessage.set($event)">
+  </app-image-upload>
+
   <ion-item>
     <ion-label position="stacked">Nick de jugador</ion-label>
     <ion-input

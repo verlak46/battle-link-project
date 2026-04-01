@@ -5,6 +5,7 @@ import {
   IsObject,
   IsOptional,
   IsString,
+  IsUrl,
   Matches,
   MaxLength,
   MinLength,
@@ -47,4 +48,10 @@ export class UpdateProfileDto {
   @ValidateNested()
   @Type(() => LocationDto)
   location?: LocationDto;
+
+  @ApiPropertyOptional({ example: 'https://res.cloudinary.com/...' })
+  @IsOptional()
+  @IsString()
+  @IsUrl()
+  picture?: string;
 }

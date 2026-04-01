@@ -29,6 +29,7 @@ export interface UpdateProfilePayload {
   favoriteGames?: string[];
   experienceLevel?: ExperienceLevel;
   location?: GeoLocation | null;
+  picture?: string;
 }
 
 interface ApiResponse<T> {
