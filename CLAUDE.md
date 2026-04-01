@@ -5,6 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Project Overview
 
 Battle Link is a wargaming social platform — an **Nx integrated monorepo** with two apps:
+
 - **`apps/battle-link/`** — Angular 21 + Ionic 8 frontend (PWA/mobile app)
 - **`apps/battle-link-api/`** — NestJS + MongoDB (Mongoose) backend
 
@@ -67,6 +68,7 @@ The backend requires a `.env` or `.env.local` file with `MONGO_URI` and `JWT_SEC
 **Environment configs** in `apps/battle-link/src/environments/` drive the API URL and Firebase config. `environment.local.ts` points to `localhost:3000`; `environment.ts` (default/prod) points to the deployed API on Render.
 
 **Auth flow:**
+
 1. Firebase is initialized once in `app.config.ts` (exported `auth` and `firestore` instances used across the app).
 2. `AuthService` (`apps/battle-link/src/app/core/services/auth.service.ts`) manages a JWT session stored in `localStorage` under key `battle-link-auth`. It exposes a `user` signal and a `ready` Promise that resolves after session restore.
 3. `authGuard` waits on `auth.ready` before evaluating; redirects unauthenticated users to `/login` and users without completed onboarding to `/onboarding`. `guestGuard` is the inverse — it protects `/login` by redirecting already-authenticated users to `/` or `/onboarding`.
@@ -80,6 +82,7 @@ The backend requires a `.env` or `.env.local` file with `MONGO_URI` and `JWT_SEC
 ### Backend
 
 **NestJS modular structure** under `src/`:
+
 - `auth/` — `AuthModule`: login con Google (Firebase ID token), registro y login local. DTOs con `class-validator`. `JwtStrategy` (passport-jwt) valida tokens en rutas protegidas.
 - `users/` — `UsersModule`: perfil, onboarding y actualización de datos. Exporta el modelo `User` para que `AuthModule` pueda usarlo.
 - `wargames/` — `WargamesModule`: listado de wargames.
@@ -105,3 +108,27 @@ The backend requires a `.env` or `.env.local` file with `MONGO_URI` and `JWT_SEC
 - **Native class/style bindings** — not `[ngClass]` or `[ngStyle]`.
 - Avoid `any`; prefer strict types. Use `unknown` when type is uncertain.
 - Lazy-load all feature routes.
+
+<!-- nx configuration start-->
+<!-- Leave the start & end comments to automatically receive updates. -->
+
+## General Guidelines for working with Nx
+
+- For navigating/exploring the workspace, invoke the `nx-workspace` skill first - it has patterns for querying projects, targets, and dependencies
+- When running tasks (for example build, lint, test, e2e, etc.), always prefer running the task through `nx` (i.e. `nx run`, `nx run-many`, `nx affected`) instead of using the underlying tooling directly
+- Prefix nx commands with the workspace's package manager (e.g., `pnpm nx build`, `npm exec nx test`) - avoids using globally installed CLI
+- You have access to the Nx MCP server and its tools, use them to help the user
+- For Nx plugin best practices, check `node_modules/@nx/<plugin>/PLUGIN.md`. Not all plugins have this file - proceed without it if unavailable.
+- NEVER guess CLI flags - always check nx_docs or `--help` first when unsure
+
+## Scaffolding & Generators
+
+- For scaffolding tasks (creating apps, libs, project structure, setup), ALWAYS invoke the `nx-generate` skill FIRST before exploring or calling MCP tools
+
+## When to use nx_docs
+
+- USE for: advanced config options, unfamiliar flags, migration guides, plugin configuration, edge cases
+- DON'T USE for: basic generator syntax (`nx g @nx/react:app`), standard commands, things you already know
+- The `nx-generate` skill handles generator discovery internally - don't call nx_docs just to look up generator syntax
+
+<!-- nx configuration end-->

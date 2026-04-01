@@ -37,3 +37,6 @@ __screenshots__/
 apps/battle-link-api/data/serviceAccountKey.json
 apps/battle-link-api/.env*
 apps/battle-link/src/environments/.env*
+.nx/polygraph
+.claude/worktrees
+.claude/settings.local.json
