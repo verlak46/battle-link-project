@@ -108,6 +108,10 @@ export class ApiService {
     return this.unwrap(this.http.get<ApiResponse<Event[]>>(`${this.baseUrl}/events`));
   }
 
+  getMyEvents(): Observable<Event[]> {
+    return this.unwrap(this.http.get<ApiResponse<Event[]>>(`${this.baseUrl}/events/mine`));
+  }
+
   getPlaces(): Observable<Place[]> {
     return this.unwrap(this.http.get<ApiResponse<Place[]>>(`${this.baseUrl}/places`));
   }

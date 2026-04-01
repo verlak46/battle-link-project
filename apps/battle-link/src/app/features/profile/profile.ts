@@ -9,11 +9,30 @@ import {
   IonButton,
   IonIcon,
   IonButtons,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent,
+  IonChip,
+  IonSpinner,
 } from '@ionic/angular/standalone';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { DatePipe } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { addIcons } from 'ionicons';
-import { arrowBack, logOutOutline, mailOutline, personCircleOutline } from 'ionicons/icons';
+import {
+  arrowBack,
+  logOutOutline,
+  mailOutline,
+  personCircleOutline,
+  calendarOutline,
+  addCircleOutline,
+  peopleOutline,
+  gameControllerOutline,
+  locationOutline,
+} from 'ionicons/icons';
 import { AuthService } from '../../core/services/auth.service';
+import { ApiService, Event } from '../../core/services/api.service';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit';
 
 @Component({
@@ -30,14 +49,24 @@ import { ProfileEditComponent } from './components/profile-edit/profile-edit';
     IonButton,
     IonIcon,
     IonButtons,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardContent,
+    IonChip,
+    IonSpinner,
+    RouterLink,
+    DatePipe,
     ProfileEditComponent,
   ],
 })
 export class ProfilePage implements OnInit {
   private readonly auth = inject(AuthService);
+  private readonly api = inject(ApiService);
   private readonly router = inject(Router);
 
   showEdit = signal(false);
+  myEvents = toSignal(this.api.getMyEvents(), { initialValue: [] as Event[] });
 
   user = computed(() => this.auth.user());
 
@@ -56,7 +85,7 @@ export class ProfilePage implements OnInit {
   });
 
   constructor() {
-    addIcons({ arrowBack, logOutOutline, mailOutline, personCircleOutline });
+    addIcons({ arrowBack, logOutOutline, mailOutline, personCircleOutline, calendarOutline, addCircleOutline, peopleOutline, gameControllerOutline, locationOutline });
   }
 
   ngOnInit(): void {

@@ -146,7 +146,7 @@ export class NewPage {
     };
     try {
       await firstValueFrom(this.api.createEvent(payload));
-      await this.router.navigate(['/tabs', 'buscar']);
+      await this.router.navigate(['/tabs', 'explore']);
     } catch {
       this.errorMessage.set('No se pudo crear. Inténtalo de nuevo.');
       this.saving.set(false);
