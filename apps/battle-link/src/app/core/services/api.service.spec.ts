@@ -3,12 +3,41 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
 import { ApiService } from './api.service';
 import { environment } from '../../../environments/environment';
+import { CreateEventPayload, CreatePlacePayload } from '@battle-link/shared-models';
 
 const base = environment.apiUrl.replace(/\/$/, '');
 
 function wrap<T>(data: T) {
   return { statusCode: 200, message: 'ok', data };
 }
+
+const mockUser = { _id: '1', email: 'a@b.com' };
+const mockPlace = {
+  _id: 'p1',
+  name: 'Place 1',
+  type: 'store' as const,
+  status: 'approved' as const,
+  city: 'Madrid',
+  address: 'Calle 1',
+  wargames: [],
+  location: { type: 'Point' as const, coordinates: [0, 0] },
+  createdBy: 'u1',
+  createdAt: '',
+  updatedAt: '',
+};
+const mockEvent = {
+  _id: 'e1',
+  title: 'Battle',
+  type: 'partida' as const,
+  game: 'wh40k',
+  startDate: '2026-05-01',
+  status: 'published' as const,
+  currentPlayers: 0,
+  createdBy: 'u1',
+  participants: [],
+  createdAt: '',
+  updatedAt: '',
+};
 
 describe('ApiService', () => {
   let service: ApiService;
@@ -28,19 +57,10 @@ describe('ApiService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('getWargames()', () => {
-    it('should GET /wargames and unwrap data', () => {
-      const mockGames = [{ id: 'wh40k', name: 'Warhammer 40K' }];
-      service.getWargames().subscribe((res) => expect(res).toEqual(mockGames));
-      const req = http.expectOne(`${base}/wargames`);
-      expect(req.request.method).toBe('GET');
-      req.flush(wrap(mockGames));
-    });
-  });
-
+  // Auth
   describe('authGoogle()', () => {
     it('should POST /auth/google with token and unwrap', () => {
-      const mockRes = { token: 'jwt', user: { _id: '1', email: 'a@b.com' } };
+      const mockRes = { token: 'jwt', user: mockUser };
       service.authGoogle('firebase-token').subscribe((res) => expect(res).toEqual(mockRes));
       const req = http.expectOne(`${base}/auth/google`);
       expect(req.request.method).toBe('POST');
@@ -52,7 +72,7 @@ describe('ApiService', () => {
   describe('authRegister()', () => {
     it('should POST /auth/register', () => {
       const payload = { email: 'test@test.com', password: '1234' };
-      const mockRes = { token: 'jwt', user: { _id: '1', email: 'test@test.com' } };
+      const mockRes = { token: 'jwt', user: mockUser };
       service.authRegister(payload).subscribe((res) => expect(res).toEqual(mockRes));
       const req = http.expectOne(`${base}/auth/register`);
       expect(req.request.method).toBe('POST');
@@ -64,10 +84,11 @@ describe('ApiService', () => {
   describe('authLogin()', () => {
     it('should POST /auth/login', () => {
       const payload = { email: 'test@test.com', password: '1234' };
-      const mockRes = { token: 'jwt', user: { _id: '1', email: 'test@test.com' } };
+      const mockRes = { token: 'jwt', user: mockUser };
       service.authLogin(payload).subscribe((res) => expect(res).toEqual(mockRes));
       const req = http.expectOne(`${base}/auth/login`);
       expect(req.request.method).toBe('POST');
+      expect(req.request.body).toEqual(payload);
       req.flush(wrap(mockRes));
     });
   });
@@ -92,9 +113,9 @@ describe('ApiService', () => {
     });
   });
 
+  // User
   describe('getProfile()', () => {
-    it('should GET /user/profile', () => {
-      const mockUser = { _id: '1', email: 'a@b.com' };
+    it('should GET /user/profile and unwrap', () => {
       service.getProfile().subscribe((res) => expect(res).toEqual(mockUser));
       const req = http.expectOne(`${base}/user/profile`);
       expect(req.request.method).toBe('GET');
@@ -109,33 +130,74 @@ describe('ApiService', () => {
       const req = http.expectOne(`${base}/user/onboarding`);
       expect(req.request.method).toBe('POST');
       expect(req.request.body).toEqual(payload);
-      req.flush(wrap({ _id: '1', email: 'a@b.com' }));
+      req.flush(wrap(mockUser));
     });
   });
 
   describe('updateProfile()', () => {
     it('should PATCH /user/profile', () => {
       const payload = { name: 'Updated' };
-      service.updateProfile(payload).subscribe();
+      service.updateProfile(payload).subscribe((res) => expect(res).toEqual(mockUser));
       const req = http.expectOne(`${base}/user/profile`);
       expect(req.request.method).toBe('PATCH');
-      req.flush(wrap({ _id: '1', email: 'a@b.com' }));
+      expect(req.request.body).toEqual(payload);
+      req.flush(wrap(mockUser));
     });
   });
 
+  // Wargames
+  describe('getWargames()', () => {
+    it('should GET /wargames and unwrap', () => {
+      const mockGames = [{ id: 'wh40k', name: 'Warhammer 40K' }];
+      service.getWargames().subscribe((res) => expect(res).toEqual(mockGames));
+      const req = http.expectOne(`${base}/wargames`);
+      expect(req.request.method).toBe('GET');
+      req.flush(wrap(mockGames));
+    });
+  });
+
+  // Events
+  describe('createEvent()', () => {
+    it('should POST /events', () => {
+      const payload: CreateEventPayload = { title: 'Battle', type: 'partida', game: 'wh40k', startDate: '2026-05-01' };
+      service.createEvent(payload).subscribe((res) => expect(res).toEqual(mockEvent));
+      const req = http.expectOne(`${base}/events`);
+      expect(req.request.method).toBe('POST');
+      expect(req.request.body).toEqual(payload);
+      req.flush(wrap(mockEvent));
+    });
+  });
+
+  describe('getEvents()', () => {
+    it('should GET /events and unwrap', () => {
+      service.getEvents().subscribe((res) => expect(res).toEqual([mockEvent]));
+      const req = http.expectOne(`${base}/events`);
+      expect(req.request.method).toBe('GET');
+      req.flush(wrap([mockEvent]));
+    });
+  });
+
+  describe('getMyEvents()', () => {
+    it('should GET /events/mine and unwrap', () => {
+      service.getMyEvents().subscribe((res) => expect(res).toEqual([mockEvent]));
+      const req = http.expectOne(`${base}/events/mine`);
+      expect(req.request.method).toBe('GET');
+      req.flush(wrap([mockEvent]));
+    });
+  });
+
+  // Places
   describe('getPlaces()', () => {
-    it('should GET /places', () => {
-      const mockPlaces = [{ _id: 'p1', name: 'Place 1' }];
-      service.getPlaces().subscribe((res) => expect(res).toEqual(mockPlaces));
+    it('should GET /places and unwrap', () => {
+      service.getPlaces().subscribe((res) => expect(res).toEqual([mockPlace]));
       const req = http.expectOne(`${base}/places`);
       expect(req.request.method).toBe('GET');
-      req.flush(wrap(mockPlaces));
+      req.flush(wrap([mockPlace]));
     });
   });
 
   describe('getPlace()', () => {
     it('should GET /places/:id', () => {
-      const mockPlace = { _id: 'p1', name: 'Place 1' };
       service.getPlace('p1').subscribe((res) => expect(res).toEqual(mockPlace));
       const req = http.expectOne(`${base}/places/p1`);
       expect(req.request.method).toBe('GET');
@@ -145,11 +207,29 @@ describe('ApiService', () => {
 
   describe('createPlace()', () => {
     it('should POST /places', () => {
-      const payload = { name: 'New Place', address: 'Street 1' } as any;
-      service.createPlace(payload).subscribe();
+      const payload: CreatePlacePayload = {
+        name: 'New Place',
+        type: 'store',
+        city: 'Madrid',
+        address: 'Calle 1',
+        location: { type: 'Point', coordinates: [0, 0] },
+      };
+      service.createPlace(payload).subscribe((res) => expect(res).toEqual(mockPlace));
       const req = http.expectOne(`${base}/places`);
       expect(req.request.method).toBe('POST');
-      req.flush(wrap({ _id: 'p2', name: 'New Place' }));
+      expect(req.request.body).toEqual(payload);
+      req.flush(wrap(mockPlace));
+    });
+  });
+
+  describe('updatePlace()', () => {
+    it('should PATCH /places/:id', () => {
+      const payload: Partial<CreatePlacePayload> = { name: 'Updated Place' };
+      service.updatePlace('p1', payload).subscribe((res) => expect(res).toEqual(mockPlace));
+      const req = http.expectOne(`${base}/places/p1`);
+      expect(req.request.method).toBe('PATCH');
+      expect(req.request.body).toEqual(payload);
+      req.flush(wrap(mockPlace));
     });
   });
 
@@ -164,7 +244,7 @@ describe('ApiService', () => {
 
   describe('getPendingPlaces()', () => {
     it('should GET /places/pending', () => {
-      service.getPendingPlaces().subscribe();
+      service.getPendingPlaces().subscribe((res) => expect(res).toEqual([]));
       const req = http.expectOne(`${base}/places/pending`);
       expect(req.request.method).toBe('GET');
       req.flush(wrap([]));
@@ -173,19 +253,19 @@ describe('ApiService', () => {
 
   describe('approvePlace()', () => {
     it('should PATCH /places/:id/approve', () => {
-      service.approvePlace('p1').subscribe();
+      service.approvePlace('p1').subscribe((res) => expect(res).toEqual(mockPlace));
       const req = http.expectOne(`${base}/places/p1/approve`);
       expect(req.request.method).toBe('PATCH');
-      req.flush(wrap({ _id: 'p1' }));
+      req.flush(wrap(mockPlace));
     });
   });
 
   describe('rejectPlace()', () => {
     it('should PATCH /places/:id/reject', () => {
-      service.rejectPlace('p1').subscribe();
+      service.rejectPlace('p1').subscribe((res) => expect(res).toEqual(mockPlace));
       const req = http.expectOne(`${base}/places/p1/reject`);
       expect(req.request.method).toBe('PATCH');
-      req.flush(wrap({ _id: 'p1' }));
+      req.flush(wrap(mockPlace));
     });
   });
 });

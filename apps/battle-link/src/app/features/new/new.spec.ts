@@ -7,6 +7,7 @@ import { ApiService } from '../../core/services/api.service';
 import { StorageService } from '../../core/services/storage.service';
 import { AuthService } from '../../core/services/auth.service';
 import { signal } from '@angular/core';
+import type { Event as BattleEvent } from '@battle-link/shared-models';
 
 describe('NewPage', () => {
   beforeEach(async () => {
@@ -20,7 +21,7 @@ describe('NewPage', () => {
           useValue: {
             getPlaces: () => of([]),
             getWargames: () => of([]),
-            createEvent: () => of({}),
+            createEvent: () => of({} as BattleEvent),
           } satisfies Partial<ApiService>,
         },
         { provide: StorageService, useValue: { upload: () => of('') } },
