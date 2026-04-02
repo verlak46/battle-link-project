@@ -30,6 +30,8 @@
     <app-profile-settings
       (editProfile)="openEditProfile()"
       (openAccount)="openAccount()"
+      (openPrivacy)="openBrowser('privacy')"
+      (openTerms)="openBrowser('terms')"
     ></app-profile-settings>
   } @else {
     <app-profile-avatar

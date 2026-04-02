@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { addIcons } from 'ionicons';
 import { arrowBack, settingsOutline } from 'ionicons/icons';
+import { environment } from '../../../environments/environment';
 import { AuthService } from '../../core/services/auth.service';
 import { ApiService, Event } from '../../core/services/api.service';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit';
@@ -108,6 +109,14 @@ export class ProfilePage implements OnInit {
   async logout(): Promise<void> {
     await this.auth.logout();
     this.router.navigate(['/login']);
+  }
+
+  openBrowser(page: 'privacy' | 'terms'): void {
+    const urls: Record<typeof page, string> = {
+      privacy: environment.legal.privacyUrl,
+      terms: environment.legal.termsUrl,
+    };
+    window.open(urls[page], '_blank', 'noopener');
   }
 
   async deleteAccount(): Promise<void> {

@@ -9,3 +9,15 @@
     <ion-label>Cuenta</ion-label>
   </ion-item>
 </ion-list>
+
+<ion-list>
+  <ion-list-header>SOPORTE</ion-list-header>
+  <ion-item button="true" detail="true" (click)="openPrivacy.emit()">
+    <ion-icon name="document-text-outline" slot="start"></ion-icon>
+    <ion-label>Política de privacidad</ion-label>
+  </ion-item>
+  <ion-item button="true" detail="true" (click)="openTerms.emit()">
+    <ion-icon name="shield-checkmark-outline" slot="start"></ion-icon>
+    <ion-label>Términos de uso</ion-label>
+  </ion-item>
+</ion-list>

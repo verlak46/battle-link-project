@@ -15,4 +15,8 @@ export const environment = {
     cloudName: 'dwxboiwqc',
     uploadPreset: 'battle-link',
   },
+  legal: {
+    privacyUrl: 'https://battle-link.app/privacy',
+    termsUrl: 'https://battle-link.app/terms',
+  },
 };
