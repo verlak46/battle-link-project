@@ -1,0 +1,71 @@
+.partidas-section {
+  width: 100%;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+
+  ion-icon {
+    font-size: 1.2rem;
+    color: var(--ion-color-primary);
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ion-color-medium);
+  }
+}
+
+.event-card {
+  margin: 0 0 12px;
+  border-radius: 12px;
+
+  ion-card-title {
+    font-size: 1rem;
+  }
+}
+
+.card-meta {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+
+  ion-chip {
+    height: 24px;
+    font-size: 0.75rem;
+  }
+}
+
+.card-date,
+.card-place,
+.card-players {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 4px 0;
+  font-size: 0.85rem;
+  color: var(--ion-color-medium-shade);
+
+  ion-icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 16px 0;
+  color: var(--ion-color-medium);
+
+  p {
+    margin-bottom: 12px;
+  }
+}

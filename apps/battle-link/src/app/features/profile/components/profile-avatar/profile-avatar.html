@@ -1,0 +1,21 @@
+<div
+  class="avatar-wrapper"
+  (click)="editClick.emit()"
+  (keyup.enter)="editClick.emit()"
+  tabindex="0"
+  role="button"
+  aria-label="Editar avatar"
+>
+  @if (photoURL()) {
+    <img class="avatar-img" [src]="photoURL()!" [alt]="nick()" />
+  } @else if (initials()) {
+    <div class="avatar-initials">{{ initials() }}</div>
+  } @else {
+    <div class="avatar-initials">
+      <ion-icon name="person-circle-outline"></ion-icon>
+    </div>
+  }
+  <div class="avatar-edit-overlay">EDITAR</div>
+</div>
+
+<h2 class="profile-nick">{{ nick() }}</h2>

@@ -1,0 +1,56 @@
+<section class="partidas-section">
+  <div class="section-header">
+    <ion-icon name="game-controller-outline"></ion-icon>
+    <h3>Mis partidas</h3>
+  </div>
+
+  @if (events().length > 0) {
+    @for (event of events(); track event._id) {
+      <ion-card class="event-card">
+        <ion-card-header>
+          <ion-card-title>{{ event.title }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="card-meta">
+            <ion-chip color="primary">
+              <ion-label>{{ event.game }}</ion-label>
+            </ion-chip>
+            <ion-chip color="medium">
+              <ion-label>{{ event.type }}</ion-label>
+            </ion-chip>
+          </div>
+          <p class="card-date">
+            <ion-icon name="calendar-outline"></ion-icon>
+            {{ event.startDate | date: 'EEE d MMM' : '' : 'es' }}
+            @if (event.endDate) {
+              – {{ event.endDate | date: 'EEE d MMM' : '' : 'es' }}
+            }
+            @if (event.time) {
+              · {{ event.time }}
+            }
+          </p>
+          @if (event.city) {
+            <p class="card-place">
+              <ion-icon name="location-outline"></ion-icon>
+              {{ event.city }}
+            </p>
+          }
+          @if (event.maxPlayers) {
+            <p class="card-players">
+              <ion-icon name="people-outline"></ion-icon>
+              {{ event.currentPlayers }} / {{ event.maxPlayers }} jugadores
+            </p>
+          }
+        </ion-card-content>
+      </ion-card>
+    }
+  } @else {
+    <div class="empty-state">
+      <p>Aún no has creado ninguna partida.</p>
+      <ion-button fill="outline" routerLink="/tabs/new">
+        <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+        Crear partida
+      </ion-button>
+    </div>
+  }
+</section>

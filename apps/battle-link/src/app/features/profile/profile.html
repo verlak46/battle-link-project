@@ -1,127 +1,43 @@
 <ion-header>
   <ion-toolbar>
-    @if (showEdit()) {
+    @if (showBackButton()) {
       <ion-buttons slot="start">
-        <ion-button (click)="showEdit.set(false)" (keyup.enter)="showEdit.set(false)">
+        <ion-button (click)="goBack()" (keyup.enter)="goBack()">
           <ion-icon name="arrow-back"></ion-icon>
         </ion-button>
       </ion-buttons>
-      <ion-title>Configuración</ion-title>
     } @else {
-      <ion-title>Perfil</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="showSettings.set(true)" (keyup.enter)="showSettings.set(true)">
+          <ion-icon name="settings-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     }
+    <ion-title>{{ headerTitle() }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
   @if (showEdit()) {
     <app-profile-edit (closed)="showEdit.set(false)"></app-profile-edit>
+  } @else if (showAccount()) {
+    <app-profile-account
+      [email]="email()"
+      (logout)="logout()"
+      (deleteAccount)="deleteAccount()"
+    ></app-profile-account>
+  } @else if (showSettings()) {
+    <app-profile-settings
+      (editProfile)="openEditProfile()"
+      (openAccount)="openAccount()"
+    ></app-profile-settings>
   } @else {
-  <div class="perfil-container">
-    <div class="perfil-avatar">
-      @if (photoURL()) {
-        <img [src]="photoURL()!" [alt]="displayNick()" />
-      } @else if (initials()) {
-        {{ initials() }}
-      } @else {
-        <ion-icon name="person-circle-outline"></ion-icon>
-      }
-    </div>
-
-    <div class="perfil-text">
-      <h2 class="perfil-name">{{ displayNick() }}</h2>
-      @if (email()) {
-        <p class="perfil-email">{{ email() }}</p>
-      }
-    </div>
-
-    <div class="perfil-info">
-      <ion-item lines="none">
-        <ion-icon slot="start" name="mail-outline"></ion-icon>
-        <ion-label>
-          <h3>Correo electrónico</h3>
-          <p>{{ email() || 'Sin correo disponible' }}</p>
-        </ion-label>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-icon slot="start" name="person-outline"></ion-icon>
-        <ion-label>
-          <h3>Nick de jugador</h3>
-          <p>{{ displayNick() || 'Sin nick disponible' }}</p>
-        </ion-label>
-      </ion-item>
-    </div>
-
-    <section class="partidas-section">
-      <div class="section-header">
-        <ion-icon name="game-controller-outline"></ion-icon>
-        <h3>Mis partidas</h3>
-      </div>
-
-      @if (myEvents().length > 0) {
-        @for (event of myEvents(); track event._id) {
-          <ion-card class="event-card">
-            <ion-card-header>
-              <ion-card-title>{{ event.title }}</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              <div class="card-meta">
-                <ion-chip color="primary">
-                  <ion-label>{{ event.game }}</ion-label>
-                </ion-chip>
-                <ion-chip color="medium">
-                  <ion-label>{{ event.type }}</ion-label>
-                </ion-chip>
-              </div>
-              <p class="card-date">
-                <ion-icon name="calendar-outline"></ion-icon>
-                {{ event.startDate | date:'EEE d MMM':'':'es' }}
-                @if (event.endDate) { – {{ event.endDate | date:'EEE d MMM':'':'es' }} }
-                @if (event.time) { · {{ event.time }} }
-              </p>
-              @if (event.city) {
-                <p class="card-place">
-                  <ion-icon name="location-outline"></ion-icon>
-                  {{ event.city }}
-                </p>
-              }
-              @if (event.maxPlayers) {
-                <p class="card-players">
-                  <ion-icon name="people-outline"></ion-icon>
-                  {{ event.currentPlayers }} / {{ event.maxPlayers }} jugadores
-                </p>
-              }
-            </ion-card-content>
-          </ion-card>
-        }
-      } @else {
-        <div class="empty-state">
-          <p>Aún no has creado ninguna partida.</p>
-          <ion-button fill="outline" routerLink="/tabs/new">
-            <ion-icon name="add-circle-outline" slot="start"></ion-icon>
-            Crear partida
-          </ion-button>
-        </div>
-      }
-    </section>
-
-    <div class="perfil-actions">
-      <ion-button
-        expand="block"
-        color="primary"
-        (click)="showEdit.set(true)"
-        (keyup.enter)="showEdit.set(true)">
-        Configurar perfil
-      </ion-button>
-      <ion-button
-        expand="block"
-        color="danger"
-        (click)="logout()"
-        (keyup.enter)="logout()">
-        <ion-icon slot="start" name="log-out-outline"></ion-icon>
-        Cerrar sesión
-      </ion-button>
-    </div>
-  </div>
+    <app-profile-avatar
+      [photoURL]="photoURL()"
+      [initials]="initials()"
+      [nick]="displayNick()"
+      (editClick)="showEdit.set(true)"
+    ></app-profile-avatar>
+    <app-profile-events [events]="myEvents()"></app-profile-events>
   }
 </ion-content>

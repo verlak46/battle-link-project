@@ -1,0 +1,63 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar-wrapper {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.avatar-initials {
+  width: 100%;
+  height: 100%;
+  background: color-mix(in srgb, var(--ion-color-primary) 15%, var(--ion-card-background));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: var(--ion-color-primary);
+
+  ion-icon {
+    font-size: 3.5rem;
+  }
+}
+
+.avatar-edit-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 38%;
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.72));
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 6px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.profile-nick {
+  margin: 18px 0 24px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--ion-text-color);
+  text-align: center;
+}
