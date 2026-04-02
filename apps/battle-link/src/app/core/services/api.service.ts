@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -42,105 +42,107 @@ interface ApiResponse<T> {
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
+  private readonly http = inject(HttpClient);
   private readonly baseUrl = environment.apiUrl.replace(/\/$/, '');
 
-  constructor(private readonly http: HttpClient) {}
-
-  private unwrap<T>(source: Observable<ApiResponse<T>>): Observable<T> {
-    return source.pipe(map((res) => res.data));
+  private get<T>(path: string): Observable<T> {
+    return this.http.get<ApiResponse<T>>(`${this.baseUrl}/${path}`).pipe(map((res) => res.data));
   }
 
-  getWargames(): Observable<Game[]> {
-    return this.unwrap(this.http.get<ApiResponse<Game[]>>(`${this.baseUrl}/wargames`));
+  private post<T>(path: string, body: unknown): Observable<T> {
+    return this.http.post<ApiResponse<T>>(`${this.baseUrl}/${path}`, body).pipe(map((res) => res.data));
   }
 
+  private patch<T>(path: string, body: unknown): Observable<T> {
+    return this.http.patch<ApiResponse<T>>(`${this.baseUrl}/${path}`, body).pipe(map((res) => res.data));
+  }
+
+  private delete<T>(path: string): Observable<T> {
+    return this.http.delete<ApiResponse<T>>(`${this.baseUrl}/${path}`).pipe(map((res) => res.data));
+  }
+
+  // Auth
   authGoogle(token: string): Observable<AuthResponse> {
-    return this.unwrap(
-      this.http.post<ApiResponse<AuthResponse>>(`${this.baseUrl}/auth/google`, { token }),
-    );
+    return this.post('auth/google', { token });
   }
 
   authRegister(payload: AuthPasswordRequest): Observable<AuthResponse> {
-    return this.unwrap(
-      this.http.post<ApiResponse<AuthResponse>>(`${this.baseUrl}/auth/register`, payload),
-    );
+    return this.post('auth/register', payload);
   }
 
   authLogin(payload: AuthPasswordRequest): Observable<AuthResponse> {
-    return this.unwrap(
-      this.http.post<ApiResponse<AuthResponse>>(`${this.baseUrl}/auth/login`, payload),
-    );
+    return this.post('auth/login', payload);
   }
 
   authForgotPassword(email: string): Observable<void> {
-    return this.unwrap(
-      this.http.post<ApiResponse<void>>(`${this.baseUrl}/auth/forgot-password`, { email }),
-    );
+    return this.post('auth/forgot-password', { email });
   }
 
   authResetPassword(token: string, password: string): Observable<void> {
-    return this.unwrap(
-      this.http.post<ApiResponse<void>>(`${this.baseUrl}/auth/reset-password`, { token, password }),
-    );
+    return this.post('auth/reset-password', { token, password });
   }
 
+  // User
   getProfile(): Observable<User> {
-    return this.unwrap(this.http.get<ApiResponse<User>>(`${this.baseUrl}/user/profile`));
+    return this.get('user/profile');
   }
 
   completeOnboarding(payload: UpdateProfilePayload): Observable<User> {
-    return this.unwrap(
-      this.http.post<ApiResponse<User>>(`${this.baseUrl}/user/onboarding`, payload),
-    );
+    return this.post('user/onboarding', payload);
   }
 
   updateProfile(payload: UpdateProfilePayload): Observable<User> {
-    return this.unwrap(
-      this.http.patch<ApiResponse<User>>(`${this.baseUrl}/user/profile`, payload),
-    );
+    return this.patch('user/profile', payload);
   }
 
+  // Wargames
+  getWargames(): Observable<Game[]> {
+    return this.get('wargames');
+  }
+
+  // Events
   createEvent(payload: CreateEventPayload): Observable<Event> {
-    return this.unwrap(this.http.post<ApiResponse<Event>>(`${this.baseUrl}/events`, payload));
+    return this.post('events', payload);
   }
 
   getEvents(): Observable<Event[]> {
-    return this.unwrap(this.http.get<ApiResponse<Event[]>>(`${this.baseUrl}/events`));
+    return this.get('events');
   }
 
   getMyEvents(): Observable<Event[]> {
-    return this.unwrap(this.http.get<ApiResponse<Event[]>>(`${this.baseUrl}/events/mine`));
+    return this.get('events/mine');
   }
 
+  // Places
   getPlaces(): Observable<Place[]> {
-    return this.unwrap(this.http.get<ApiResponse<Place[]>>(`${this.baseUrl}/places`));
+    return this.get('places');
   }
 
   getPlace(id: string): Observable<Place> {
-    return this.unwrap(this.http.get<ApiResponse<Place>>(`${this.baseUrl}/places/${id}`));
+    return this.get(`places/${id}`);
   }
 
   createPlace(payload: CreatePlacePayload): Observable<Place> {
-    return this.unwrap(this.http.post<ApiResponse<Place>>(`${this.baseUrl}/places`, payload));
+    return this.post('places', payload);
   }
 
   updatePlace(id: string, payload: Partial<CreatePlacePayload>): Observable<Place> {
-    return this.unwrap(this.http.patch<ApiResponse<Place>>(`${this.baseUrl}/places/${id}`, payload));
+    return this.patch(`places/${id}`, payload);
   }
 
   deletePlace(id: string): Observable<void> {
-    return this.unwrap(this.http.delete<ApiResponse<void>>(`${this.baseUrl}/places/${id}`));
+    return this.delete(`places/${id}`);
   }
 
   getPendingPlaces(): Observable<Place[]> {
-    return this.unwrap(this.http.get<ApiResponse<Place[]>>(`${this.baseUrl}/places/pending`));
+    return this.get('places/pending');
   }
 
   approvePlace(id: string): Observable<Place> {
-    return this.unwrap(this.http.patch<ApiResponse<Place>>(`${this.baseUrl}/places/${id}/approve`, {}));
+    return this.patch(`places/${id}/approve`, {});
   }
 
   rejectPlace(id: string): Observable<Place> {
-    return this.unwrap(this.http.patch<ApiResponse<Place>>(`${this.baseUrl}/places/${id}/reject`, {}));
+    return this.patch(`places/${id}/reject`, {});
   }
 }
