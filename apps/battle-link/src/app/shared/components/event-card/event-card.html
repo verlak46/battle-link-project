@@ -3,14 +3,36 @@
     <img [src]="event().imageUrl" [alt]="event().title" class="card-img" />
   }
   <ion-card-header>
-    @if (showKindBadge()) {
-      <div class="card-kind-badge">
-        <ion-chip color="primary">
-          <ion-icon name="calendar-outline" slot="start"></ion-icon>
-          <ion-label>{{ 'EXPLORE.GAME_BADGE' | translate }}</ion-label>
-        </ion-chip>
-      </div>
-    }
+    <div class="card-kind-badge">
+      @switch (event().type) {
+        @case ('game') {
+          @if (showKindBadge()) {
+            <ion-chip color="primary">
+              <ion-icon name="game-controller-outline" slot="start"></ion-icon>
+              <ion-label>{{ 'EXPLORE.GAME_BADGE' | translate }}</ion-label>
+            </ion-chip>
+          }
+        }
+        @case ('tournament') {
+          <ion-chip color="warning">
+            <ion-icon name="trophy-outline" slot="start"></ion-icon>
+            <ion-label>{{ 'NEW.BADGE_TOURNAMENT' | translate }}</ion-label>
+          </ion-chip>
+        }
+        @case ('campaign') {
+          <ion-chip color="tertiary">
+            <ion-icon name="book-outline" slot="start"></ion-icon>
+            <ion-label>{{ 'NEW.BADGE_CAMPAIGN' | translate }}</ion-label>
+          </ion-chip>
+        }
+        @case ('league') {
+          <ion-chip color="success">
+            <ion-icon name="medal-outline" slot="start"></ion-icon>
+            <ion-label>{{ 'NEW.BADGE_LEAGUE' | translate }}</ion-label>
+          </ion-chip>
+        }
+      }
+    </div>
     <ion-card-title>{{ event().title }}</ion-card-title>
   </ion-card-header>
   <ion-card-content>

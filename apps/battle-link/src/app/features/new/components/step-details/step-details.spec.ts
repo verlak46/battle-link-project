@@ -23,7 +23,7 @@ import { provideTestTranslations } from '../../../../testing/translate-testing';
   imports: [StepDetailsComponent],
 })
 class TestHostComponent {
-  type: CreationType = 'partida';
+  type: CreationType = 'game';
   title = '';
   description = '';
   maxPlayers = '';
@@ -57,15 +57,15 @@ describe('StepDetailsComponent', () => {
     expect(fixture.nativeElement.querySelectorAll('ion-item').length).toBe(4);
   });
 
-  it('should show "Título de la partida" when type is partida', () => {
+  it('should show "Título de la partida" when type is game', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
     fixture.detectChanges();
     expect(fixture.nativeElement.textContent).toContain('Título de la partida');
   });
 
-  it('should show "Título del evento" when type is evento', () => {
+  it('should show "Título del evento" when type is tournament', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
-    fixture.componentInstance.type = 'evento';
+    fixture.componentInstance.type = 'tournament';
     fixture.detectChanges();
     expect(fixture.nativeElement.textContent).toContain('Título del evento');
   });

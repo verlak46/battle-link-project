@@ -7,7 +7,7 @@ import { Event } from '../../../core/services/api.service';
 const MOCK_EVENT: Event = {
   _id: 'e1',
   title: 'Batalla en Macragge',
-  type: 'partida',
+  type: 'game',
   game: 'Warhammer 40K',
   startDate: '2026-05-10T18:00:00Z',
   status: 'published',
@@ -82,22 +82,40 @@ describe('EventCardComponent', () => {
     expect(el.textContent).toContain('4');
   });
 
-  it('should render kind badge when showKindBadge is true', () => {
-    const fixture = TestBed.createComponent(EventCardComponent);
-    fixture.componentRef.setInput('event', MOCK_EVENT);
-    fixture.componentRef.setInput('showKindBadge', true);
-    fixture.detectChanges();
-    const el = fixture.nativeElement as HTMLElement;
-    expect(el.querySelector('.card-kind-badge')).toBeTruthy();
-  });
-
-  it('should not render kind badge by default', () => {
-    const el = create().nativeElement as HTMLElement;
-    expect(el.querySelector('.card-kind-badge')).toBeNull();
-  });
-
   it('should render description when provided', () => {
     const el = create().nativeElement as HTMLElement;
     expect(el.textContent).toContain('Una épica batalla en el espacio.');
+  });
+
+  describe('type badges', () => {
+    it('should not show chip for game when showKindBadge is false', () => {
+      const el = create().nativeElement as HTMLElement;
+      const chips = el.querySelectorAll('.card-kind-badge ion-chip');
+      expect(chips.length).toBe(0);
+    });
+
+    it('should show chip for game when showKindBadge is true', () => {
+      const fixture = TestBed.createComponent(EventCardComponent);
+      fixture.componentRef.setInput('event', MOCK_EVENT);
+      fixture.componentRef.setInput('showKindBadge', true);
+      fixture.detectChanges();
+      const el = fixture.nativeElement as HTMLElement;
+      expect(el.querySelectorAll('.card-kind-badge ion-chip').length).toBe(1);
+    });
+
+    it('should show "Torneo" badge for tournament type', () => {
+      const el = create({ ...MOCK_EVENT, type: 'tournament' }).nativeElement as HTMLElement;
+      expect(el.textContent).toContain('Torneo');
+    });
+
+    it('should show "Campaña" badge for campaign type', () => {
+      const el = create({ ...MOCK_EVENT, type: 'campaign' }).nativeElement as HTMLElement;
+      expect(el.textContent).toContain('Campaña');
+    });
+
+    it('should show "Liga" badge for league type', () => {
+      const el = create({ ...MOCK_EVENT, type: 'league' }).nativeElement as HTMLElement;
+      expect(el.textContent).toContain('Liga');
+    });
   });
 });

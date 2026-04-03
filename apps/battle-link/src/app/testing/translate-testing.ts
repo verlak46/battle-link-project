@@ -70,7 +70,10 @@ const ES: Record<string, unknown> = {
     ERROR_ONBOARDING: 'No se pudo completar el onboarding.',
   },
   NEW: {
-    TITLE_GAME: 'Nueva Partida', TITLE_EVENT: 'Nuevo Evento', TYPE_GAME: '🎲 Partida', TYPE_EVENT: '📅 Evento',
+    TITLE_GAME: 'Nueva Partida', TITLE_EVENT: 'Nuevo Evento',
+    TYPE_GAME: '🎲 Partida', TYPE_EVENT: '🎯 Evento', EVENT_KIND_LABEL: 'Tipo de evento *',
+    TYPE_TOURNAMENT: '🏆 Torneo', TYPE_CAMPAIGN: '📖 Campaña', TYPE_LEAGUE: '🏅 Liga',
+    BADGE_TOURNAMENT: 'Torneo', BADGE_CAMPAIGN: 'Campaña', BADGE_LEAGUE: 'Liga',
     STEP_GAME: 'Juego', STEP_DATE: 'Fecha', STEP_LOCATION: 'Ubicación', STEP_DETAILS: 'Detalles',
     GAME_LABEL_GAME: 'Juego / Sistema *', GAME_LABEL_EVENT: 'Nombre del juego *',
     GAME_PLACEHOLDER: 'Selecciona un wargame',

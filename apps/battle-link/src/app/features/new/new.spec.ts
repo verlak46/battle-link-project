@@ -38,27 +38,27 @@ describe('NewPage', () => {
   });
 
   describe('type signal', () => {
-    it('should default to "partida"', () => {
+    it('should default to "game"', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
-      expect(comp.type()).toBe('partida');
+      expect(comp.type()).toBe('game');
     });
 
     it('should update type via signal set', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
-      comp.type.set('evento');
-      expect(comp.type()).toBe('evento');
+      comp.type.set('tournament');
+      expect(comp.type()).toBe('tournament');
     });
 
-    it('should show "Nueva Partida" title when type is partida', () => {
+    it('should show "Nueva Partida" title when type is game', () => {
       const fixture = TestBed.createComponent(NewPage);
       fixture.detectChanges();
       const el = fixture.nativeElement as HTMLElement;
       expect(el.querySelector('ion-title')?.textContent?.trim()).toBe('Nueva Partida');
     });
 
-    it('should show "Nuevo Evento" title when type is evento', () => {
+    it('should show "Nuevo Evento" title when type is tournament', () => {
       const fixture = TestBed.createComponent(NewPage);
-      fixture.componentInstance.type.set('evento');
+      fixture.componentInstance.type.set('tournament');
       fixture.detectChanges();
       expect(fixture.nativeElement.querySelector('ion-title')?.textContent?.trim()).toBe('Nuevo Evento');
     });
@@ -136,6 +136,13 @@ describe('NewPage', () => {
   });
 
   describe('isStepValid computed', () => {
+    it('always invalid when type is null (event without sub-type)', () => {
+      const { componentInstance: comp } = TestBed.createComponent(NewPage);
+      comp.type.set(null);
+      comp.patch({ game: 'Infinity' });
+      expect(comp.isStepValid()).toBe(false);
+    });
+
     it('step 1 invalid when game is empty', () => {
       const { componentInstance: comp } = TestBed.createComponent(NewPage);
       expect(comp.isStepValid()).toBe(false);

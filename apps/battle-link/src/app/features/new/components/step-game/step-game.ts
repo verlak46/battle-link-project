@@ -11,7 +11,7 @@ import { Wargame } from '../../../../shared/models/IWargame';
   template: `
     <ion-item>
       <ion-label position="stacked">
-        {{ (type() === 'partida' ? 'NEW.GAME_LABEL_GAME' : 'NEW.GAME_LABEL_EVENT') | translate }}
+        {{ (type() === 'game' ? 'NEW.GAME_LABEL_GAME' : 'NEW.GAME_LABEL_EVENT') | translate }}
       </ion-label>
       <ion-select
         [value]="game()"
@@ -39,7 +39,7 @@ import { Wargame } from '../../../../shared/models/IWargame';
 export class StepGameComponent {
   private readonly api = inject(ApiService);
 
-  type = input.required<CreationType>();
+  type = input.required<CreationType | null>();
   game = input('');
   system = input('');
 

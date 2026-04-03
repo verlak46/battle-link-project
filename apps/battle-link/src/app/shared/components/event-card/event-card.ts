@@ -10,7 +10,15 @@ import {
   IonLabel,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { calendarOutline, storefrontOutline, peopleOutline } from 'ionicons/icons';
+import {
+  calendarOutline,
+  storefrontOutline,
+  peopleOutline,
+  gameControllerOutline,
+  trophyOutline,
+  bookOutline,
+  medalOutline,
+} from 'ionicons/icons';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Event } from '../../../core/services/api.service';
 
@@ -37,6 +45,6 @@ export class EventCardComponent {
   showKindBadge = input(false);
 
   constructor() {
-    addIcons({ calendarOutline, storefrontOutline, peopleOutline });
+    addIcons({ calendarOutline, storefrontOutline, peopleOutline, gameControllerOutline, trophyOutline, bookOutline, medalOutline });
   }
 }

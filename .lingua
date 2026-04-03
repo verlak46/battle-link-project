@@ -1,0 +1,12 @@
+{
+  "translationFiles": [
+    {
+      "lang": "es",
+      "uri": "apps/battle-link/public/assets/i18n/es.json"
+    },
+    {
+      "lang": "en",
+      "uri": "apps/battle-link/public/assets/i18n/en.json"
+    }
+  ]
+}

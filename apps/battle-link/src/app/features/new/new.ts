@@ -56,7 +56,7 @@ export class NewPage {
   private readonly translate = inject(TranslateService);
   readonly steps = WIZARD_STEPS;
 
-  type = signal<CreationType>('partida');
+  type = signal<CreationType | null>('game');
   currentStep = signal(1);
   saving = signal(false);
   errorMessage = signal<string | null>(null);
@@ -78,6 +78,7 @@ export class NewPage {
   });
 
   isStepValid = computed(() => {
+    if (this.type() === null) return false;
     const f = this.form();
     switch (this.currentStep()) {
       case 1: return f.game.trim().length > 0;
@@ -130,9 +131,11 @@ export class NewPage {
     this.saving.set(true);
     this.errorMessage.set(null);
     const f = this.form();
+    const type = this.type();
+    if (type === null) return;
     const payload: CreateEventPayload = {
       title: f.title,
-      type: this.type(),
+      type,
       game: f.game,
       system: f.system || undefined,
       startDate: f.startDate,

@@ -21,7 +21,7 @@ import { provideTestTranslations } from '../../../../testing/translate-testing';
   imports: [StepGameComponent],
 })
 class TestHostComponent {
-  type: CreationType = 'partida';
+  type: CreationType = 'game';
   game = '';
   system = '';
   lastGame: string | null = null;
@@ -75,15 +75,15 @@ describe('StepGameComponent', () => {
     expect(fixture.nativeElement.querySelectorAll('ion-item').length).toBe(2);
   });
 
-  it('should show "Juego / Sistema" label when type is partida', () => {
+  it('should show "Juego / Sistema" label when type is game', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
     fixture.detectChanges();
     expect(fixture.nativeElement.textContent).toContain('Juego / Sistema');
   });
 
-  it('should show "Nombre del juego" label when type is evento', () => {
+  it('should show "Nombre del juego" label when type is tournament', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
-    fixture.componentInstance.type = 'evento';
+    fixture.componentInstance.type = 'tournament';
     fixture.detectChanges();
     expect(fixture.nativeElement.textContent).toContain('Nombre del juego');
   });

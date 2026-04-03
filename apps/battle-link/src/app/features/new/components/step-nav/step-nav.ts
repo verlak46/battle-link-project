@@ -23,7 +23,7 @@ import { CreationType } from '../../new-form.types';
       } @else {
         <ion-button [disabled]="!valid()" (click)="confirm.emit()" color="success" class="btn-siguiente">
           <ion-icon slot="start" name="checkmark-outline"></ion-icon>
-          {{ (type() === 'partida' ? 'NEW.CREATE_GAME' : 'NEW.CREATE_EVENT') | translate }}
+          {{ (type() === 'game' ? 'NEW.CREATE_GAME' : 'NEW.CREATE_EVENT') | translate }}
         </ion-button>
       }
     </div>
@@ -41,7 +41,7 @@ import { CreationType } from '../../new-form.types';
   imports: [IonButton, IonIcon, TranslatePipe],
 })
 export class StepNavComponent {
-  type = input.required<CreationType>();
+  type = input.required<CreationType | null>();
   valid = input(false);
   isLastStep = input(false);
   showPrevious = input(false);

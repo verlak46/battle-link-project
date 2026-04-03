@@ -20,7 +20,7 @@ import { provideTestTranslations } from '../../../../testing/translate-testing';
   imports: [StepNavComponent],
 })
 class TestHostComponent {
-  type: CreationType = 'partida';
+  type: CreationType = 'game';
   valid = true;
   isLastStep = false;
   showPrevious = false;
@@ -51,7 +51,7 @@ describe('StepNavComponent', () => {
     expect(buttons.some((b) => b.textContent?.includes('Siguiente'))).toBe(true);
   });
 
-  it('should show "Crear Partida" on last step with type partida', () => {
+  it('should show "Crear Partida" on last step with type game', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
     fixture.componentInstance.isLastStep = true;
     fixture.detectChanges();
@@ -59,10 +59,10 @@ describe('StepNavComponent', () => {
     expect(el.textContent).toContain('Crear Partida');
   });
 
-  it('should show "Crear Evento" on last step with type evento', () => {
+  it('should show "Crear Evento" on last step with type tournament', () => {
     const fixture = TestBed.createComponent(TestHostComponent);
     fixture.componentInstance.isLastStep = true;
-    fixture.componentInstance.type = 'evento';
+    fixture.componentInstance.type = 'tournament';
     fixture.detectChanges();
     const el = fixture.nativeElement as HTMLElement;
     expect(el.textContent).toContain('Crear Evento');

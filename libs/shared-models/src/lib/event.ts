@@ -1,6 +1,6 @@
 import { GeoLocation } from './geo';
 
-export type CreationType = 'partida' | 'evento';
+export type CreationType = 'game' | 'tournament' | 'campaign' | 'league';
 export type EventStatus = 'draft' | 'published' | 'cancelled' | 'finished';
 
 export interface Event {

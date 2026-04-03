@@ -28,7 +28,7 @@ const mockPlace = {
 const mockEvent = {
   _id: 'e1',
   title: 'Battle',
-  type: 'partida' as const,
+  type: 'game' as const,
   game: 'wh40k',
   startDate: '2026-05-01',
   status: 'published' as const,
@@ -159,7 +159,7 @@ describe('ApiService', () => {
   // Events
   describe('createEvent()', () => {
     it('should POST /events', () => {
-      const payload: CreateEventPayload = { title: 'Battle', type: 'partida', game: 'wh40k', startDate: '2026-05-01' };
+      const payload: CreateEventPayload = { title: 'Battle', type: 'game', game: 'wh40k', startDate: '2026-05-01' };
       service.createEvent(payload).subscribe((res) => expect(res).toEqual(mockEvent));
       const req = http.expectOne(`${base}/events`);
       expect(req.request.method).toBe('POST');

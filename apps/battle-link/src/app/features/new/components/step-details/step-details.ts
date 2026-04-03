@@ -9,7 +9,7 @@ import { ImageUploadComponent } from '../../../../shared/components/image-upload
   template: `
     <ion-item>
       <ion-label position="stacked">
-        {{ (type() === 'partida' ? 'NEW.TITLE_GAME_LABEL' : 'NEW.TITLE_EVENT_LABEL') | translate }}
+        {{ (type() === 'game' ? 'NEW.TITLE_GAME_LABEL' : 'NEW.TITLE_EVENT_LABEL') | translate }}
       </ion-label>
       <ion-input
         [value]="title()"
@@ -56,7 +56,7 @@ import { ImageUploadComponent } from '../../../../shared/components/image-upload
   imports: [IonItem, IonLabel, IonInput, IonTextarea, ImageUploadComponent, TranslatePipe],
 })
 export class StepDetailsComponent {
-  type = input.required<CreationType>();
+  type = input.required<CreationType | null>();
   title = input('');
   description = input('');
   maxPlayers = input('');

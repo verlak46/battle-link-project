@@ -17,8 +17,8 @@ export class CreateEventDto {
   @IsNotEmpty()
   title: string;
 
-  @ApiProperty({ enum: ['partida', 'evento'] })
-  @IsEnum(['partida', 'evento'])
+  @ApiProperty({ enum: ['game', 'event'] })
+  @IsEnum(['game', 'event'])
   type: CreationType;
 
   @ApiProperty({ example: 'warhammer40k' })
