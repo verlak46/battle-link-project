@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { provideRouter } from '@angular/router';
 import { StepLocationComponent } from './step-location';
+import { provideTestTranslations } from '../../../../testing/translate-testing';
 
 // Mock Google Maps API
 (window as any)['google'] = {
@@ -38,7 +39,7 @@ describe('StepLocationComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TestHostComponent],
-      providers: [provideIonicAngular(), provideRouter([])],
+      providers: [provideIonicAngular(), provideRouter([]), provideTestTranslations()],
     }).compileComponents();
   });
 

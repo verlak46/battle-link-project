@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { StepHeaderComponent } from './step-header';
 import { WizardStep } from '../../new-form.types';
+import { provideTestTranslations } from '../../../../testing/translate-testing';
 
 const STEP_MOCK: WizardStep = { id: 2, title: 'Fecha', icon: 'calendar-outline' };
 
@@ -29,7 +30,7 @@ describe('StepHeaderComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TestHostComponent],
-      providers: [provideIonicAngular()],
+      providers: [provideIonicAngular(), provideTestTranslations()],
     }).compileComponents();
   });
 

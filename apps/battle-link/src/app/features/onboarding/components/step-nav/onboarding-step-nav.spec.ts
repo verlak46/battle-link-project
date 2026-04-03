@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { OnboardingStepNavComponent } from './onboarding-step-nav';
+import { provideTestTranslations } from '../../../../testing/translate-testing';
 
 @Component({
   template: `
@@ -31,7 +32,7 @@ describe('OnboardingStepNavComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TestHostComponent],
-      providers: [provideIonicAngular()],
+      providers: [provideIonicAngular(), provideTestTranslations()],
     }).compileComponents();
   });
 

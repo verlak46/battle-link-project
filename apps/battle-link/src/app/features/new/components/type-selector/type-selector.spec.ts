@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { TypeSelectorComponent } from './type-selector';
 import { CreationType } from '../../new-form.types';
+import { provideTestTranslations } from '../../../../testing/translate-testing';
 
 @Component({
   template: `<app-type-selector [type]="type" (typeChange)="onTypeChange($event)" />`,
@@ -18,7 +19,7 @@ describe('TypeSelectorComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TestHostComponent],
-      providers: [provideIonicAngular()],
+      providers: [provideIonicAngular(), provideTestTranslations()],
     }).compileComponents();
   });
 

@@ -1,0 +1,60 @@
+<ion-card class="event-card">
+  @if (event().imageUrl) {
+    <img [src]="event().imageUrl" [alt]="event().title" class="card-img" />
+  }
+  <ion-card-header>
+    @if (showKindBadge()) {
+      <div class="card-kind-badge">
+        <ion-chip color="primary">
+          <ion-icon name="calendar-outline" slot="start"></ion-icon>
+          <ion-label>{{ 'EXPLORE.GAME_BADGE' | translate }}</ion-label>
+        </ion-chip>
+      </div>
+    }
+    <ion-card-title>{{ event().title }}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <div class="card-meta">
+      <ion-chip color="primary">
+        <ion-label>{{ event().game }}</ion-label>
+      </ion-chip>
+      <ion-chip color="medium">
+        <ion-label>{{ event().type }}</ion-label>
+      </ion-chip>
+    </div>
+
+    @if (event().description) {
+      <p class="card-description">{{ event().description }}</p>
+    }
+
+    <p class="card-info">
+      <ion-icon name="calendar-outline"></ion-icon>
+      {{ event().startDate | date:'EEE d MMM, HH:mm' }}
+      @if (event().endDate) {
+        – {{ event().endDate | date:'EEE d MMM' }}
+      }
+      @if (event().time) {
+        · {{ event().time }}
+      }
+    </p>
+
+    @if (event().placeName) {
+      <p class="card-info">
+        <ion-icon name="storefront-outline"></ion-icon>
+        {{ event().placeName }}
+      </p>
+    } @else if (event().city) {
+      <p class="card-info">
+        <ion-icon name="storefront-outline"></ion-icon>
+        {{ event().city }}
+      </p>
+    }
+
+    @if (event().maxPlayers) {
+      <p class="card-info">
+        <ion-icon name="people-outline"></ion-icon>
+        {{ 'COMMON.PLAYERS_COUNT' | translate:{ current: event().currentPlayers, max: event().maxPlayers } }}
+      </p>
+    }
+  </ion-card-content>
+</ion-card>

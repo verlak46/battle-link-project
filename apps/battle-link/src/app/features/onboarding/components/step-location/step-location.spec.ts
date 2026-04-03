@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { OnboardingStepLocationComponent } from './step-location';
+import { provideTestTranslations } from '../../../../testing/translate-testing';
 
 @Component({
   template: `
@@ -23,7 +24,7 @@ describe('OnboardingStepLocationComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TestHostComponent],
-      providers: [provideIonicAngular()],
+      providers: [provideIonicAngular(), provideTestTranslations()],
     }).compileComponents();
   });
 

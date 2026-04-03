@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { StepDateComponent } from './step-date';
+import { provideTestTranslations } from '../../../../testing/translate-testing';
 
 @Component({
   template: `
@@ -29,7 +30,7 @@ describe('StepDateComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TestHostComponent],
-      providers: [provideIonicAngular()],
+      providers: [provideIonicAngular(), provideTestTranslations()],
     }).compileComponents();
   });
 

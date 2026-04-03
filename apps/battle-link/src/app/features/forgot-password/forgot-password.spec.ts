@@ -4,6 +4,7 @@ import { provideIonicAngular } from '@ionic/angular/standalone';
 import { signal } from '@angular/core';
 import { ForgotPasswordPage } from './forgot-password';
 import { AuthService } from '../../core/services/auth.service';
+import { provideTestTranslations } from '../../testing/translate-testing';
 
 function makeAuthMock(opts: { forgotPassword?: () => Promise<void> } = {}) {
   return {
@@ -21,6 +22,7 @@ describe('ForgotPasswordPage', () => {
         provideIonicAngular(),
         provideRouter([]),
         { provide: AuthService, useValue: makeAuthMock() },
+        provideTestTranslations(),
       ],
     }).compileComponents();
   });

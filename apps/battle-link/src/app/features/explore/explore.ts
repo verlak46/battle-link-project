@@ -37,6 +37,7 @@ import {
   MOCK_EXPLORE_ITEMS,
   ExploreItem,
 } from '../../shared/mock/events.mock';
+import { EventCardComponent } from '../../shared/components/event-card/event-card';
 
 @Component({
   selector: 'app-explore',
@@ -62,6 +63,7 @@ import {
     GoogleMap,
     MapMarker,
     MapInfoWindow,
+    EventCardComponent,
   ],
 })
 export class ExplorePage implements OnInit {

@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { OnboardingStepProfileComponent } from './step-profile';
 import { ExperienceLevel } from '../../../../core/services/api.service';
+import { provideTestTranslations } from '../../../../testing/translate-testing';
 
 @Component({
   template: `
@@ -30,7 +31,7 @@ describe('OnboardingStepProfileComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TestHostComponent],
-      providers: [provideIonicAngular()],
+      providers: [provideIonicAngular(), provideTestTranslations()],
     }).compileComponents();
   });
 

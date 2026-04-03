@@ -1,26 +1,11 @@
 import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { DatePipe } from '@angular/common';
-import {
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardContent,
-  IonChip,
-  IonLabel,
-  IonIcon,
-  IonButton,
-} from '@ionic/angular/standalone';
+import { IonIcon, IonButton } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import {
-  calendarOutline,
-  locationOutline,
-  peopleOutline,
-  addCircleOutline,
-  gameControllerOutline,
-} from 'ionicons/icons';
+import { addCircleOutline, gameControllerOutline } from 'ionicons/icons';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Event } from '../../../../core/services/api.service';
+import { EventCardComponent } from '../../../../shared/components/event-card/event-card';
 
 @Component({
   selector: 'app-profile-events',
@@ -29,22 +14,16 @@ import { Event } from '../../../../core/services/api.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     RouterLink,
-    DatePipe,
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardContent,
-    IonChip,
-    IonLabel,
     IonIcon,
     IonButton,
     TranslatePipe,
+    EventCardComponent,
   ],
 })
 export class ProfileEventsComponent {
   events = input<Event[]>([]);
 
   constructor() {
-    addIcons({ calendarOutline, locationOutline, peopleOutline, addCircleOutline, gameControllerOutline });
+    addIcons({ addCircleOutline, gameControllerOutline });
   }
 }

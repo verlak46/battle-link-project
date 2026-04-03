@@ -6,6 +6,7 @@ import { CreationType } from '../../new-form.types';
 import { StorageService } from '../../../../core/services/storage.service';
 import { AuthService } from '../../../../core/services/auth.service';
 import { signal } from '@angular/core';
+import { provideTestTranslations } from '../../../../testing/translate-testing';
 
 @Component({
   template: `
@@ -39,6 +40,7 @@ describe('StepDetailsComponent', () => {
         provideIonicAngular(),
         { provide: StorageService, useValue: { upload: () => {} } },
         { provide: AuthService, useValue: { user: signal(null) } },
+        provideTestTranslations(),
       ],
     }).compileComponents();
   });

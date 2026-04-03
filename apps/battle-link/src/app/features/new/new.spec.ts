@@ -8,6 +8,7 @@ import { StorageService } from '../../core/services/storage.service';
 import { AuthService } from '../../core/services/auth.service';
 import { signal } from '@angular/core';
 import type { Event as BattleEvent } from '@battle-link/shared-models';
+import { provideTestTranslations } from '../../testing/translate-testing';
 
 describe('NewPage', () => {
   beforeEach(async () => {
@@ -26,6 +27,7 @@ describe('NewPage', () => {
         },
         { provide: StorageService, useValue: { upload: () => of('') } },
         { provide: AuthService, useValue: { user: signal(null) } },
+        provideTestTranslations(),
       ],
     }).compileComponents();
   });

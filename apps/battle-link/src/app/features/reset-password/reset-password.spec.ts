@@ -4,6 +4,7 @@ import { provideIonicAngular } from '@ionic/angular/standalone';
 import { signal } from '@angular/core';
 import { ResetPasswordPage } from './reset-password';
 import { AuthService } from '../../core/services/auth.service';
+import { provideTestTranslations } from '../../testing/translate-testing';
 
 function makeRoute(token: string | null) {
   return {
@@ -32,6 +33,7 @@ describe('ResetPasswordPage', () => {
         provideRouter([]),
         { provide: AuthService, useValue: authMock },
         { provide: ActivatedRoute, useValue: makeRoute(token) },
+        provideTestTranslations(),
       ],
     });
     const fixture = TestBed.createComponent(ResetPasswordPage);

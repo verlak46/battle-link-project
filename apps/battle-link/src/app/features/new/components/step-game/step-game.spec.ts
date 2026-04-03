@@ -6,6 +6,7 @@ import { StepGameComponent } from './step-game';
 import { CreationType } from '../../new-form.types';
 import { ApiService } from '../../../../core/services/api.service';
 import { Wargame } from '../../../../shared/models/IWargame';
+import { provideTestTranslations } from '../../../../testing/translate-testing';
 
 @Component({
   template: `
@@ -57,6 +58,7 @@ describe('StepGameComponent', () => {
               ]),
           } satisfies Partial<ApiService>,
         },
+        provideTestTranslations(),
       ],
     }).compileComponents();
   });

@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { OnboardingStepGamesComponent } from './step-games';
 import { Wargame } from '../../../../shared/models/IWargame';
+import { provideTestTranslations } from '../../../../testing/translate-testing';
 
 const MOCK_WARGAMES: Wargame[] = [
   { id: 'wh40k', name: 'Warhammer 40K', players: 2, scale: '28mm', publisher: 'GW', active: true },
@@ -30,7 +31,7 @@ describe('OnboardingStepGamesComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TestHostComponent],
-      providers: [provideIonicAngular()],
+      providers: [provideIonicAngular(), provideTestTranslations()],
     }).compileComponents();
   });
 

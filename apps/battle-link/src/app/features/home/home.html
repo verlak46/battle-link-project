@@ -21,35 +21,7 @@
 
     @if (myEvents().length > 0) {
       @for (event of myEvents(); track event._id) {
-        <ion-card class="event-card">
-          <ion-card-header>
-            <ion-card-title>{{ event.title }}</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <div class="card-meta">
-              <ion-chip color="primary">
-                <ion-label>{{ event.game }}</ion-label>
-              </ion-chip>
-              <ion-chip color="medium">
-                <ion-label>{{ event.type }}</ion-label>
-              </ion-chip>
-            </div>
-            <p class="card-date">
-              <ion-icon name="calendar-outline"></ion-icon>
-              {{ event.startDate | date:'EEE d MMM, HH:mm' }}
-            </p>
-            @if (event.placeName) {
-              <p class="card-place">
-                <ion-icon name="storefront-outline"></ion-icon>
-                {{ event.placeName }}
-              </p>
-            }
-            <div class="card-players">
-              <ion-icon name="people-outline"></ion-icon>
-              {{ 'COMMON.PLAYERS_COUNT' | translate:{ current: event.currentPlayers, max: event.maxPlayers } }}
-            </div>
-          </ion-card-content>
-        </ion-card>
+        <app-event-card [event]="event" />
       }
     } @else {
       <div class="empty-state">
@@ -72,6 +44,9 @@
     @if (myTournaments().length > 0) {
       @for (tournament of myTournaments(); track tournament._id) {
         <ion-card class="event-card">
+          @if (tournament.imageUrl) {
+            <img [src]="tournament.imageUrl" [alt]="tournament.title" class="card-img" />
+          }
           <ion-card-header>
             <ion-card-title>{{ tournament.title }}</ion-card-title>
           </ion-card-header>

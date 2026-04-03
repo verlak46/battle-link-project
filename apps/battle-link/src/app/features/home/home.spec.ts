@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 import { HomePage } from './home';
 import { AuthService } from '../../core/services/auth.service';
 import { ApiService } from '../../core/services/api.service';
+import { provideTestTranslations } from '../../testing/translate-testing';
 
 const MOCK_USER = {
   _id: 'mock-user-id',
@@ -37,6 +38,7 @@ describe('HomePage', () => {
         provideRouter([]),
         { provide: AuthService, useValue: makeAuthMock(MOCK_USER) },
         { provide: ApiService, useValue: makeApiMock() },
+        provideTestTranslations(),
       ],
     }).compileComponents();
   });

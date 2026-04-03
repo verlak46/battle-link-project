@@ -3,6 +3,7 @@ import { provideRouter } from '@angular/router';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { LoginPage } from './login';
 import { AuthService } from '../../core/services/auth.service';
+import { provideTestTranslations } from '../../testing/translate-testing';
 
 function createAuthMock() {
   const login = async (email: string, password: string) => undefined;
@@ -40,6 +41,7 @@ describe('LoginPage', () => {
           { path: 'onboarding', component: LoginPage },
         ]),
         { provide: AuthService, useValue: authMock },
+        provideTestTranslations(),
       ],
     }).compileComponents();
   });

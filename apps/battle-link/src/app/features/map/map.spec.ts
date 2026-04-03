@@ -4,6 +4,7 @@ import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 import { MapPage } from './map';
 import { ApiService } from '../../core/services/api.service';
+import { provideTestTranslations } from '../../testing/translate-testing';
 
 // Mock Google Maps API for @angular/google-maps
 (window as any)['google'] = {
@@ -69,6 +70,7 @@ describe('MapPage', () => {
             getPlaces: () => of([]),
           } satisfies Partial<ApiService>,
         },
+        provideTestTranslations(),
       ],
     }).compileComponents();
   });

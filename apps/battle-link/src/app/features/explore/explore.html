@@ -23,50 +23,18 @@
       }
 
       @for (item of filteredItems(); track item.data._id) {
-        <ion-card class="explore-card">
 
-          @switch (item.kind) {
+        @switch (item.kind) {
 
-            @case ('event') {
-              <ion-card-header>
-                <div class="card-kind-badge">
-                  <ion-chip color="primary">
-                    <ion-icon name="calendar-outline" slot="start"></ion-icon>
-                    <ion-label>{{ 'EXPLORE.GAME_BADGE' | translate }}</ion-label>
-                  </ion-chip>
-                </div>
-                <ion-card-title>{{ item.data.title }}</ion-card-title>
-              </ion-card-header>
-              <ion-card-content>
-                <div class="card-meta">
-                  <ion-chip color="medium">
-                    <ion-label>{{ item.data.game }}</ion-label>
-                  </ion-chip>
-                  <ion-chip color="medium">
-                    <ion-label>{{ item.data.type }}</ion-label>
-                  </ion-chip>
-                </div>
-                @if (item.data.description) {
-                  <p class="card-description">{{ item.data.description }}</p>
-                }
-                <p class="card-info">
-                  <ion-icon name="calendar-outline"></ion-icon>
-                  {{ item.data.startDate | date:'EEE d MMM, HH:mm' }}
-                </p>
-                @if (item.data.placeName) {
-                  <p class="card-info">
-                    <ion-icon name="storefront-outline"></ion-icon>
-                    {{ item.data.placeName }}
-                  </p>
-                }
-                <p class="card-info">
-                  <ion-icon name="people-outline"></ion-icon>
-                  {{ 'COMMON.PLAYERS_COUNT' | translate:{ current: item.data.currentPlayers, max: item.data.maxPlayers } }}
-                </p>
-              </ion-card-content>
-            }
+          @case ('event') {
+            <app-event-card [event]="item.data" [showKindBadge]="true" />
+          }
 
-            @case ('tournament') {
+          @case ('tournament') {
+            <ion-card class="explore-card">
+              @if (item.data.imageUrl) {
+                <img [src]="item.data.imageUrl" [alt]="item.data.title" class="card-img" />
+              }
               <ion-card-header>
                 <div class="card-kind-badge">
                   <ion-chip color="warning">
@@ -108,10 +76,10 @@
                   </p>
                 }
               </ion-card-content>
-            }
-
+            </ion-card>
           }
-        </ion-card>
+
+        }
       }
     </div>
 

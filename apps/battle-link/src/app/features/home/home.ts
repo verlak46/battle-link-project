@@ -18,6 +18,7 @@ import {
 import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
+import { EventCardComponent } from '../../shared/components/event-card/event-card';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { addIcons } from 'ionicons';
 import {
@@ -56,6 +57,7 @@ import { MOCK_EVENTS, MOCK_TOURNAMENTS } from '../../shared/mock/events.mock';
     RouterLink,
     DatePipe,
     TranslatePipe,
+    EventCardComponent,
   ],
 })
 export class HomePage {

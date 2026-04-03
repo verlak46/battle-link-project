@@ -3,12 +3,13 @@ import { provideRouter } from '@angular/router';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { TabsPage } from './tabs';
 import { tabsRoutes } from './tabs.routes';
+import { provideTestTranslations } from '../../testing/translate-testing';
 
 describe('TabsPage', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TabsPage],
-      providers: [provideRouter(tabsRoutes), provideIonicAngular()],
+      providers: [provideRouter(tabsRoutes), provideIonicAngular(), provideTestTranslations()],
     }).compileComponents();
   });
 

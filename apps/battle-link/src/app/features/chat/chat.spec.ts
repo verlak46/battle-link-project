@@ -1,12 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { ChatPage } from './chat';
+import { provideTestTranslations } from '../../testing/translate-testing';
 
 describe('ChatPage', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ChatPage],
-      providers: [provideIonicAngular()],
+      providers: [provideIonicAngular(), provideTestTranslations()],
     }).compileComponents();
   });
 

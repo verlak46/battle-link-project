@@ -5,6 +5,7 @@ import { OnboardingPage } from './onboarding';
 import { AuthService } from '../../core/services/auth.service';
 import { ApiService } from '../../core/services/api.service';
 import { of } from 'rxjs';
+import { provideTestTranslations } from '../../testing/translate-testing';
 
 describe('OnboardingPage', () => {
   beforeEach(async () => {
@@ -26,6 +27,7 @@ describe('OnboardingPage', () => {
             getWargames: () => of([]),
           } as Partial<ApiService>,
         },
+        provideTestTranslations(),
       ],
     }).compileComponents();
   });
