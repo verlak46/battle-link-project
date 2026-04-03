@@ -10,6 +10,7 @@ import {
   IonButton,
   IonSpinner,
 } from '@ionic/angular/standalone';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../core/services/auth.service';
 import { getApiError } from '../../core/utils/api-error';
 
@@ -27,6 +28,7 @@ import { getApiError } from '../../core/utils/api-error';
     IonInput,
     IonButton,
     IonSpinner,
+    TranslatePipe,
   ],
 })
 export class ResetPasswordPage implements OnInit {
@@ -34,6 +36,7 @@ export class ResetPasswordPage implements OnInit {
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
+  private readonly translate = inject(TranslateService);
 
   private token = '';
 
@@ -69,7 +72,7 @@ export class ResetPasswordPage implements OnInit {
 
     const { password, confirmPassword } = this.form.getRawValue();
     if (password !== confirmPassword) {
-      this.errorMessage.set('Las contraseñas no coinciden.');
+      this.errorMessage.set(this.translate.instant('LOGIN.ERROR_PASSWORDS_MISMATCH'));
       return;
     }
 
@@ -79,7 +82,7 @@ export class ResetPasswordPage implements OnInit {
       await this.auth.resetPassword(this.token, password);
       this.done.set(true);
     } catch (err: unknown) {
-      this.errorMessage.set(getApiError(err, 'El enlace es inválido o ha expirado.'));
+      this.errorMessage.set(getApiError(err, this.translate.instant('RESET_PASSWORD.ERROR_EXPIRED')));
     } finally {
       this.loading.set(false);
     }

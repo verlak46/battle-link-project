@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Explorar</ion-title>
+    <ion-title>{{ 'EXPLORE.TITLE' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -10,7 +10,7 @@
 
     <div class="explore-list">
       <ion-searchbar
-        placeholder="Buscar partidas, torneos, juegos..."
+        [placeholder]="'EXPLORE.SEARCH_PLACEHOLDER' | translate"
         (ionInput)="onSearch($event)"
         [value]="searchQuery()"
         debounce="300">
@@ -18,7 +18,7 @@
 
       @if (filteredItems().length === 0) {
         <div class="empty-search">
-          <p>No se encontraron resultados para "{{ searchQuery() }}"</p>
+          <p>{{ 'EXPLORE.NO_RESULTS' | translate:{ query: searchQuery() } }}</p>
         </div>
       }
 
@@ -32,7 +32,7 @@
                 <div class="card-kind-badge">
                   <ion-chip color="primary">
                     <ion-icon name="calendar-outline" slot="start"></ion-icon>
-                    <ion-label>Partida</ion-label>
+                    <ion-label>{{ 'EXPLORE.GAME_BADGE' | translate }}</ion-label>
                   </ion-chip>
                 </div>
                 <ion-card-title>{{ item.data.title }}</ion-card-title>
@@ -51,7 +51,7 @@
                 }
                 <p class="card-info">
                   <ion-icon name="calendar-outline"></ion-icon>
-                  {{ item.data.startDate | date:'EEE d MMM, HH:mm':'':'es' }}
+                  {{ item.data.startDate | date:'EEE d MMM, HH:mm' }}
                 </p>
                 @if (item.data.placeName) {
                   <p class="card-info">
@@ -61,7 +61,7 @@
                 }
                 <p class="card-info">
                   <ion-icon name="people-outline"></ion-icon>
-                  {{ item.data.currentPlayers }} / {{ item.data.maxPlayers }} jugadores
+                  {{ 'COMMON.PLAYERS_COUNT' | translate:{ current: item.data.currentPlayers, max: item.data.maxPlayers } }}
                 </p>
               </ion-card-content>
             }
@@ -71,7 +71,7 @@
                 <div class="card-kind-badge">
                   <ion-chip color="warning">
                     <ion-icon name="trophy-outline" slot="start"></ion-icon>
-                    <ion-label>Torneo</ion-label>
+                    <ion-label>{{ 'EXPLORE.TOURNAMENT_BADGE' | translate }}</ion-label>
                   </ion-chip>
                 </div>
                 <ion-card-title>{{ item.data.title }}</ion-card-title>
@@ -90,7 +90,7 @@
                 }
                 <p class="card-info">
                   <ion-icon name="calendar-outline"></ion-icon>
-                  {{ item.data.startDate | date:'EEE d MMM':'':'es' }}
+                  {{ item.data.startDate | date:'EEE d MMM' }}
                 </p>
                 @if (item.data.placeName) {
                   <p class="card-info">
@@ -100,11 +100,11 @@
                 }
                 <p class="card-info">
                   <ion-icon name="people-outline"></ion-icon>
-                  {{ item.data.currentPlayers }} / {{ item.data.maxPlayers }} plazas
+                  {{ 'COMMON.SLOTS_COUNT' | translate:{ current: item.data.currentPlayers, max: item.data.maxPlayers } }}
                 </p>
                 @if (item.data.entryFee != null) {
                   <p class="entry-fee">
-                    Inscripción: {{ item.data.entryFee === 0 ? 'Gratuita' : item.data.entryFee + '€' }}
+                    {{ 'HOME.ENTRY_FEE' | translate:{ fee: item.data.entryFee === 0 ? ('COMMON.FREE' | translate) : item.data.entryFee + '€' } }}
                   </p>
                 }
               </ion-card-content>
@@ -118,7 +118,7 @@
     <div class="view-toggle-btn">
       <ion-button shape="round" (click)="viewMode.set('map')">
         <ion-icon name="map-outline" slot="start"></ion-icon>
-        Ver mapa
+        {{ 'EXPLORE.VIEW_MAP' | translate }}
       </ion-button>
     </div>
 
@@ -147,11 +147,11 @@
           <div class="info-window">
             <h3>{{ selectedItem()!.data.title }}</h3>
             <p class="info-kind">
-              {{ selectedItem()!.kind === 'event' ? 'Partida' : 'Torneo' }}
+              {{ (selectedItem()!.kind === 'event' ? 'EXPLORE.GAME_BADGE' : 'EXPLORE.TOURNAMENT_BADGE') | translate }}
               · {{ selectedItem()!.data.game }}
             </p>
             <p class="info-date">
-              {{ selectedItem()!.data.startDate | date:'d MMM yyyy':'':'es' }}
+              {{ selectedItem()!.data.startDate | date:'d MMM yyyy' }}
             </p>
             @if (selectedItem()!.data.placeName) {
               <p class="info-place">{{ selectedItem()!.data.placeName }}</p>
@@ -165,7 +165,7 @@
     <div class="view-toggle-btn">
       <ion-button shape="round" (click)="viewMode.set('list')">
         <ion-icon name="list-outline" slot="start"></ion-icon>
-        Ver listado
+        {{ 'EXPLORE.VIEW_LIST' | translate }}
       </ion-button>
     </div>
 

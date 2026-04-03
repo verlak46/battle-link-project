@@ -9,6 +9,7 @@ import {
   IonSegmentButton,
   IonSpinner,
 } from '@ionic/angular/standalone';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../../core/services/auth.service';
 import { ApiService, ExperienceLevel } from '../../../../core/services/api.service';
 import { getApiError } from '../../../../core/utils/api-error';
@@ -32,11 +33,13 @@ import { ImageUploadComponent } from '../../../../shared/components/image-upload
     OnboardingStepGamesComponent,
     OnboardingStepLocationComponent,
     ImageUploadComponent,
+    TranslatePipe,
   ],
 })
 export class ProfileEditComponent implements OnInit {
   private readonly auth = inject(AuthService);
   private readonly api = inject(ApiService);
+  private readonly translate = inject(TranslateService);
 
   closed = output<void>();
 
@@ -63,7 +66,6 @@ export class ProfileEditComponent implements OnInit {
         this.location.set([lat, lng]);
       }
     }
-
   }
 
   setExperience(level: ExperienceLevel): void {
@@ -72,7 +74,7 @@ export class ProfileEditComponent implements OnInit {
 
   useCurrentLocation(): void {
     if (!('geolocation' in navigator)) {
-      this.errorMessage.set('La geolocalización no está disponible en este navegador.');
+      this.errorMessage.set(this.translate.instant('ONBOARDING.ERROR_GEOLOCATION'));
       return;
     }
     this.locationLoading.set(true);
@@ -83,7 +85,7 @@ export class ProfileEditComponent implements OnInit {
       },
       () => {
         this.locationLoading.set(false);
-        this.errorMessage.set('No se pudo obtener tu ubicación.');
+        this.errorMessage.set(this.translate.instant('ONBOARDING.ERROR_LOCATION'));
       },
     );
   }
@@ -108,7 +110,7 @@ export class ProfileEditComponent implements OnInit {
       });
       this.closed.emit();
     } catch (err) {
-      this.errorMessage.set(getApiError(err, 'No se pudo guardar el perfil.'));
+      this.errorMessage.set(getApiError(err, this.translate.instant('ONBOARDING.ERROR_ONBOARDING')));
     } finally {
       this.saving.set(false);
     }

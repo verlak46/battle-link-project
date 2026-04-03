@@ -4,6 +4,7 @@ import { IonHeader, IonToolbar, IonTitle, IonContent, IonSpinner } from '@ionic/
 import { addIcons } from 'ionicons';
 import { gameControllerOutline, locationOutline } from 'ionicons/icons';
 import { Router } from '@angular/router';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../core/services/auth.service';
 import { ApiService, ExperienceLevel } from '../../core/services/api.service';
 import { Wargame } from '../../shared/models/IWargame';
@@ -12,6 +13,7 @@ import { OnboardingStepProfileComponent } from './components/step-profile/step-p
 import { OnboardingStepGamesComponent } from './components/step-games/step-games';
 import { OnboardingStepLocationComponent } from './components/step-location/step-location';
 import { OnboardingStepNavComponent } from './components/step-nav/onboarding-step-nav';
+import { LanguageSelectorComponent } from '../../shared/components/language-selector/language-selector';
 import { getApiError } from '../../core/utils/api-error';
 
 @Component({
@@ -29,12 +31,15 @@ import { getApiError } from '../../core/utils/api-error';
     OnboardingStepGamesComponent,
     OnboardingStepLocationComponent,
     OnboardingStepNavComponent,
+    LanguageSelectorComponent,
+    TranslatePipe,
   ],
 })
 export class OnboardingPage implements OnInit {
   private readonly auth = inject(AuthService);
   private readonly api = inject(ApiService);
   private readonly router = inject(Router);
+  private readonly translate = inject(TranslateService);
 
   step = signal(1);
   loading = signal(false);
@@ -50,16 +55,10 @@ export class OnboardingPage implements OnInit {
   location = signal<[number, number] | null>(null);
   locationLoading = signal(false);
 
-  experienceLabel(level: ExperienceLevel): string {
-    if (level === 'beginner') return 'Principiante';
-    if (level === 'casual') return 'Casual';
-    return 'Competitivo';
-  }
-
   steps = [
-    { id: 1, title: 'Perfil', icon: 'person-circle-outline' },
-    { id: 2, title: 'Juegos favoritos', icon: 'game-controller-outline' },
-    { id: 3, title: 'Ubicación', icon: 'location-outline' },
+    { id: 1, title: 'ONBOARDING.STEP_PROFILE', icon: 'person-circle-outline' },
+    { id: 2, title: 'ONBOARDING.STEP_GAMES', icon: 'game-controller-outline' },
+    { id: 3, title: 'ONBOARDING.STEP_LOCATION', icon: 'location-outline' },
   ];
 
   totalSteps = this.steps.length;
@@ -73,7 +72,6 @@ export class OnboardingPage implements OnInit {
       case 2:
         return this.favoriteGamesIds().length > 0;
       case 3:
-        // La ubicación es opcional; siempre válido.
         return true;
       default:
         return false;
@@ -96,7 +94,6 @@ export class OnboardingPage implements OnInit {
         this.favoriteGamesIds.set(current.favoriteGames);
       }
     }
-
   }
 
   next() {
@@ -114,7 +111,7 @@ export class OnboardingPage implements OnInit {
 
   useCurrentLocation() {
     if (!('geolocation' in navigator)) {
-      this.errorMessage.set('La geolocalización no está disponible en este navegador.');
+      this.errorMessage.set(this.translate.instant('ONBOARDING.ERROR_GEOLOCATION'));
       return;
     }
 
@@ -126,7 +123,7 @@ export class OnboardingPage implements OnInit {
       },
       () => {
         this.locationLoading.set(false);
-        this.errorMessage.set('No se pudo obtener tu ubicación.');
+        this.errorMessage.set(this.translate.instant('ONBOARDING.ERROR_LOCATION'));
       },
     );
   }
@@ -142,7 +139,6 @@ export class OnboardingPage implements OnInit {
       if (coords) {
         location = {
           type: 'Point',
-          // GeoJSON: [long, lat]
           coordinates: [coords[1], coords[0]],
         };
       }
@@ -157,7 +153,7 @@ export class OnboardingPage implements OnInit {
 
       this.router.navigate(['/']);
     } catch (err) {
-      const message = getApiError(err, 'No se pudo completar el onboarding.');
+      const message = getApiError(err, this.translate.instant('ONBOARDING.ERROR_ONBOARDING'));
       this.errorMessage.set(message);
     } finally {
       this.loading.set(false);

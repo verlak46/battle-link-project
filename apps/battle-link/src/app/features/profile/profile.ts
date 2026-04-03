@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { addIcons } from 'ionicons';
 import { arrowBack, settingsOutline } from 'ionicons/icons';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../core/services/auth.service';
 import { ApiService, Event } from '../../core/services/api.service';
@@ -40,6 +41,7 @@ import { ProfileAccountComponent } from './components/profile-account/profile-ac
     ProfileEventsComponent,
     ProfileSettingsComponent,
     ProfileAccountComponent,
+    TranslatePipe,
   ],
 })
 export class ProfilePage implements OnInit {
@@ -47,6 +49,7 @@ export class ProfilePage implements OnInit {
   private readonly api = inject(ApiService);
   private readonly router = inject(Router);
   private readonly alertCtrl = inject(AlertController);
+  private readonly translate = inject(TranslateService);
 
   showEdit = signal(false);
   showSettings = signal(false);
@@ -78,10 +81,10 @@ export class ProfilePage implements OnInit {
   }
 
   headerTitle = computed(() => {
-    if (this.showEdit()) return 'Editar perfil';
-    if (this.showAccount()) return 'Cuenta';
-    if (this.showSettings()) return 'Configuración';
-    return 'Perfil';
+    if (this.showEdit()) return 'PROFILE.EDIT_HEADER';
+    if (this.showAccount()) return 'PROFILE.ACCOUNT_HEADER';
+    if (this.showSettings()) return 'PROFILE.SETTINGS_HEADER';
+    return 'PROFILE.TITLE';
   });
 
   showBackButton = computed(() => this.showEdit() || this.showSettings() || this.showAccount());
@@ -121,16 +124,15 @@ export class ProfilePage implements OnInit {
 
   async deleteAccount(): Promise<void> {
     const alert = await this.alertCtrl.create({
-      header: 'Eliminar cuenta',
-      message: '¿Estás seguro? Esta acción es irreversible y perderás todos tus datos.',
+      header: this.translate.instant('PROFILE.DELETE_CONFIRM_HEADER'),
+      message: this.translate.instant('PROFILE.DELETE_CONFIRM_MSG'),
       buttons: [
-        { text: 'Cancelar', role: 'cancel' },
+        { text: this.translate.instant('COMMON.CANCEL'), role: 'cancel' },
         {
-          text: 'Eliminar',
+          text: this.translate.instant('PROFILE.DELETE_CONFIRM_BTN'),
           role: 'destructive',
           cssClass: 'alert-button-danger',
           handler: async () => {
-            // TODO: llamar a la API para eliminar la cuenta
             await this.auth.logout();
             this.router.navigate(['/login']);
           },

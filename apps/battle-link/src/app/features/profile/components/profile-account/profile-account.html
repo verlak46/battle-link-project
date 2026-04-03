@@ -1,5 +1,5 @@
 <ion-list>
-  <ion-list-header>INFORMACIÓN</ion-list-header>
+  <ion-list-header>{{ 'PROFILE.INFO_TITLE' | translate }}</ion-list-header>
   <ion-item lines="none">
     <ion-icon name="mail-outline" slot="start"></ion-icon>
     <ion-label>
@@ -11,9 +11,9 @@
 
 <ion-list>
   <ion-item button="true" detail="false" (click)="logout.emit()">
-    <ion-label color="danger">Cerrar sesión</ion-label>
+    <ion-label color="danger">{{ 'PROFILE.LOGOUT' | translate }}</ion-label>
   </ion-item>
   <ion-item button="true" detail="false" (click)="deleteAccount.emit()">
-    <ion-label color="danger">Eliminar cuenta</ion-label>
+    <ion-label color="danger">{{ 'PROFILE.DELETE_ACCOUNT' | translate }}</ion-label>
   </ion-item>
 </ion-list>

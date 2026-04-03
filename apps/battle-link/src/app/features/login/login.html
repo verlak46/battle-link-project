@@ -4,52 +4,52 @@
 
     <ion-segment [value]="mode()" (ionChange)="onSegmentChange($event)" class="auth-segment">
       <ion-segment-button value="login">
-        <ion-label>Iniciar sesión</ion-label>
+        <ion-label>{{ 'LOGIN.SIGN_IN' | translate }}</ion-label>
       </ion-segment-button>
       <ion-segment-button value="register">
-        <ion-label>Registrarse</ion-label>
+        <ion-label>{{ 'LOGIN.REGISTER' | translate }}</ion-label>
       </ion-segment-button>
     </ion-segment>
 
     <form [formGroup]="loginForm" (ngSubmit)="submit()" class="auth-form">
       <ion-item>
-        <ion-label position="stacked">Correo electrónico</ion-label>
+        <ion-label position="stacked">{{ 'LOGIN.EMAIL' | translate }}</ion-label>
         <ion-input
           formControlName="email"
           type="email"
-          placeholder="tu&#64;email.com"
+          [placeholder]="'LOGIN.EMAIL_PLACEHOLDER' | translate"
           [disabled]="loading()">
         </ion-input>
       </ion-item>
       @if (email?.invalid && email?.touched) {
-        <p class="input-error">Introduce un correo válido.</p>
+        <p class="input-error">{{ 'LOGIN.EMAIL_INVALID' | translate }}</p>
       }
 
       <ion-item>
-        <ion-label position="stacked">Contraseña</ion-label>
+        <ion-label position="stacked">{{ 'LOGIN.PASSWORD' | translate }}</ion-label>
         <ion-input
           formControlName="password"
           type="password"
-          placeholder="Mínimo 6 caracteres"
+          [placeholder]="'LOGIN.PASSWORD_PLACEHOLDER' | translate"
           [disabled]="loading()">
         </ion-input>
       </ion-item>
       @if (password?.invalid && password?.touched) {
-        <p class="input-error">Mínimo 6 caracteres.</p>
+        <p class="input-error">{{ 'LOGIN.PASSWORD_MIN' | translate }}</p>
       }
 
       @if (isRegister()) {
         <ion-item>
-          <ion-label position="stacked">Repetir contraseña</ion-label>
+          <ion-label position="stacked">{{ 'LOGIN.CONFIRM_PASSWORD' | translate }}</ion-label>
           <ion-input
             formControlName="confirmPassword"
             type="password"
-            placeholder="Repite la contraseña"
+            [placeholder]="'LOGIN.CONFIRM_PLACEHOLDER' | translate"
             [disabled]="loading()">
           </ion-input>
         </ion-item>
         @if (confirmPassword?.invalid && confirmPassword?.touched) {
-          <p class="input-error">Las contraseñas deben coincidir.</p>
+          <p class="input-error">{{ 'LOGIN.PASSWORDS_MATCH' | translate }}</p>
         }
       }
 
@@ -65,19 +65,19 @@
         @if (loading()) {
           <ion-spinner name="crescent"></ion-spinner>
         } @else {
-          {{ isRegister() ? 'Crear cuenta' : 'Entrar' }}
+          {{ (isRegister() ? 'LOGIN.CREATE_ACCOUNT' : 'LOGIN.ENTER') | translate }}
         }
       </ion-button>
 
       @if (!isRegister()) {
         <ion-button fill="clear" routerLink="/forgot-password" class="forgot-link">
-          ¿Olvidaste tu contraseña?
+          {{ 'LOGIN.FORGOT_PASSWORD' | translate }}
         </ion-button>
       }
     </form>
 
     <div class="auth-divider">
-      <span>o</span>
+      <span>{{ 'LOGIN.OR' | translate }}</span>
     </div>
 
     <ion-button
@@ -87,7 +87,7 @@
       (click)="loginWithGoogle()"
       class="auth-google">
       <ion-icon name="logo-google" slot="start"></ion-icon>
-      Continuar con Google
+      {{ 'LOGIN.CONTINUE_GOOGLE' | translate }}
     </ion-button>
   </div>
 </ion-content>

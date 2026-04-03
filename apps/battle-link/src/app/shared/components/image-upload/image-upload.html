@@ -12,9 +12,9 @@
   <label class="upload-btn" [class.uploading]="uploading()">
     @if (uploading()) {
       <ion-spinner name="crescent"></ion-spinner>
-      Subiendo...
+      {{ 'IMAGE_UPLOAD.UPLOADING' | translate }}
     } @else {
-      {{ imageUrl() ? 'Cambiar imagen' : 'Añadir imagen' }}
+      {{ (imageUrl() ? 'IMAGE_UPLOAD.CHANGE' : 'IMAGE_UPLOAD.ADD') | translate }}
     }
     <input
       type="file"

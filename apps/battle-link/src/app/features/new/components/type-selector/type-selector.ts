@@ -4,6 +4,7 @@ import {
   IonSegmentButton,
   IonLabel,
 } from '@ionic/angular/standalone';
+import { TranslatePipe } from '@ngx-translate/core';
 import { CreationType } from '../../new-form.types';
 
 @Component({
@@ -11,17 +12,17 @@ import { CreationType } from '../../new-form.types';
   template: `
     <ion-segment [value]="type()" (ionChange)="typeChange.emit($any($event).detail.value)" class="tipo-segment">
       <ion-segment-button value="partida">
-        <ion-label>🎲 Partida</ion-label>
+        <ion-label>{{ 'NEW.TYPE_GAME' | translate }}</ion-label>
       </ion-segment-button>
       <ion-segment-button value="evento">
-        <ion-label>📅 Evento</ion-label>
+        <ion-label>{{ 'NEW.TYPE_EVENT' | translate }}</ion-label>
       </ion-segment-button>
     </ion-segment>
   `,
   styles: [`
     .tipo-segment { margin-bottom: 24px; }
   `],
-  imports: [IonSegment, IonSegmentButton, IonLabel],
+  imports: [IonSegment, IonSegmentButton, IonLabel, TranslatePipe],
 })
 export class TypeSelectorComponent {
   type = input.required<CreationType>();

@@ -24,8 +24,8 @@ export interface NewFormData {
 }
 
 export const WIZARD_STEPS: WizardStep[] = [
-  { id: 1, title: 'Juego', icon: 'game-controller-outline' },
-  { id: 2, title: 'Fecha', icon: 'calendar-outline' },
-  { id: 3, title: 'Ubicación', icon: 'location-outline' },
-  { id: 4, title: 'Detalles', icon: 'list-outline' },
+  { id: 1, title: 'NEW.STEP_GAME', icon: 'game-controller-outline' },
+  { id: 2, title: 'NEW.STEP_DATE', icon: 'calendar-outline' },
+  { id: 3, title: 'NEW.STEP_LOCATION', icon: 'location-outline' },
+  { id: 4, title: 'NEW.STEP_DETAILS', icon: 'list-outline' },
 ];

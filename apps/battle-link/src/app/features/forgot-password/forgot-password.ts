@@ -13,6 +13,7 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { arrowBackOutline } from 'ionicons/icons';
+import { TranslatePipe } from '@ngx-translate/core';
 import { AuthService } from '../../core/services/auth.service';
 import { getApiError } from '../../core/utils/api-error';
 
@@ -31,6 +32,7 @@ import { getApiError } from '../../core/utils/api-error';
     IonButton,
     IonSpinner,
     IonIcon,
+    TranslatePipe,
   ],
 })
 export class ForgotPasswordPage {

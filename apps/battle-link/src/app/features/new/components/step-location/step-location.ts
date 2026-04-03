@@ -3,19 +3,20 @@ import { RouterLink } from '@angular/router';
 import { IonButton, IonIcon, IonInput, IonItem, IonLabel, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { addCircleOutline } from 'ionicons/icons';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Place } from '@battle-link/shared-models';
 
 @Component({
   selector: 'app-step-location',
   template: `
     <ion-item>
-      <ion-label position="stacked">Tienda / Club (opcional)</ion-label>
+      <ion-label position="stacked">{{ 'NEW.PLACE' | translate }}</ion-label>
       <ion-select
         [value]="placeId()"
         (ionChange)="onPlaceChange($any($event).detail.value)"
-        placeholder="Sin tienda registrada"
+        [placeholder]="'NEW.NO_PLACE' | translate"
         interface="action-sheet">
-        <ion-select-option [value]="null">Sin tienda registrada</ion-select-option>
+        <ion-select-option [value]="null">{{ 'NEW.NO_PLACE' | translate }}</ion-select-option>
         @for (v of places(); track v._id) {
           <ion-select-option [value]="v._id">{{ v.name }} — {{ v.city }}</ion-select-option>
         }
@@ -26,40 +27,40 @@ import { Place } from '@battle-link/shared-models';
       <div class="register-place">
         <ion-button fill="clear" size="small" routerLink="/places/new">
           <ion-icon slot="start" name="add-circle-outline"></ion-icon>
-          Registrar nueva tienda / club
+          {{ 'NEW.REGISTER_PLACE' | translate }}
         </ion-button>
       </div>
     }
 
     @if (!placeId()) {
       <ion-item>
-        <ion-label position="stacked">Nombre del lugar (opcional)</ion-label>
+        <ion-label position="stacked">{{ 'NEW.PLACE_NAME' | translate }}</ion-label>
         <ion-input
           [value]="placeName()"
           (ionInput)="placeNameChange.emit($any($event).detail.value)"
-          placeholder="Ej. Club Dragón Rojo, sótano de casa..."
+          [placeholder]="'NEW.PLACE_NAME_PLACEHOLDER' | translate"
           clearInput>
         </ion-input>
       </ion-item>
     }
 
     <ion-item>
-      <ion-label position="stacked">Ciudad *</ion-label>
+      <ion-label position="stacked">{{ 'NEW.CITY' | translate }}</ion-label>
       <ion-input
         [value]="city()"
         (ionInput)="cityChange.emit($any($event).detail.value)"
-        placeholder="Ej. Madrid, Barcelona..."
+        [placeholder]="'NEW.CITY_PLACEHOLDER' | translate"
         clearInput>
       </ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="stacked">Dirección / Local (opcional)</ion-label>
+      <ion-label position="stacked">{{ 'NEW.ADDRESS' | translate }}</ion-label>
       <ion-input
         #addressInput
         [value]="address()"
         (ionInput)="addressChange.emit($any($event).detail.value)"
-        placeholder="Ej. Calle Mayor 12, Club Dragón"
+        [placeholder]="'NEW.ADDRESS_PLACEHOLDER' | translate"
         autocomplete="off">
       </ion-input>
     </ion-item>
@@ -73,7 +74,7 @@ import { Place } from '@battle-link/shared-models';
       margin-bottom: 8px;
     }
   `],
-  imports: [IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonButton, IonIcon, RouterLink],
+  imports: [IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonButton, IonIcon, RouterLink, TranslatePipe],
 })
 export class StepLocationComponent implements AfterViewInit {
   @ViewChild('addressInput') private addressInputRef!: IonInput;

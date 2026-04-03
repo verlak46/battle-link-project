@@ -5,15 +5,16 @@ import {
   IonList,
   IonChip,
 } from '@ionic/angular/standalone';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Wargame } from '../../../../shared/models/IWargame';
 
 @Component({
   selector: 'app-onboarding-step-games',
   template: `
     <section>
-      <h3>Juegos favoritos</h3>
+      <h3>{{ 'ONBOARDING.FAVORITE_GAMES' | translate }}</h3>
       <p class="onboarding__hint">
-        Elige al menos un wargame para recomendarte partidas.
+        {{ 'ONBOARDING.GAMES_HINT' | translate }}
       </p>
 
       <ion-list>
@@ -25,7 +26,7 @@ import { Wargame } from '../../../../shared/models/IWargame';
               color="primary"
               (click)="toggle(game.id)"
             >
-              {{ isSelected(game.id) ? 'Seleccionado' : 'Elegir' }}
+              {{ (isSelected(game.id) ? 'COMMON.SELECTED' : 'COMMON.SELECT') | translate }}
             </ion-chip>
           </ion-item>
         }
@@ -39,7 +40,7 @@ import { Wargame } from '../../../../shared/models/IWargame';
       margin-bottom: 8px;
     }
   `],
-  imports: [IonList, IonItem, IonLabel, IonChip],
+  imports: [IonList, IonItem, IonLabel, IonChip, TranslatePipe],
 })
 export class OnboardingStepGamesComponent {
   wargames = input<Wargame[]>([]);
@@ -59,4 +60,3 @@ export class OnboardingStepGamesComponent {
     this.selectedIdsChange.emit(next);
   }
 }
-

@@ -13,6 +13,7 @@ import { GoogleMap, MapMarker, MapInfoWindow } from '@angular/google-maps';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { addIcons } from 'ionicons';
 import { addOutline } from 'ionicons/icons';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ApiService } from '../../core/services/api.service';
 import { Place } from '@battle-link/shared-models';
 
@@ -33,6 +34,7 @@ import { Place } from '@battle-link/shared-models';
     GoogleMap,
     MapMarker,
     MapInfoWindow,
+    TranslatePipe,
   ],
 })
 export class MapPage implements OnInit {

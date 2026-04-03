@@ -13,6 +13,7 @@ import {
   IonSpinner,
   IonNote,
 } from '@ionic/angular/standalone';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ApiService } from '../../../core/services/api.service';
 import { Place } from '@battle-link/shared-models';
 import { getApiError } from '../../../core/utils/api-error';
@@ -35,6 +36,7 @@ import { getApiError } from '../../../core/utils/api-error';
     IonButton,
     IonSpinner,
     IonNote,
+    TranslatePipe,
   ],
 })
 export class PlacesPendingPage {

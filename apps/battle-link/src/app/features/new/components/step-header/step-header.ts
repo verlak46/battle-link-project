@@ -2,6 +2,7 @@ import { Component, input, output } from '@angular/core';
 import { IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { checkmarkOutline } from 'ionicons/icons';
+import { TranslatePipe } from '@ngx-translate/core';
 import { WizardStep } from '../../new-form.types';
 
 @Component({
@@ -23,16 +24,16 @@ import { WizardStep } from '../../new-form.types';
         }
       </div>
       <div class="step__meta">
-        <p class="step__num">Paso {{ step().id }} de {{ total() }}</p>
+        <p class="step__num">{{ 'COMMON.STEP' | translate:{ current: step().id, total: total() } }}</p>
         <h3 class="step__title">
           <ion-icon [name]="step().icon"></ion-icon>
-          {{ step().title }}
+          {{ step().title | translate }}
         </h3>
       </div>
     </div>
   `,
   styleUrl: './step-header.scss',
-  imports: [IonIcon],
+  imports: [IonIcon, TranslatePipe],
   host: {
     '[class.step--active]': 'active()',
     '[class.step--done]': 'done()',

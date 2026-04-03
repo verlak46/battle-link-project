@@ -6,7 +6,7 @@
     (uploadError)="errorMessage.set($event)">
   </app-image-upload>
 
-  <h3>Nick de jugador</h3>
+  <h3>{{ 'PROFILE.NICK_LABEL' | translate }}</h3>
   <ion-item>
     <ion-input
       [value]="nick()"
@@ -15,16 +15,16 @@
     ></ion-input>
   </ion-item>
 
-  <h3>Experiencia</h3>
+  <h3>{{ 'PROFILE.EXPERIENCE' | translate }}</h3>
   <ion-segment [value]="experienceLevel() ?? ''" scrollable="true" class="perfil-edit__segment">
     <ion-segment-button value="beginner" (click)="setExperience('beginner')">
-      <ion-label>Principiante</ion-label>
+      <ion-label>{{ 'PROFILE.BEGINNER' | translate }}</ion-label>
     </ion-segment-button>
     <ion-segment-button value="casual" (click)="setExperience('casual')">
-      <ion-label>Casual</ion-label>
+      <ion-label>{{ 'PROFILE.CASUAL' | translate }}</ion-label>
     </ion-segment-button>
     <ion-segment-button value="competitive" (click)="setExperience('competitive')">
-      <ion-label>Competitivo</ion-label>
+      <ion-label>{{ 'PROFILE.COMPETITIVE' | translate }}</ion-label>
     </ion-segment-button>
   </ion-segment>
 
@@ -45,12 +45,12 @@
   }
 
   <div class="perfil-edit__actions">
-    <ion-button fill="outline" (click)="cancel()">Cancelar</ion-button>
+    <ion-button fill="outline" (click)="cancel()">{{ 'COMMON.CANCEL' | translate }}</ion-button>
     <ion-button color="primary" (click)="save()" [disabled]="saving()">
       @if (saving()) {
         <ion-spinner name="crescent"></ion-spinner>
       } @else {
-        Guardar
+        {{ 'COMMON.SAVE' | translate }}
       }
     </ion-button>
   </div>

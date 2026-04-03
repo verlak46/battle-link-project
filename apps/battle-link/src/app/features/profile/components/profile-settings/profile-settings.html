@@ -1,23 +1,25 @@
 <ion-list>
-  <ion-list-header>CUENTA</ion-list-header>
+  <ion-list-header>{{ 'PROFILE.SETTINGS_TITLE' | translate }}</ion-list-header>
   <ion-item button="true" detail="true" (click)="editProfile.emit()">
     <ion-icon name="person-outline" slot="start"></ion-icon>
-    <ion-label>Perfil</ion-label>
+    <ion-label>{{ 'PROFILE.EDIT_PROFILE' | translate }}</ion-label>
   </ion-item>
   <ion-item button="true" detail="true" (click)="openAccount.emit()">
     <ion-icon name="key-outline" slot="start"></ion-icon>
-    <ion-label>Cuenta</ion-label>
+    <ion-label>{{ 'PROFILE.ACCOUNT' | translate }}</ion-label>
   </ion-item>
 </ion-list>
 
 <ion-list>
-  <ion-list-header>SOPORTE</ion-list-header>
+  <ion-list-header>{{ 'PROFILE.SUPPORT_TITLE' | translate }}</ion-list-header>
   <ion-item button="true" detail="true" (click)="openPrivacy.emit()">
     <ion-icon name="document-text-outline" slot="start"></ion-icon>
-    <ion-label>Política de privacidad</ion-label>
+    <ion-label>{{ 'PROFILE.PRIVACY' | translate }}</ion-label>
   </ion-item>
   <ion-item button="true" detail="true" (click)="openTerms.emit()">
     <ion-icon name="shield-checkmark-outline" slot="start"></ion-icon>
-    <ion-label>Términos de uso</ion-label>
+    <ion-label>{{ 'PROFILE.TERMS' | translate }}</ion-label>
   </ion-item>
 </ion-list>
+
+<app-language-selector></app-language-selector>

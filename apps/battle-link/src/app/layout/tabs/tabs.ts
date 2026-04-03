@@ -6,6 +6,7 @@ import {
   IonIcon,
   IonLabel,
 } from '@ionic/angular/standalone';
+import { TranslatePipe } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import {
   homeOutline,
@@ -19,7 +20,7 @@ import {
   selector: 'app-tabs',
   templateUrl: './tabs.html',
   styleUrl: './tabs.scss',
-  imports: [IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel],
+  imports: [IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, TranslatePipe],
 })
 export class TabsPage {
   constructor() {

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, input, output, signal } fro
 import { IonSpinner, IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { imageOutline } from 'ionicons/icons';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { StorageService } from '../../../core/services/storage.service';
 import { AuthService } from '../../../core/services/auth.service';
 
@@ -10,11 +11,12 @@ import { AuthService } from '../../../core/services/auth.service';
   templateUrl: './image-upload.html',
   styleUrl: './image-upload.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IonSpinner, IonIcon],
+  imports: [IonSpinner, IonIcon, TranslatePipe],
 })
 export class ImageUploadComponent {
   private readonly storageService = inject(StorageService);
   private readonly auth = inject(AuthService);
+  private readonly translate = inject(TranslateService);
 
   imageUrl = input<string | undefined>(undefined);
   entityType = input.required<string>();
@@ -39,7 +41,7 @@ export class ImageUploadComponent {
       },
       error: () => {
         this.uploading.set(false);
-        this.uploadError.emit('Error al subir la imagen');
+        this.uploadError.emit(this.translate.instant('IMAGE_UPLOAD.ERROR'));
       },
     });
   }

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Inicio</ion-title>
+    <ion-title>{{ 'HOME.TITLE' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -8,15 +8,15 @@
 
   <!-- Saludo personalizado -->
   <div class="greeting">
-    <h2>Hola, {{ displayNick() }} 👋</h2>
-    <p class="subtitle">¿Listo para jugar?</p>
+    <h2>{{ 'HOME.GREETING' | translate:{ nick: displayNick() } }}</h2>
+    <p class="subtitle">{{ 'HOME.READY' | translate }}</p>
   </div>
 
   <!-- Mis próximas partidas -->
   <section class="home-section">
     <div class="section-header">
       <ion-icon name="calendar-outline"></ion-icon>
-      <h3>Mis próximas partidas</h3>
+      <h3>{{ 'HOME.MY_EVENTS' | translate }}</h3>
     </div>
 
     @if (myEvents().length > 0) {
@@ -36,7 +36,7 @@
             </div>
             <p class="card-date">
               <ion-icon name="calendar-outline"></ion-icon>
-              {{ event.startDate | date:'EEE d MMM, HH:mm':'':'es' }}
+              {{ event.startDate | date:'EEE d MMM, HH:mm' }}
             </p>
             @if (event.placeName) {
               <p class="card-place">
@@ -46,17 +46,17 @@
             }
             <div class="card-players">
               <ion-icon name="people-outline"></ion-icon>
-              {{ event.currentPlayers }} / {{ event.maxPlayers }} jugadores
+              {{ 'COMMON.PLAYERS_COUNT' | translate:{ current: event.currentPlayers, max: event.maxPlayers } }}
             </div>
           </ion-card-content>
         </ion-card>
       }
     } @else {
       <div class="empty-state">
-        <p>No tienes partidas próximas.</p>
+        <p>{{ 'HOME.NO_EVENTS' | translate }}</p>
         <ion-button fill="outline" routerLink="/new">
           <ion-icon name="add-circle-outline" slot="start"></ion-icon>
-          Crear partida
+          {{ 'HOME.CREATE_GAME' | translate }}
         </ion-button>
       </div>
     }
@@ -66,7 +66,7 @@
   <section class="home-section">
     <div class="section-header">
       <ion-icon name="trophy-outline"></ion-icon>
-      <h3>Mis torneos</h3>
+      <h3>{{ 'HOME.MY_TOURNAMENTS' | translate }}</h3>
     </div>
 
     @if (myTournaments().length > 0) {
@@ -86,7 +86,7 @@
             </div>
             <p class="card-date">
               <ion-icon name="calendar-outline"></ion-icon>
-              {{ tournament.startDate | date:'EEE d MMM':'':'es' }}
+              {{ tournament.startDate | date:'EEE d MMM' }}
             </p>
             @if (tournament.placeName) {
               <p class="card-place">
@@ -96,7 +96,7 @@
             }
             @if (tournament.entryFee != null) {
               <p class="entry-fee">
-                Inscripción: {{ tournament.entryFee === 0 ? 'Gratuita' : tournament.entryFee + '€' }}
+                {{ 'HOME.ENTRY_FEE' | translate:{ fee: tournament.entryFee === 0 ? ('COMMON.FREE' | translate) : tournament.entryFee + '€' } }}
               </p>
             }
           </ion-card-content>
@@ -104,10 +104,10 @@
       }
     } @else {
       <div class="empty-state">
-        <p>No estás inscrito en ningún torneo.</p>
+        <p>{{ 'HOME.NO_TOURNAMENTS' | translate }}</p>
         <ion-button fill="outline" routerLink="/explore">
           <ion-icon name="compass-outline" slot="start"></ion-icon>
-          Explorar torneos
+          {{ 'HOME.EXPLORE_TOURNAMENTS' | translate }}
         </ion-button>
       </div>
     }
@@ -119,13 +119,13 @@
       <ion-card-content>
         <div class="discover-content">
           <div>
-            <h3>Descubrir cerca de ti</h3>
-            <p>Partidas y torneos próximos en tu zona</p>
+            <h3>{{ 'HOME.DISCOVER' | translate }}</h3>
+            <p>{{ 'HOME.DISCOVER_SUBTITLE' | translate }}</p>
           </div>
           <ion-icon name="compass-outline" class="discover-icon"></ion-icon>
         </div>
         <ion-button fill="clear" class="ion-no-padding">
-          Ver todo
+          {{ 'HOME.SEE_ALL' | translate }}
           <ion-icon name="compass-outline" slot="end"></ion-icon>
         </ion-button>
       </ion-card-content>
@@ -136,7 +136,7 @@
   <section class="home-section">
     <div class="section-header">
       <ion-icon name="storefront-outline"></ion-icon>
-      <h3>Tiendas y clubs cercanos</h3>
+      <h3>{{ 'HOME.NEARBY_PLACES' | translate }}</h3>
     </div>
 
     @if (nearbyPlaces().length > 0) {
@@ -146,13 +146,13 @@
             <ion-icon name="storefront-outline" slot="start" color="medium"></ion-icon>
             <ion-label>
               <h2>{{ place.name }}</h2>
-              <p>{{ place.city }} · {{ place.type === 'store' ? 'Tienda' : 'Club' }}</p>
+              <p>{{ place.city }} · {{ (place.type === 'store' ? 'COMMON.STORE' : 'COMMON.CLUB') | translate }}</p>
             </ion-label>
           </ion-item>
         }
       </ion-list>
     } @else {
-      <p class="no-places">No hay tiendas ni clubs en tu zona todavía.</p>
+      <p class="no-places">{{ 'HOME.NO_PLACES' | translate }}</p>
     }
   </section>
 

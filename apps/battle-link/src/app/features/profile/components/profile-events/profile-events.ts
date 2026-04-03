@@ -19,6 +19,7 @@ import {
   addCircleOutline,
   gameControllerOutline,
 } from 'ionicons/icons';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Event } from '../../../../core/services/api.service';
 
 @Component({
@@ -37,6 +38,7 @@ import { Event } from '../../../../core/services/api.service';
     IonLabel,
     IonIcon,
     IonButton,
+    TranslatePipe,
   ],
 })
 export class ProfileEventsComponent {

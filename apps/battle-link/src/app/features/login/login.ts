@@ -14,6 +14,7 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { logoGoogle } from 'ionicons/icons';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../core/services/auth.service';
 import { getApiError } from '../../core/utils/api-error';
 
@@ -33,16 +34,17 @@ import { getApiError } from '../../core/utils/api-error';
     IonButton,
     IonIcon,
     IonSpinner,
+    TranslatePipe,
   ],
 })
 export class LoginPage {
   private readonly fb = inject(FormBuilder);
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly translate = inject(TranslateService);
 
   readonly logoUrl = '/logo_white.png';
 
-  /** 'login' | 'register' */
   mode = signal<'login' | 'register'>('login');
   loading = signal(false);
   errorMessage = signal<string | null>(null);
@@ -90,7 +92,7 @@ export class LoginPage {
     if (this.isRegister()) {
       const confirm = this.loginForm.get('confirmPassword')?.value ?? '';
       if (password !== confirm) {
-        this.errorMessage.set('Las contraseñas no coinciden.');
+        this.errorMessage.set(this.translate.instant('LOGIN.ERROR_PASSWORDS_MISMATCH'));
         return;
       }
     }
@@ -128,7 +130,7 @@ export class LoginPage {
       const message =
         err && typeof err === 'object' && 'code' in err
           ? this.firebaseMessage((err as { code: string }).code)
-          : getApiError(err, 'No se pudo iniciar sesión con Google.');
+          : getApiError(err, this.translate.instant('LOGIN.ERROR_GOOGLE'));
       this.errorMessage.set(message);
     } finally {
       this.loading.set(false);
@@ -136,18 +138,19 @@ export class LoginPage {
   }
 
   private firebaseMessage(code: string): string {
-    const messages: Record<string, string> = {
-      'auth/email-already-in-use': 'Este correo ya está registrado.',
-      'auth/invalid-email': 'Correo electrónico no válido.',
-      'auth/operation-not-allowed': 'Operación no permitida.',
-      'auth/weak-password': 'La contraseña debe tener al menos 6 caracteres.',
-      'auth/user-disabled': 'Esta cuenta ha sido deshabilitada.',
-      'auth/user-not-found': 'No existe una cuenta con este correo.',
-      'auth/wrong-password': 'Contraseña incorrecta.',
-      'auth/invalid-credential': 'Credenciales incorrectas.',
-      'auth/popup-closed-by-user': 'Se cerró la ventana de Google.',
-      'auth/popup-blocked': 'El navegador bloqueó la ventana de Google.',
+    const keyMap: Record<string, string> = {
+      'auth/email-already-in-use': 'LOGIN.FIREBASE_EMAIL_IN_USE',
+      'auth/invalid-email': 'LOGIN.FIREBASE_INVALID_EMAIL',
+      'auth/operation-not-allowed': 'LOGIN.FIREBASE_OPERATION_NOT_ALLOWED',
+      'auth/weak-password': 'LOGIN.FIREBASE_WEAK_PASSWORD',
+      'auth/user-disabled': 'LOGIN.FIREBASE_USER_DISABLED',
+      'auth/user-not-found': 'LOGIN.FIREBASE_USER_NOT_FOUND',
+      'auth/wrong-password': 'LOGIN.FIREBASE_WRONG_PASSWORD',
+      'auth/invalid-credential': 'LOGIN.FIREBASE_INVALID_CREDENTIAL',
+      'auth/popup-closed-by-user': 'LOGIN.FIREBASE_POPUP_CLOSED',
+      'auth/popup-blocked': 'LOGIN.FIREBASE_POPUP_BLOCKED',
     };
-    return messages[code] ?? 'Error de autenticación.';
+    const key = keyMap[code] ?? 'LOGIN.ERROR_AUTH';
+    return this.translate.instant(key);
   }
 }

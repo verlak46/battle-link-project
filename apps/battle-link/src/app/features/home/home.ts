@@ -17,6 +17,7 @@ import {
 } from '@ionic/angular/standalone';
 import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { addIcons } from 'ionicons';
 import {
@@ -54,6 +55,7 @@ import { MOCK_EVENTS, MOCK_TOURNAMENTS } from '../../shared/mock/events.mock';
     IonList,
     RouterLink,
     DatePipe,
+    TranslatePipe,
   ],
 })
 export class HomePage {

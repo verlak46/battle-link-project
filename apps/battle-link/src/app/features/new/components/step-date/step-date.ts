@@ -1,11 +1,12 @@
 import { Component, computed, input, output } from '@angular/core';
 import { IonItem, IonLabel, IonInput } from '@ionic/angular/standalone';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-step-date',
   template: `
     <ion-item>
-      <ion-label position="stacked">Fecha inicio *</ion-label>
+      <ion-label position="stacked">{{ 'NEW.START_DATE' | translate }}</ion-label>
       <ion-input
         type="date"
         [value]="startDate()"
@@ -14,7 +15,7 @@ import { IonItem, IonLabel, IonInput } from '@ionic/angular/standalone';
       </ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="stacked">Fecha fin (opcional)</ion-label>
+      <ion-label position="stacked">{{ 'NEW.END_DATE' | translate }}</ion-label>
       <ion-input
         type="date"
         [value]="endDate()"
@@ -23,7 +24,7 @@ import { IonItem, IonLabel, IonInput } from '@ionic/angular/standalone';
       </ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="stacked">Hora (opcional)</ion-label>
+      <ion-label position="stacked">{{ 'NEW.TIME' | translate }}</ion-label>
       <ion-input
         type="time"
         [value]="time()"
@@ -31,7 +32,7 @@ import { IonItem, IonLabel, IonInput } from '@ionic/angular/standalone';
       </ion-input>
     </ion-item>
   `,
-  imports: [IonItem, IonLabel, IonInput],
+  imports: [IonItem, IonLabel, IonInput, TranslatePipe],
 })
 export class StepDateComponent {
   readonly today = new Date().toISOString().split('T')[0];

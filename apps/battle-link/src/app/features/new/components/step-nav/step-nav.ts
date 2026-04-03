@@ -2,6 +2,7 @@ import { Component, input, output } from '@angular/core';
 import { IonButton, IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { chevronForwardOutline, chevronBackOutline, checkmarkOutline } from 'ionicons/icons';
+import { TranslatePipe } from '@ngx-translate/core';
 import { CreationType } from '../../new-form.types';
 
 @Component({
@@ -11,18 +12,18 @@ import { CreationType } from '../../new-form.types';
       @if (showPrevious()) {
         <ion-button fill="outline" (click)="previous.emit()">
           <ion-icon slot="start" name="chevron-back-outline"></ion-icon>
-          Anterior
+          {{ 'COMMON.PREVIOUS' | translate }}
         </ion-button>
       }
       @if (!isLastStep()) {
         <ion-button [disabled]="!valid()" (click)="next.emit()" class="btn-siguiente">
-          Siguiente
+          {{ 'COMMON.NEXT' | translate }}
           <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
         </ion-button>
       } @else {
         <ion-button [disabled]="!valid()" (click)="confirm.emit()" color="success" class="btn-siguiente">
           <ion-icon slot="start" name="checkmark-outline"></ion-icon>
-          {{ type() === 'partida' ? 'Crear Partida' : 'Crear Evento' }}
+          {{ (type() === 'partida' ? 'NEW.CREATE_GAME' : 'NEW.CREATE_EVENT') | translate }}
         </ion-button>
       }
     </div>
@@ -37,7 +38,7 @@ import { CreationType } from '../../new-form.types';
     }
     .btn-siguiente { flex: 1; max-width: 200px; }
   `],
-  imports: [IonButton, IonIcon],
+  imports: [IonButton, IonIcon, TranslatePipe],
 })
 export class StepNavComponent {
   type = input.required<CreationType>();

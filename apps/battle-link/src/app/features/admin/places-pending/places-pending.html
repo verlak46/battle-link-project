@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>Localizaciones pendientes</ion-title>
+    <ion-title>{{ 'ADMIN.PLACES_TITLE' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,7 +16,7 @@
   } @else if (error()) {
     <p class="error-msg">{{ error() }}</p>
   } @else if (places().length === 0) {
-    <p class="empty-msg">No hay localizaciones pendientes de revisión.</p>
+    <p class="empty-msg">{{ 'ADMIN.NO_PENDING' | translate }}</p>
   } @else {
     <ion-list>
       @for (place of places(); track place._id) {
@@ -24,14 +24,14 @@
           <ion-label>
             <h2>{{ place.name }}</h2>
             <p>{{ place.city }} — {{ place.address }}</p>
-            <ion-note>{{ place.type === 'store' ? 'Tienda' : 'Club' }}</ion-note>
+            <ion-note>{{ (place.type === 'store' ? 'COMMON.STORE' : 'COMMON.CLUB') | translate }}</ion-note>
           </ion-label>
           <div class="actions" slot="end">
             <ion-button fill="solid" color="success" size="small" (click)="approve(place)">
-              Aprobar
+              {{ 'COMMON.APPROVE' | translate }}
             </ion-button>
             <ion-button fill="outline" color="danger" size="small" (click)="reject(place)">
-              Rechazar
+              {{ 'COMMON.REJECT' | translate }}
             </ion-button>
           </div>
         </ion-item>

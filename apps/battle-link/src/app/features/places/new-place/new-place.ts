@@ -28,6 +28,7 @@ import {
   IonToast,
 } from '@ionic/angular/standalone';
 import { GoogleMap, MapMarker } from '@angular/google-maps';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../../core/services/api.service';
 import { getApiError } from '../../../core/utils/api-error';
 import { PlaceType } from '@battle-link/shared-models';
@@ -58,6 +59,7 @@ import { ImageUploadComponent } from '../../../shared/components/image-upload/im
     GoogleMap,
     MapMarker,
     ImageUploadComponent,
+    TranslatePipe,
   ],
 })
 export class NewPlacePage implements AfterViewInit {
@@ -66,6 +68,7 @@ export class NewPlacePage implements AfterViewInit {
   private readonly api = inject(ApiService);
   private readonly router = inject(Router);
   private readonly zone = inject(NgZone);
+  private readonly translate = inject(TranslateService);
 
   name = signal('');
   type = signal<PlaceType>('store');
@@ -123,7 +126,7 @@ export class NewPlacePage implements AfterViewInit {
 
   useMyLocation() {
     if (!navigator.geolocation) {
-      this.error.set('Geolocalización no disponible en este dispositivo');
+      this.error.set(this.translate.instant('ONBOARDING.ERROR_GEOLOCATION'));
       return;
     }
     this.locating.set(true);
@@ -134,7 +137,7 @@ export class NewPlacePage implements AfterViewInit {
         this.locating.set(false);
       },
       () => {
-        this.error.set('No se pudo obtener la ubicación');
+        this.error.set(this.translate.instant('ONBOARDING.ERROR_LOCATION'));
         this.locating.set(false);
       },
     );
@@ -142,11 +145,11 @@ export class NewPlacePage implements AfterViewInit {
 
   async submit() {
     if (!this.name().trim() || !this.city().trim() || !this.address().trim()) {
-      this.error.set('Nombre, ciudad y dirección son obligatorios');
+      this.error.set(this.translate.instant('PLACES.ERROR_REQUIRED'));
       return;
     }
     if (this.lat() === null || this.lng() === null) {
-      this.error.set('Selecciona una dirección del autocompletado o usa "Mi ubicación"');
+      this.error.set(this.translate.instant('PLACES.ERROR_SELECT_ADDRESS'));
       return;
     }
 

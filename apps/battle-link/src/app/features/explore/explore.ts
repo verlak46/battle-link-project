@@ -22,6 +22,7 @@ import {
   IonSearchbar,
 } from '@ionic/angular/standalone';
 import { DatePipe } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 import { GoogleMap, MapMarker, MapInfoWindow } from '@angular/google-maps';
 import { addIcons } from 'ionicons';
 import {
@@ -57,6 +58,7 @@ import {
     IonButton,
     IonSearchbar,
     DatePipe,
+    TranslatePipe,
     GoogleMap,
     MapMarker,
     MapInfoWindow,

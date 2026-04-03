@@ -18,6 +18,7 @@ import {
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 import { CreationType, NewFormData, WIZARD_STEPS } from './new-form.types';
 import { ApiService, CreateEventPayload } from '../../core/services/api.service';
@@ -46,11 +47,13 @@ import { StepDetailsComponent } from './components/step-details/step-details';
     StepDateComponent,
     StepLocationComponent,
     StepDetailsComponent,
+    TranslatePipe,
   ],
 })
 export class NewPage {
   private readonly api = inject(ApiService);
   private readonly router = inject(Router);
+  private readonly translate = inject(TranslateService);
   readonly steps = WIZARD_STEPS;
 
   type = signal<CreationType>('partida');
@@ -148,7 +151,7 @@ export class NewPage {
       await firstValueFrom(this.api.createEvent(payload));
       await this.router.navigate(['/tabs', 'explore']);
     } catch {
-      this.errorMessage.set('No se pudo crear. Inténtalo de nuevo.');
+      this.errorMessage.set(this.translate.instant('NEW.ERROR'));
       this.saving.set(false);
     }
   }

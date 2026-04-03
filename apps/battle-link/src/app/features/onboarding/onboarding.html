@@ -1,10 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Bienvenido</ion-title>
+    <ion-title>{{ 'ONBOARDING.TITLE' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
+  <app-language-selector></app-language-selector>
+
   <div class="stepper">
     @for (wizardStep of steps; track wizardStep.id) {
 

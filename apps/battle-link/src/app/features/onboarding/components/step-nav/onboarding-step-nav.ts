@@ -1,5 +1,6 @@
 import { Component, input, output } from '@angular/core';
 import { IonButton } from '@ionic/angular/standalone';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-onboarding-step-nav',
@@ -7,7 +8,7 @@ import { IonButton } from '@ionic/angular/standalone';
     <div class="step__actions">
       @if (showPrevious()) {
         <ion-button fill="outline" (click)="previous.emit()">
-          Anterior
+          {{ 'COMMON.PREVIOUS' | translate }}
         </ion-button>
       }
       @if (!isLastStep()) {
@@ -16,7 +17,7 @@ import { IonButton } from '@ionic/angular/standalone';
           (click)="next.emit()"
           [disabled]="!valid()"
         >
-          Siguiente
+          {{ 'COMMON.NEXT' | translate }}
         </ion-button>
       } @else {
         <ion-button
@@ -24,7 +25,7 @@ import { IonButton } from '@ionic/angular/standalone';
           (click)="finalize.emit()"
           [disabled]="!valid() || loading()"
         >
-          Finalizar
+          {{ 'COMMON.FINISH' | translate }}
         </ion-button>
       }
     </div>
@@ -37,7 +38,7 @@ import { IonButton } from '@ionic/angular/standalone';
       margin-top: 16px;
     }
   `],
-  imports: [IonButton],
+  imports: [IonButton, TranslatePipe],
 })
 export class OnboardingStepNavComponent {
   valid = input(false);

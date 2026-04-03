@@ -1,7 +1,7 @@
 <section class="partidas-section">
   <div class="section-header">
     <ion-icon name="game-controller-outline"></ion-icon>
-    <h3>Mis partidas</h3>
+    <h3>{{ 'PROFILE.MY_GAMES' | translate }}</h3>
   </div>
 
   @if (events().length > 0) {
@@ -21,9 +21,9 @@
           </div>
           <p class="card-date">
             <ion-icon name="calendar-outline"></ion-icon>
-            {{ event.startDate | date: 'EEE d MMM' : '' : 'es' }}
+            {{ event.startDate | date: 'EEE d MMM' }}
             @if (event.endDate) {
-              – {{ event.endDate | date: 'EEE d MMM' : '' : 'es' }}
+              – {{ event.endDate | date: 'EEE d MMM' }}
             }
             @if (event.time) {
               · {{ event.time }}
@@ -38,7 +38,7 @@
           @if (event.maxPlayers) {
             <p class="card-players">
               <ion-icon name="people-outline"></ion-icon>
-              {{ event.currentPlayers }} / {{ event.maxPlayers }} jugadores
+              {{ 'COMMON.PLAYERS_COUNT' | translate:{ current: event.currentPlayers, max: event.maxPlayers } }}
             </p>
           }
         </ion-card-content>
@@ -46,10 +46,10 @@
     }
   } @else {
     <div class="empty-state">
-      <p>Aún no has creado ninguna partida.</p>
+      <p>{{ 'PROFILE.NO_GAMES' | translate }}</p>
       <ion-button fill="outline" routerLink="/tabs/new">
         <ion-icon name="add-circle-outline" slot="start"></ion-icon>
-        Crear partida
+        {{ 'PROFILE.CREATE_GAME' | translate }}
       </ion-button>
     </div>
   }

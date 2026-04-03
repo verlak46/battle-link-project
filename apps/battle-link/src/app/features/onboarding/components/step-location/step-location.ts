@@ -1,14 +1,15 @@
 import { Component, input, output } from '@angular/core';
 import { IonButton, IonSpinner } from '@ionic/angular/standalone';
 import { DecimalPipe } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-onboarding-step-location',
   template: `
     <section>
-      <h3>Ubicación</h3>
+      <h3>{{ 'ONBOARDING.LOCATION_TITLE' | translate }}</h3>
       <p class="onboarding__hint">
-        Opcional, pero nos ayuda a mostrarte partidas y eventos cerca de ti.
+        {{ 'ONBOARDING.LOCATION_HINT' | translate }}
       </p>
 
       <ion-button
@@ -20,13 +21,12 @@ import { DecimalPipe } from '@angular/common';
         @if (locationLoading()) {
           <ion-spinner slot="start"></ion-spinner>
         }
-        Usar mi ubicación actual
+        {{ 'ONBOARDING.USE_LOCATION' | translate }}
       </ion-button>
 
       @if (location()) {
         <p class="onboarding__location">
-          Ubicación guardada (lat: {{ location()![0] | number:'1.4-4' }},
-          lng: {{ location()![1] | number:'1.4-4' }}).
+          {{ 'ONBOARDING.LOCATION_SAVED' | translate:{ lat: (location()![0] | number:'1.4-4'), lng: (location()![1] | number:'1.4-4') } }}
         </p>
       }
     </section>
@@ -43,7 +43,7 @@ import { DecimalPipe } from '@angular/common';
       font-size: 13px;
     }
   `],
-  imports: [IonButton, IonSpinner, DecimalPipe],
+  imports: [IonButton, IonSpinner, DecimalPipe, TranslatePipe],
 })
 export class OnboardingStepLocationComponent {
   location = input<[number, number] | null>(null);
