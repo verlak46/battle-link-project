@@ -1,5 +1,6 @@
 export const environment = {
   production: false,
+  sentryDsn: 'https://cd3d335627e1bfe90d3977d9913a6ca9@o4511174730317824.ingest.de.sentry.io/4511174873251920',
   apiUrl: 'https://battle-link-api.onrender.com/api',
   googleMapsApiKey: 'AIzaSyBFaNP2bYbjTspEI4HVE51btBNQqBt26vo',
   firebase: {
