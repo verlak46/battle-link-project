@@ -142,6 +142,7 @@
     "TYPE_GAME": "🎲 Partida",
     "TYPE_EVENT": "🎯 Evento",
     "EVENT_KIND_LABEL": "Tipo de evento *",
+    "EVENT_KIND_PLACEHOLDER": "Selecciona un tipo",
     "TYPE_TOURNAMENT": "🏆 Torneo",
     "TYPE_CAMPAIGN": "📖 Campaña",
     "TYPE_LEAGUE": "🏅 Liga",

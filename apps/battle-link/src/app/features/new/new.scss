@@ -38,3 +38,7 @@
   margin-bottom: 8px;
 }
 
+.step__body ion-item::part(native) {
+  padding-inline-start: 0;
+}
+

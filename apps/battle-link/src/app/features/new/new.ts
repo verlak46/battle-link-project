@@ -26,6 +26,7 @@ import { Place } from '@battle-link/shared-models';
 import { TypeSelectorComponent } from './components/type-selector/type-selector';
 import { StepHeaderComponent } from './components/step-header/step-header';
 import { StepNavComponent } from './components/step-nav/step-nav';
+import { StepEventKindComponent } from './components/step-event-kind/step-event-kind';
 import { StepGameComponent } from './components/step-game/step-game';
 import { StepDateComponent } from './components/step-date/step-date';
 import { StepLocationComponent } from './components/step-location/step-location';
@@ -41,6 +42,7 @@ import { StepDetailsComponent } from './components/step-details/step-details';
     IonTitle,
     IonContent,
     TypeSelectorComponent,
+    StepEventKindComponent,
     StepHeaderComponent,
     StepNavComponent,
     StepGameComponent,

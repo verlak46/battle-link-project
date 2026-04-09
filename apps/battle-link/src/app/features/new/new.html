@@ -26,6 +26,12 @@
         <div class="step__body">
 
           @if (step.id === 1) {
+            @if (type() !== 'game') {
+              <app-step-event-kind
+                [kind]="type()"
+                (kindChange)="type.set($event)">
+              </app-step-event-kind>
+            }
             <app-step-game
               [type]="type()"
               [game]="form().game"
