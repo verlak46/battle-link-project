@@ -59,12 +59,8 @@ export class NewPage {
   readonly steps = WIZARD_STEPS;
 
   type = signal<CreationType | null>('game');
-  currentStep = signal(1);
-  saving = signal(false);
-  errorMessage = signal<string | null>(null);
-  places = toSignal(this.api.getPlaces(), { initialValue: [] as Place[] });
 
-  form = signal<NewFormData>({
+  private readonly emptyForm: NewFormData = {
     game: '',
     system: '',
     startDate: '',
@@ -77,7 +73,13 @@ export class NewPage {
     maxPlayers: '',
     contactUrl: '',
     imageUrl: undefined,
-  });
+  };
+  currentStep = signal(1);
+  saving = signal(false);
+  errorMessage = signal<string | null>(null);
+  places = toSignal(this.api.getPlaces(), { initialValue: [] as Place[] });
+
+  form = signal<NewFormData>({ ...this.emptyForm });
 
   isStepValid = computed(() => {
     if (this.type() === null) return false;
@@ -103,6 +105,17 @@ export class NewPage {
       chevronForwardOutline,
       chevronBackOutline,
     });
+  }
+
+  onTypeChange(next: CreationType | null): void {
+    const prev = this.type();
+    const categoryChanged = (prev === 'game') !== (next === 'game');
+    this.type.set(next);
+    if (categoryChanged) {
+      this.form.set({ ...this.emptyForm });
+      this.currentStep.set(1);
+      this.errorMessage.set(null);
+    }
   }
 
   patch(partial: Partial<NewFormData>) {
