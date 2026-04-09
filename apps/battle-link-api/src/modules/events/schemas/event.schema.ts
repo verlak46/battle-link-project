@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
 
 export type EventDocument = HydratedDocument<EventEntity>;
-export type CreationType = 'game' | 'event';
+export type CreationType = 'game' | 'tournament' | 'campaign' | 'league';
 export type EventStatus = 'draft' | 'published' | 'cancelled' | 'finished';
 
 const EventLocationSchema = new MongooseSchema(
@@ -18,7 +18,7 @@ export class EventEntity {
   @Prop({ required: true })
   title: string;
 
-  @Prop({ enum: ['game', 'event'], required: true })
+  @Prop({ enum: ['game', 'tournament', 'campaign', 'league'], required: true })
   type: CreationType;
 
   @Prop({ required: true })
@@ -65,6 +65,9 @@ export class EventEntity {
 
   @Prop({ type: EventLocationSchema })
   location?: { type: string; coordinates: [number, number] };
+
+  @Prop()
+  locationRadius?: number;
 
   @Prop({ required: true })
   createdBy: string;

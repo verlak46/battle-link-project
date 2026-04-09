@@ -54,6 +54,7 @@ export class OnboardingPage implements OnInit {
 
   location = signal<[number, number] | null>(null);
   locationLoading = signal(false);
+  locationLabel = signal('');
 
   steps = [
     { id: 1, title: 'ONBOARDING.STEP_PROFILE', icon: 'person-circle-outline' },
@@ -92,6 +93,9 @@ export class OnboardingPage implements OnInit {
       }
       if (current.favoriteGames?.length) {
         this.favoriteGamesIds.set(current.favoriteGames);
+      }
+      if (current.locationLabel) {
+        this.locationLabel.set(current.locationLabel);
       }
     }
   }
@@ -149,6 +153,7 @@ export class OnboardingPage implements OnInit {
         experienceLevel: this.experienceLevel() ?? undefined,
         favoriteGames: this.favoriteGamesIds(),
         location,
+        locationLabel: this.locationLabel().trim() || undefined,
       });
 
       this.router.navigate(['/']);

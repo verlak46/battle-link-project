@@ -5,6 +5,7 @@ import {
   IonTitle,
   IonContent,
 } from '@ionic/angular/standalone';
+import { AuthService } from '../../core/services/auth.service';
 import { addIcons } from 'ionicons';
 import {
   gameControllerOutline,
@@ -54,9 +55,13 @@ import { StepDetailsComponent } from './components/step-details/step-details';
 })
 export class NewPage {
   private readonly api = inject(ApiService);
+  private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
   private readonly translate = inject(TranslateService);
   readonly steps = WIZARD_STEPS;
+
+  userLocation = computed(() => this.auth.user()?.location ?? null);
+  userLocationLabel = computed(() => this.auth.user()?.locationLabel ?? null);
 
   type = signal<CreationType | null>('game');
 
@@ -73,6 +78,9 @@ export class NewPage {
     maxPlayers: '',
     contactUrl: '',
     imageUrl: undefined,
+    locationMode: undefined,
+    locationRadius: undefined,
+    locationCoords: undefined,
   };
   currentStep = signal(1);
   saving = signal(false);
@@ -87,7 +95,11 @@ export class NewPage {
     switch (this.currentStep()) {
       case 1: return f.game.trim().length > 0;
       case 2: return f.startDate.trim().length > 0;
-      case 3: return f.city.trim().length > 0;
+      case 3: {
+        if (f.placeId) return true;
+        if (this.type() === 'game') return true;
+        return f.address.trim().length > 0;
+      }
       case 4: return f.title.trim().length > 0;
       default: return false;
     }
@@ -148,6 +160,12 @@ export class NewPage {
     const f = this.form();
     const type = this.type();
     if (type === null) return;
+    const location =
+      f.locationMode === 'profile' && this.userLocation()
+        ? this.userLocation()!
+        : f.locationCoords
+        ? { type: 'Point' as const, coordinates: [f.locationCoords[1], f.locationCoords[0]] as [number, number] }
+        : undefined;
     const payload: CreateEventPayload = {
       title: f.title,
       type,
@@ -162,6 +180,8 @@ export class NewPage {
       maxPlayers: f.maxPlayers ? parseInt(f.maxPlayers, 10) : undefined,
       city: f.city || undefined,
       address: f.address || undefined,
+      location,
+      locationRadius: f.locationMode === 'approximate' ? f.locationRadius : undefined,
       placeId: f.placeId,
       placeName: f.placeName,
     };

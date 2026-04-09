@@ -132,6 +132,11 @@
     "LOCATION_HINT": "Opcional, pero nos ayuda a mostrarte partidas y eventos cerca de ti.",
     "USE_LOCATION": "Usar mi ubicación actual",
     "LOCATION_SAVED": "Ubicación guardada (lat: {{ lat }}, lng: {{ lng }}).",
+    "LOCATION_OR": "o",
+    "ADDRESS_LABEL": "Busca tu dirección",
+    "ADDRESS_PLACEHOLDER": "Ej. Calle Mayor 12, Madrid...",
+    "LOCATION_LABEL": "Nombre de tu ubicación habitual",
+    "LOCATION_LABEL_PLACEHOLDER": "Ej. Valencia – Ruzafa, zona norte...",
     "ERROR_GEOLOCATION": "La geolocalización no está disponible en este navegador.",
     "ERROR_LOCATION": "No se pudo obtener tu ubicación.",
     "ERROR_ONBOARDING": "No se pudo completar el onboarding."
@@ -181,7 +186,17 @@
     "CONTACT_PLACEHOLDER": "https:// o https://wa.me/...",
     "CREATE_GAME": "Crear Partida",
     "CREATE_EVENT": "Crear Evento",
-    "ERROR": "No se pudo crear. Inténtalo de nuevo."
+    "ERROR": "No se pudo crear. Inténtalo de nuevo.",
+    "LOCATION_QUESTION": "¿Dónde será la partida?",
+    "LOCATION_PROFILE": "Mi ubicación habitual",
+    "LOCATION_MAP": "Elegir en el mapa",
+    "LOCATION_APPROXIMATE": "Ubicación aproximada",
+    "LOCATION_RADIUS_500": "500 m",
+    "LOCATION_RADIUS_1000": "1 km",
+    "LOCATION_RADIUS_5000": "5 km",
+    "LOCATION_PIN_SET": "Pin colocado",
+    "LOCATION_CONFIRM": "Confirmar ubicación",
+    "CITY_READONLY": "Ciudad (automática)"
   },
   "MAP": {
     "TITLE": "Mapa"

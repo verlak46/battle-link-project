@@ -54,15 +54,24 @@
 
           @if (step.id === 3) {
             <app-step-location
+              [type]="type()"
               [city]="form().city"
               [address]="form().address"
               [placeId]="form().placeId ?? null"
               [placeName]="form().placeName ?? ''"
               [places]="places()"
+              [userLocation]="userLocation()"
+              [userLocationLabel]="userLocationLabel()"
+              [locationMode]="form().locationMode"
+              [locationRadius]="form().locationRadius"
+              [locationCoords]="form().locationCoords"
               (cityChange)="patch({ city: $event })"
               (addressChange)="patch({ address: $event })"
               (placeIdChange)="patch({ placeId: $event ?? undefined })"
-              (placeNameChange)="patch({ placeName: $event || undefined })">
+              (placeNameChange)="patch({ placeName: $event || undefined })"
+              (locationModeChange)="patch({ locationMode: $event })"
+              (locationRadiusChange)="patch({ locationRadius: $event })"
+              (locationCoordsChange)="patch({ locationCoords: $event })">
             </app-step-location>
           }
 

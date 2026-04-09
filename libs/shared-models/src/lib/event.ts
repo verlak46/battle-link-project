@@ -20,6 +20,7 @@ export interface Event {
   city?: string;
   address?: string;
   location?: GeoLocation;
+  locationRadius?: number;
   placeId?: string;
   placeName?: string;
   status: EventStatus;
@@ -44,6 +45,7 @@ export interface CreateEventPayload {
   city?: string;
   address?: string;
   location?: GeoLocation;
+  locationRadius?: number;
   placeId?: string;
   placeName?: string;
 }

@@ -54,4 +54,9 @@ export class UpdateProfileDto {
   @IsString()
   @IsUrl()
   picture?: string;
+
+  @ApiPropertyOptional({ example: 'Valencia – Ruzafa' })
+  @IsOptional()
+  @IsString()
+  locationLabel?: string;
 }

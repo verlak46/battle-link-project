@@ -132,6 +132,11 @@
     "LOCATION_HINT": "Optional, but helps us show you games and events near you.",
     "USE_LOCATION": "Use my current location",
     "LOCATION_SAVED": "Location saved (lat: {{ lat }}, lng: {{ lng }}).",
+    "LOCATION_OR": "or",
+    "ADDRESS_LABEL": "Search your address",
+    "ADDRESS_PLACEHOLDER": "E.g. 12 High Street, London...",
+    "LOCATION_LABEL": "Name of your usual location",
+    "LOCATION_LABEL_PLACEHOLDER": "E.g. London – Shoreditch, north area...",
     "ERROR_GEOLOCATION": "Geolocation is not available in this browser.",
     "ERROR_LOCATION": "Could not get your location.",
     "ERROR_ONBOARDING": "Could not complete onboarding."
@@ -181,7 +186,17 @@
     "CONTACT_PLACEHOLDER": "https:// or https://wa.me/...",
     "CREATE_GAME": "Create Game",
     "CREATE_EVENT": "Create Event",
-    "ERROR": "Could not create. Please try again."
+    "ERROR": "Could not create. Please try again.",
+    "LOCATION_QUESTION": "Where will the game be?",
+    "LOCATION_PROFILE": "My usual location",
+    "LOCATION_MAP": "Choose on map",
+    "LOCATION_APPROXIMATE": "Approximate location",
+    "LOCATION_RADIUS_500": "500 m",
+    "LOCATION_RADIUS_1000": "1 km",
+    "LOCATION_RADIUS_5000": "5 km",
+    "LOCATION_PIN_SET": "Pin placed",
+    "LOCATION_CONFIRM": "Confirm location",
+    "CITY_READONLY": "City (automatic)"
   },
   "MAP": {
     "TITLE": "Map"

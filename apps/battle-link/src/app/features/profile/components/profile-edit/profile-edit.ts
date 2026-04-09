@@ -50,6 +50,7 @@ export class ProfileEditComponent implements OnInit {
   wargames = toSignal(this.api.getWargames(), { initialValue: [] as Wargame[] });
   location = signal<[number, number] | null>(null);
   locationLoading = signal(false);
+  locationLabel = signal('');
   saving = signal(false);
   errorMessage = signal<string | null>(null);
 
@@ -64,6 +65,9 @@ export class ProfileEditComponent implements OnInit {
       if (coords?.length === 2) {
         const [lng, lat] = coords;
         this.location.set([lat, lng]);
+      }
+      if (current.locationLabel) {
+        this.locationLabel.set(current.locationLabel);
       }
     }
   }
@@ -106,6 +110,7 @@ export class ProfileEditComponent implements OnInit {
         experienceLevel: this.experienceLevel() ?? undefined,
         favoriteGames: this.favoriteGamesIds(),
         location: locationPayload,
+        locationLabel: this.locationLabel().trim() || undefined,
         picture: this.picture(),
       });
       this.closed.emit();

@@ -37,7 +37,10 @@
   <app-onboarding-step-location
     [location]="location()"
     [locationLoading]="locationLoading()"
-    (useLocation)="useCurrentLocation()">
+    [locationLabel]="locationLabel()"
+    (useLocation)="useCurrentLocation()"
+    (locationChange)="location.set($event)"
+    (locationLabelChange)="locationLabel.set($event)">
   </app-onboarding-step-location>
 
   @if (errorMessage()) {

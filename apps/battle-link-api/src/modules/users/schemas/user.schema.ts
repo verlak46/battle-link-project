@@ -46,6 +46,9 @@ export class User {
   @Prop({ type: UserLocationSchema })
   location: UserLocation;
 
+  @Prop()
+  locationLabel?: string;
+
   @Prop({ default: false })
   onboardingCompleted: boolean;
 

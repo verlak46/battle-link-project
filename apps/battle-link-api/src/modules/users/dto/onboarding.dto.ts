@@ -57,4 +57,9 @@ export class OnboardingDto {
   @ValidateNested()
   @Type(() => LocationDto)
   location?: LocationDto;
+
+  @ApiPropertyOptional({ example: 'Valencia – Ruzafa' })
+  @IsOptional()
+  @IsString()
+  locationLabel?: string;
 }

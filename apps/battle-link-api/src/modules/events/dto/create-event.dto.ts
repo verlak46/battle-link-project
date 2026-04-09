@@ -1,15 +1,32 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
+  IsArray,
   IsEnum,
   IsInt,
   IsNotEmpty,
+  IsNumber,
+  IsObject,
   IsOptional,
   IsString,
   IsUrl,
   Min,
+  ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { CreationType } from '../schemas/event.schema';
+
+const CREATION_TYPES: CreationType[] = ['game', 'tournament', 'campaign', 'league'];
+
+export class EventLocationDto {
+  @ApiProperty({ example: 'Point' })
+  @IsString()
+  type: 'Point';
+
+  @ApiProperty({ example: [-3.7038, 40.4168] })
+  @IsArray()
+  @IsNumber({}, { each: true })
+  coordinates: [number, number];
+}
 
 export class CreateEventDto {
   @ApiProperty({ example: 'Torneo de primavera' })
@@ -17,8 +34,8 @@ export class CreateEventDto {
   @IsNotEmpty()
   title: string;
 
-  @ApiProperty({ enum: ['game', 'event'] })
-  @IsEnum(['game', 'event'])
+  @ApiProperty({ enum: CREATION_TYPES })
+  @IsEnum(CREATION_TYPES)
   type: CreationType;
 
   @ApiProperty({ example: 'warhammer40k' })
@@ -87,4 +104,18 @@ export class CreateEventDto {
   @IsOptional()
   @IsString()
   placeName?: string;
+
+  @ApiPropertyOptional({ type: EventLocationDto })
+  @IsOptional()
+  @IsObject()
+  @ValidateNested()
+  @Type(() => EventLocationDto)
+  location?: EventLocationDto;
+
+  @ApiPropertyOptional({ example: 1000 })
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  locationRadius?: number;
 }

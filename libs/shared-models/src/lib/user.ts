@@ -14,6 +14,7 @@ export interface User {
   favoriteGames: string[];
   experienceLevel?: ExperienceLevel;
   location?: GeoLocation | null;
+  locationLabel?: string;
   onboardingCompleted: boolean;
   isAdmin?: boolean;
   createdAt: string;

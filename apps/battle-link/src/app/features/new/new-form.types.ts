@@ -21,6 +21,9 @@ export interface NewFormData {
   placeId?: string;
   placeName?: string;
   imageUrl?: string;
+  locationMode?: 'place' | 'profile' | 'map' | 'approximate';
+  locationRadius?: number;
+  locationCoords?: [number, number];
 }
 
 export const WIZARD_STEPS: WizardStep[] = [
