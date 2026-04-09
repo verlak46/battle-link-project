@@ -70,13 +70,13 @@ import { LocationPickerModalComponent } from '../location-picker-modal/location-
             </p>
           }
 
-          <ion-button
+          <!-- <ion-button
             expand="block"
             [fill]="locationMode() === 'approximate' ? 'solid' : 'outline'"
             color="secondary"
             (click)="openApproximatePicker()">
             🔒 {{ 'NEW.LOCATION_APPROXIMATE' | translate }}
-          </ion-button>
+          </ion-button> -->
           @if (locationMode() === 'approximate') {
             <div class="radius-chips">
               <ion-button

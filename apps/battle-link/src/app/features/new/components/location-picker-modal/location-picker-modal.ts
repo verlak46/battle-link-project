@@ -5,6 +5,9 @@ import {
   IonContent,
   IonFooter,
   IonHeader,
+  IonInput,
+  IonItem,
+  IonLabel,
   IonTitle,
   IonToolbar,
   ModalController,
@@ -27,6 +30,16 @@ import { TranslatePipe } from '@ngx-translate/core';
     </ion-header>
 
     <ion-content>
+      <ion-item class="address-item">
+        <ion-label position="stacked">{{ 'NEW.ADDRESS' | translate }}</ion-label>
+        <ion-input
+          #addressInput
+          [placeholder]="'NEW.ADDRESS_PLACEHOLDER' | translate"
+          autocomplete="off"
+          clearInput>
+        </ion-input>
+      </ion-item>
+
       <div #mapDiv class="map-container"></div>
 
       @if (selectedCoords()) {
@@ -75,9 +88,13 @@ import { TranslatePipe } from '@ngx-translate/core';
     </ion-footer>
   `,
   styles: [`
+    .address-item {
+      margin: 8px 0 0;
+    }
     .map-container {
       width: 100%;
-      height: 320px;
+      height: 260px;
+      margin-top: 8px;
     }
     .pin-info {
       font-size: 12px;
@@ -97,7 +114,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   `],
   imports: [
     IonHeader, IonToolbar, IonTitle, IonButtons, IonButton,
-    IonContent, IonFooter,
+    IonContent, IonFooter, IonItem, IonLabel, IonInput,
     DecimalPipe, TranslatePipe,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -114,9 +131,19 @@ export class LocationPickerModalComponent implements AfterViewInit {
   selectedCoords = signal<[number, number] | null>(null);
   selectedRadius = signal<number>(1000);
 
-  @ViewChild('mapDiv') mapDivRef!: ElementRef<HTMLDivElement>;
+  private map!: google.maps.Map;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private marker!: any;
+
+  @ViewChild('mapDiv') private mapDivRef!: ElementRef<HTMLDivElement>;
+  @ViewChild('addressInput') private addressInputRef!: IonInput;
 
   ngAfterViewInit(): void {
+    this.initMap();
+    this.initAutocomplete();
+  }
+
+  private initMap(): void {
     const defaultCenter = { lat: 40.4168, lng: -3.7038 };
     const center = this.coords
       ? { lat: this.coords[0], lng: this.coords[1] }
@@ -126,7 +153,7 @@ export class LocationPickerModalComponent implements AfterViewInit {
       this.selectedCoords.set(this.coords);
     }
 
-    const map = new google.maps.Map(this.mapDivRef.nativeElement, {
+    this.map = new google.maps.Map(this.mapDivRef.nativeElement, {
       center,
       zoom: 14,
       disableDefaultUI: true,
@@ -134,29 +161,52 @@ export class LocationPickerModalComponent implements AfterViewInit {
     });
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const marker = new (google.maps as any).Marker({
+    this.marker = new (google.maps as any).Marker({
       position: center,
-      map,
+      map: this.map,
       draggable: true,
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    marker.addListener('dragend', () => {
-      const pos = marker.getPosition() as google.maps.LatLng;
+    this.marker.addListener('dragend', () => {
+      const pos = this.marker.getPosition() as google.maps.LatLng;
       this.zone.run(() => {
         this.selectedCoords.set([pos.lat(), pos.lng()]);
         this.cdr.markForCheck();
       });
     });
 
-    map.addListener('click', (e: google.maps.MapMouseEvent) => {
+    this.map.addListener('click', (e: google.maps.MapMouseEvent) => {
       if (e.latLng) {
-        marker.setPosition(e.latLng);
+        this.marker.setPosition(e.latLng);
         this.zone.run(() => {
           this.selectedCoords.set([e.latLng!.lat(), e.latLng!.lng()]);
           this.cdr.markForCheck();
         });
       }
+    });
+  }
+
+  private initAutocomplete(): void {
+    this.addressInputRef.getInputElement().then((el) => {
+      const autocomplete = new google.maps.places.Autocomplete(el, {
+        types: ['geocode'],
+        fields: ['geometry', 'formatted_address'],
+      });
+
+      autocomplete.addListener('place_changed', () => {
+        const place = autocomplete.getPlace();
+        const loc = place.geometry?.location;
+        if (loc) {
+          const latLng = { lat: loc.lat(), lng: loc.lng() };
+          this.marker.setPosition(latLng);
+          this.map.panTo(latLng);
+          this.map.setZoom(15);
+          this.zone.run(() => {
+            this.selectedCoords.set([loc.lat(), loc.lng()]);
+            this.cdr.markForCheck();
+          });
+        }
+      });
     });
   }
 
