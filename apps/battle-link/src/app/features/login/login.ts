@@ -1,5 +1,5 @@
 import { Component, inject, signal, computed } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import {
   IonContent,
@@ -41,6 +41,7 @@ export class LoginPage {
   private readonly fb = inject(FormBuilder);
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
   private readonly translate = inject(TranslateService);
 
   readonly logoUrl = '/logo_white.png';
@@ -48,6 +49,7 @@ export class LoginPage {
   mode = signal<'login' | 'register'>('login');
   loading = signal(false);
   errorMessage = signal<string | null>(null);
+  sessionExpired = signal(false);
 
   loginForm = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
@@ -59,6 +61,7 @@ export class LoginPage {
 
   constructor() {
     addIcons({ logoGoogle });
+    this.sessionExpired.set(this.route.snapshot.queryParamMap.get('reason') === 'session-expired');
   }
 
   get email() {

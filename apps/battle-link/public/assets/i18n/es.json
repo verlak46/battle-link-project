@@ -58,7 +58,8 @@
     "FIREBASE_WRONG_PASSWORD": "Contraseña incorrecta.",
     "FIREBASE_INVALID_CREDENTIAL": "Credenciales incorrectas.",
     "FIREBASE_POPUP_CLOSED": "Se cerró la ventana de Google.",
-    "FIREBASE_POPUP_BLOCKED": "El navegador bloqueó la ventana de Google."
+    "FIREBASE_POPUP_BLOCKED": "El navegador bloqueó la ventana de Google.",
+    "SESSION_EXPIRED": "Tu sesión ha expirado. Por favor, inicia sesión de nuevo."
   },
   "HOME": {
     "TITLE": "Inicio",

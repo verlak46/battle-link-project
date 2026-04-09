@@ -20,6 +20,16 @@
   object-fit: contain;
 }
 
+.session-expired-banner {
+  margin: 0 0 16px;
+  padding: 12px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--ion-color-warning) 15%, transparent);
+  color: var(--ion-color-warning-shade);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
 .auth-segment {
   margin-bottom: 24px;
 }

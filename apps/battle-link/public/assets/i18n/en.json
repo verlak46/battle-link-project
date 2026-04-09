@@ -58,7 +58,8 @@
     "FIREBASE_WRONG_PASSWORD": "Incorrect password.",
     "FIREBASE_INVALID_CREDENTIAL": "Incorrect credentials.",
     "FIREBASE_POPUP_CLOSED": "Google sign-in window was closed.",
-    "FIREBASE_POPUP_BLOCKED": "The browser blocked the Google sign-in window."
+    "FIREBASE_POPUP_BLOCKED": "The browser blocked the Google sign-in window.",
+    "SESSION_EXPIRED": "Your session has expired. Please sign in again."
   },
   "HOME": {
     "TITLE": "Home",

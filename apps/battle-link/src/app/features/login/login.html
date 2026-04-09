@@ -2,6 +2,12 @@
   <div class="auth-card">
     <img [src]="logoUrl" alt="Logo" class="auth-logo" />
 
+    @if (sessionExpired()) {
+      <p class="session-expired-banner" role="alert">
+        {{ 'LOGIN.SESSION_EXPIRED' | translate }}
+      </p>
+    }
+
     <ion-segment [value]="mode()" (ionChange)="onSegmentChange($event)" class="auth-segment">
       <ion-segment-button value="login">
         <ion-label>{{ 'LOGIN.SIGN_IN' | translate }}</ion-label>
