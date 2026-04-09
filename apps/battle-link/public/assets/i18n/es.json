@@ -245,6 +245,14 @@
     "PLACES_TITLE": "Localizaciones pendientes",
     "NO_PENDING": "No hay localizaciones pendientes de revisión."
   },
+  "ERRORS": {
+    "NETWORK": "Sin conexión con el servidor. Comprueba tu red.",
+    "UNAUTHORIZED": "Sesión expirada. Por favor, inicia sesión de nuevo.",
+    "FORBIDDEN": "No tienes permiso para realizar esta acción.",
+    "NOT_FOUND": "El recurso solicitado no existe.",
+    "SERVER": "Error interno del servidor. Inténtalo más tarde.",
+    "GENERIC": "Ha ocurrido un error inesperado."
+  },
   "IMAGE_UPLOAD": {
     "UPLOADING": "Subiendo...",
     "ADD": "Añadir imagen",

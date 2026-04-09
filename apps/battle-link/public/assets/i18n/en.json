@@ -245,6 +245,14 @@
     "PLACES_TITLE": "Pending locations",
     "NO_PENDING": "No locations pending review."
   },
+  "ERRORS": {
+    "NETWORK": "Cannot reach the server. Check your connection.",
+    "UNAUTHORIZED": "Session expired. Please sign in again.",
+    "FORBIDDEN": "You do not have permission to do this.",
+    "NOT_FOUND": "The requested resource does not exist.",
+    "SERVER": "Internal server error. Please try again later.",
+    "GENERIC": "An unexpected error occurred."
+  },
   "IMAGE_UPLOAD": {
     "UPLOADING": "Uploading...",
     "ADD": "Add image",

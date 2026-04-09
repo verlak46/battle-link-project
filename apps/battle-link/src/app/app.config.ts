@@ -13,6 +13,7 @@ import { provideRouter, Router } from '@angular/router';
 import { loadGoogleMapsApi } from './core/utils/google-maps-loader';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { errorInterceptor } from './core/interceptors/error.interceptor';
 import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import * as Sentry from '@sentry/angular';
@@ -75,7 +76,7 @@ export const appConfig: ApplicationConfig = {
     }),
     provideAppInitializer(loadGoogleMapsApi(environment.googleMapsApiKey)),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(withInterceptors([authInterceptor, errorInterceptor])),
     provideIonicAngular(),
   ],
 };
