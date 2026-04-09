@@ -2,16 +2,42 @@ import { inject } from '@angular/core';
 import { HttpHandlerFn, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular/standalone';
-import { TranslateService } from '@ngx-translate/core';
 import { tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../services/auth.service';
 
 const apiBase = environment.apiUrl.replace(/\/$/, '');
 
+const ERROR_MESSAGES: Record<string, Record<string, string>> = {
+  es: {
+    NETWORK: 'Sin conexión con el servidor. Comprueba tu red.',
+    FORBIDDEN: 'No tienes permiso para realizar esta acción.',
+    NOT_FOUND: 'El recurso solicitado no existe.',
+    SERVER: 'Error interno del servidor. Inténtalo más tarde.',
+    GENERIC: 'Ha ocurrido un error inesperado.',
+  },
+  en: {
+    NETWORK: 'Cannot reach the server. Check your connection.',
+    FORBIDDEN: 'You do not have permission to do this.',
+    NOT_FOUND: 'The requested resource does not exist.',
+    SERVER: 'Internal server error. Please try again later.',
+    GENERIC: 'An unexpected error occurred.',
+  },
+};
+
+function getErrorMessage(status: number): string {
+  const lang = localStorage.getItem('battle-link-lang') ?? 'es';
+  const msgs = ERROR_MESSAGES[lang] ?? ERROR_MESSAGES['es'];
+
+  if (status === 0) return msgs['NETWORK'];
+  if (status === 403) return msgs['FORBIDDEN'];
+  if (status === 404) return msgs['NOT_FOUND'];
+  if (status >= 500) return msgs['SERVER'];
+  return msgs['GENERIC'];
+}
+
 export function errorInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) {
   const toastCtrl = inject(ToastController);
-  const translate = inject(TranslateService);
   const auth = inject(AuthService);
   const router = inject(Router);
 
@@ -29,23 +55,11 @@ export function errorInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn)
           return;
         }
 
-        let messageKey: string;
-
-        if (err.status === 0) {
-          messageKey = 'ERRORS.NETWORK';
-        } else if (err.status === 403) {
-          messageKey = 'ERRORS.FORBIDDEN';
-        } else if (err.status === 404) {
-          messageKey = 'ERRORS.NOT_FOUND';
-        } else if (err.status >= 500) {
-          messageKey = 'ERRORS.SERVER';
-        } else {
-          messageKey = 'ERRORS.GENERIC';
-        }
+        if (!isApiCall) return;
 
         toastCtrl
           .create({
-            message: translate.instant(messageKey),
+            message: getErrorMessage(err.status),
             duration: 3000,
             position: 'bottom',
             color: 'danger',
