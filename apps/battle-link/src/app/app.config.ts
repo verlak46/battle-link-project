@@ -24,6 +24,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { LanguageService } from './core/services/language.service';
+import { ThemeService } from './core/services/theme.service';
 
 registerLocaleData(localeEs);
 registerLocaleData(localeEn);
@@ -68,6 +69,9 @@ export const appConfig: ApplicationConfig = {
     }),
     provideAppInitializer(() => {
       inject(LanguageService).init();
+    }),
+    provideAppInitializer(() => {
+      inject(ThemeService).init();
     }),
     provideAppInitializer(loadGoogleMapsApi(environment.googleMapsApiKey)),
     provideRouter(routes),

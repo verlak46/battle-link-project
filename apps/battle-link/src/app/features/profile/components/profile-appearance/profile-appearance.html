@@ -1,0 +1,16 @@
+<ion-list>
+  <ion-item button="true" (click)="setTheme('dark')">
+    <ion-icon name="moon-outline" slot="start"></ion-icon>
+    <ion-label>{{ 'PROFILE.APPEARANCE_DARK' | translate }}</ion-label>
+    @if (theme.current() === 'dark') {
+      <ion-icon name="checkmark" slot="end" color="primary"></ion-icon>
+    }
+  </ion-item>
+  <ion-item lines="none" button="true" (click)="setTheme('light')">
+    <ion-icon name="sunny-outline" slot="start"></ion-icon>
+    <ion-label>{{ 'PROFILE.APPEARANCE_LIGHT' | translate }}</ion-label>
+    @if (theme.current() === 'light') {
+      <ion-icon name="checkmark" slot="end" color="primary"></ion-icon>
+    }
+  </ion-item>
+</ion-list>

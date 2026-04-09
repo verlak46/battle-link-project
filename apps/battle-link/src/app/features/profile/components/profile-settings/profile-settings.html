@@ -11,6 +11,24 @@
 </ion-list>
 
 <ion-list>
+  <ion-list-header>{{ 'PROFILE.APP_SETTINGS_TITLE' | translate }}</ion-list-header>
+  <ion-item button="true" detail="true" (click)="openAppearance.emit()" (keyup.enter)="openAppearance.emit()">
+    <ion-icon name="phone-portrait-outline" slot="start"></ion-icon>
+    <ion-label>
+      <span>{{ 'PROFILE.APPEARANCE' | translate }}</span>
+      <p>{{ currentThemeLabel() | translate }}</p>
+    </ion-label>
+  </ion-item>
+  <ion-item button="true" detail="true" (click)="openLanguage.emit()" (keyup.enter)="openLanguage.emit()">
+    <ion-icon name="globe-outline" slot="start"></ion-icon>
+    <ion-label>
+      <span>{{ 'LANGUAGE.LABEL' | translate }}</span>
+      <p>{{ currentLangLabel | translate }}</p>
+    </ion-label>
+  </ion-item>
+</ion-list>
+
+<ion-list>
   <ion-list-header>{{ 'PROFILE.SUPPORT_TITLE' | translate }}</ion-list-header>
   <ion-item button="true" detail="true" (click)="openPrivacy.emit()">
     <ion-icon name="document-text-outline" slot="start"></ion-icon>
@@ -21,5 +39,3 @@
     <ion-label>{{ 'PROFILE.TERMS' | translate }}</ion-label>
   </ion-item>
 </ion-list>
-
-<app-language-selector></app-language-selector>

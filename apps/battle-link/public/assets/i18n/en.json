@@ -19,7 +19,7 @@
     "BACK_TO_LOGIN": "Back to login"
   },
   "LANGUAGE": {
-    "LABEL": "LANGUAGE",
+    "LABEL": "Language",
     "ES": "Español",
     "EN": "English"
   },
@@ -196,6 +196,12 @@
     "SETTINGS_TITLE": "ACCOUNT",
     "EDIT_PROFILE": "Profile",
     "ACCOUNT": "Account",
+    "APP_SETTINGS_TITLE": "APP SETTINGS",
+    "APPEARANCE": "Appearance",
+    "APPEARANCE_HEADER": "Appearance",
+    "APPEARANCE_DARK": "Dark",
+    "APPEARANCE_LIGHT": "Light",
+    "LANGUAGE_HEADER": "Language",
     "SUPPORT_TITLE": "SUPPORT",
     "PRIVACY": "Privacy policy",
     "TERMS": "Terms of use",

@@ -19,7 +19,7 @@
     "BACK_TO_LOGIN": "Volver al inicio de sesión"
   },
   "LANGUAGE": {
-    "LABEL": "IDIOMA",
+    "LABEL": "Idioma",
     "ES": "Español",
     "EN": "English"
   },
@@ -196,6 +196,12 @@
     "SETTINGS_TITLE": "CUENTA",
     "EDIT_PROFILE": "Perfil",
     "ACCOUNT": "Cuenta",
+    "APP_SETTINGS_TITLE": "CONFIGURACIÓN DE APLICACIÓN",
+    "APPEARANCE": "Apariencia",
+    "APPEARANCE_HEADER": "Apariencia",
+    "APPEARANCE_DARK": "Oscuro",
+    "APPEARANCE_LIGHT": "Claro",
+    "LANGUAGE_HEADER": "Idioma",
     "SUPPORT_TITLE": "SOPORTE",
     "PRIVACY": "Política de privacidad",
     "TERMS": "Términos de uso",

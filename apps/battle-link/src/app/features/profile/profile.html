@@ -26,10 +26,16 @@
       (logout)="logout()"
       (deleteAccount)="deleteAccount()"
     ></app-profile-account>
+  } @else if (showAppearance()) {
+    <app-profile-appearance></app-profile-appearance>
+  } @else if (showLanguage()) {
+    <app-profile-language></app-profile-language>
   } @else if (showSettings()) {
     <app-profile-settings
       (editProfile)="openEditProfile()"
       (openAccount)="openAccount()"
+      (openAppearance)="openAppearance()"
+      (openLanguage)="openLanguage()"
       (openPrivacy)="openBrowser('privacy')"
       (openTerms)="openBrowser('terms')"
     ></app-profile-settings>

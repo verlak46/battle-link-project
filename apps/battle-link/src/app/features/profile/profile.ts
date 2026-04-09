@@ -22,6 +22,8 @@ import { ProfileAvatarComponent } from './components/profile-avatar/profile-avat
 import { ProfileEventsComponent } from './components/profile-events/profile-events';
 import { ProfileSettingsComponent } from './components/profile-settings/profile-settings';
 import { ProfileAccountComponent } from './components/profile-account/profile-account';
+import { ProfileAppearanceComponent } from './components/profile-appearance/profile-appearance';
+import { ProfileLanguageComponent } from './components/profile-language/profile-language';
 
 @Component({
   selector: 'app-profile',
@@ -41,6 +43,8 @@ import { ProfileAccountComponent } from './components/profile-account/profile-ac
     ProfileEventsComponent,
     ProfileSettingsComponent,
     ProfileAccountComponent,
+    ProfileAppearanceComponent,
+    ProfileLanguageComponent,
     TranslatePipe,
   ],
 })
@@ -54,6 +58,8 @@ export class ProfilePage implements OnInit {
   showEdit = signal(false);
   showSettings = signal(false);
   showAccount = signal(false);
+  showAppearance = signal(false);
+  showLanguage = signal(false);
 
   myEvents = toSignal(this.api.getMyEvents(), { initialValue: [] as Event[] });
 
@@ -83,16 +89,23 @@ export class ProfilePage implements OnInit {
   headerTitle = computed(() => {
     if (this.showEdit()) return 'PROFILE.EDIT_HEADER';
     if (this.showAccount()) return 'PROFILE.ACCOUNT_HEADER';
+    if (this.showAppearance()) return 'PROFILE.APPEARANCE_HEADER';
+    if (this.showLanguage()) return 'PROFILE.LANGUAGE_HEADER';
     if (this.showSettings()) return 'PROFILE.SETTINGS_HEADER';
     return 'PROFILE.TITLE';
   });
 
-  showBackButton = computed(() => this.showEdit() || this.showSettings() || this.showAccount());
+  showBackButton = computed(() =>
+    this.showEdit() || this.showSettings() || this.showAccount() ||
+    this.showAppearance() || this.showLanguage()
+  );
 
   goBack(): void {
-    if (this.showEdit() || this.showAccount()) {
+    if (this.showEdit() || this.showAccount() || this.showAppearance() || this.showLanguage()) {
       this.showEdit.set(false);
       this.showAccount.set(false);
+      this.showAppearance.set(false);
+      this.showLanguage.set(false);
       this.showSettings.set(true);
     } else {
       this.showSettings.set(false);
@@ -107,6 +120,16 @@ export class ProfilePage implements OnInit {
   openAccount(): void {
     this.showSettings.set(false);
     this.showAccount.set(true);
+  }
+
+  openAppearance(): void {
+    this.showSettings.set(false);
+    this.showAppearance.set(true);
+  }
+
+  openLanguage(): void {
+    this.showSettings.set(false);
+    this.showLanguage.set(true);
   }
 
   async logout(): Promise<void> {

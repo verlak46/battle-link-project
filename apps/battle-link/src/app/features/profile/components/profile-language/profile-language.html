@@ -1,0 +1,14 @@
+<ion-list>
+  <ion-item button="true" (click)="setLanguage('es')">
+    <ion-label>{{ 'LANGUAGE.ES' | translate }}</ion-label>
+    @if (language.current === 'es') {
+      <ion-icon name="checkmark" slot="end" color="primary"></ion-icon>
+    }
+  </ion-item>
+  <ion-item lines="none" button="true" (click)="setLanguage('en')">
+    <ion-label>{{ 'LANGUAGE.EN' | translate }}</ion-label>
+    @if (language.current === 'en') {
+      <ion-icon name="checkmark" slot="end" color="primary"></ion-icon>
+    }
+  </ion-item>
+</ion-list>

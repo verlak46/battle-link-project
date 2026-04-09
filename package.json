@@ -8,6 +8,7 @@
     "serve:frontend": "nx serve battle-link",
     "serve:backend": "nx serve battle-link-api",
     "serve:all": "nx run-many -t serve -p battle-link battle-link-api",
+    "serve:all:local": "nx run-many -t serve -p battle-link battle-link-api --configuration=local",
     "build:frontend": "nx build battle-link --configuration=production",
     "build:backend": "nx build battle-link-api",
     "test": "nx run-many -t test",
