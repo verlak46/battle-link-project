@@ -8,3 +8,121 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 @import "@ionic/angular/css/palettes/dark.class.css";
 /* @import "@ionic/angular/css/palettes/dark.system.css"; */
+
+/**
+ * Battle Link Design Tokens
+ * -----------------------------------------------------
+ * Custom CSS properties that extend Ionic's theme system.
+ * Use these variables instead of hardcoded values across the app.
+ */
+
+:root {
+  /* =====================================================
+   * TYPOGRAPHY
+   * ===================================================== */
+
+  --bl-font-display: 'Rajdhani', sans-serif; /* Headings, titles, labels */
+  --bl-font-body: 'Jost', sans-serif;        /* Body text, UI elements  */
+
+  /* Type scale — mobile-first (rem) */
+  --bl-text-xs:   0.75rem;   /*  12px */
+  --bl-text-sm:   0.875rem;  /*  14px */
+  --bl-text-base: 1rem;      /*  16px */
+  --bl-text-md:   1.125rem;  /*  18px */
+  --bl-text-lg:   1.25rem;   /*  20px */
+  --bl-text-xl:   1.5rem;    /*  24px */
+  --bl-text-2xl:  1.875rem;  /*  30px */
+  --bl-text-3xl:  2.25rem;   /*  36px */
+
+  /* Font weights */
+  --bl-font-regular:  400;
+  --bl-font-medium:   500;
+  --bl-font-semibold: 600;
+  --bl-font-bold:     700;
+
+  /* Line heights */
+  --bl-leading-tight:   1.2;
+  --bl-leading-normal:  1.5;
+  --bl-leading-relaxed: 1.65;
+
+  /* Letter spacing */
+  --bl-tracking-tight:  -0.02em;
+  --bl-tracking-normal:  0em;
+  --bl-tracking-wide:    0.04em;
+  --bl-tracking-wider:   0.08em;
+
+  /* =====================================================
+   * SPACING
+   * ===================================================== */
+
+  --bl-space-1:  0.25rem;  /*  4px */
+  --bl-space-2:  0.5rem;   /*  8px */
+  --bl-space-3:  0.75rem;  /* 12px */
+  --bl-space-4:  1rem;     /* 16px */
+  --bl-space-5:  1.25rem;  /* 20px */
+  --bl-space-6:  1.5rem;   /* 24px */
+  --bl-space-8:  2rem;     /* 32px */
+  --bl-space-10: 2.5rem;   /* 40px */
+  --bl-space-12: 3rem;     /* 48px */
+  --bl-space-16: 4rem;     /* 64px */
+
+  /* =====================================================
+   * BORDER RADIUS
+   * ===================================================== */
+
+  --bl-radius-sm:   6px;
+  --bl-radius-md:   10px;
+  --bl-radius-lg:   16px;
+  --bl-radius-xl:   24px;
+  --bl-radius-full: 9999px;
+
+  /* =====================================================
+   * SHADOWS & ELEVATION
+   * ===================================================== */
+
+  --bl-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --bl-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --bl-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
+
+  /* Glow effects for accent elements */
+  --bl-shadow-glow-primary: 0 0 20px rgba(77, 141, 255, 0.25);
+  --bl-shadow-glow-success: 0 0 16px rgba(45, 213, 91, 0.2);
+  --bl-shadow-glow-danger:  0 0 16px rgba(242, 76, 88, 0.2);
+
+  /* =====================================================
+   * GRADIENTS
+   * ===================================================== */
+
+  --bl-gradient-primary: linear-gradient(135deg, #4d8dff 0%, #46b1ff 100%);
+  --bl-gradient-hero:    linear-gradient(160deg, #4d8dff 0%, #8482fb 100%);
+  --bl-gradient-scrim:   linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
+  --bl-gradient-surface: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+
+  /* =====================================================
+   * BORDERS
+   * ===================================================== */
+
+  --bl-border-subtle:  1px solid rgba(255, 255, 255, 0.06);
+  --bl-border-default: 1px solid rgba(255, 255, 255, 0.10);
+  --bl-border-strong:  1px solid rgba(255, 255, 255, 0.20);
+  --bl-border-primary: 1px solid rgba(77, 141, 255, 0.40);
+
+  /* =====================================================
+   * TRANSITIONS
+   * ===================================================== */
+
+  --bl-transition-fast:   0.15s ease;
+  --bl-transition-base:   0.25s ease;
+  --bl-transition-slow:   0.40s ease;
+  --bl-transition-spring: 0.30s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* =====================================================
+   * Z-INDEX SCALE
+   * ===================================================== */
+
+  --bl-z-base:    0;
+  --bl-z-raised:  10;
+  --bl-z-overlay: 100;
+  --bl-z-modal:   200;
+  --bl-z-toast:   300;
+}

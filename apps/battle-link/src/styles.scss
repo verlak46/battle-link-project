@@ -1,9 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Orbitron:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=Rajdhani:wght@500;600;700&display=swap');
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: var(--bl-font-body);
 }
 
-h1, h2, h3 {
-  font-family: 'Orbitron', sans-serif;
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--bl-font-display);
+  letter-spacing: var(--bl-tracking-wide);
 }
