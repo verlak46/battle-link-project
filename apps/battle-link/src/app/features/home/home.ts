@@ -12,6 +12,7 @@ import {
   IonLabel,
   IonIcon,
   IonButton,
+  IonButtons,
   IonItem,
   IonList,
 } from '@ionic/angular/standalone';
@@ -28,6 +29,7 @@ import {
   storefrontOutline,
   addCircleOutline,
   peopleOutline,
+  chevronForwardOutline,
 } from 'ionicons/icons';
 import { AuthService } from '../../core/services/auth.service';
 import { ApiService } from '../../core/services/api.service';
@@ -52,6 +54,7 @@ import { MOCK_EVENTS, MOCK_TOURNAMENTS } from '../../shared/mock/events.mock';
     IonLabel,
     IonIcon,
     IonButton,
+    IonButtons,
     IonItem,
     IonList,
     RouterLink,
@@ -66,6 +69,13 @@ export class HomePage {
 
   readonly user = computed(() => this.auth.user());
   readonly displayNick = computed(() => this.user()?.nick ?? this.user()?.name ?? 'Jugador');
+
+  readonly initials = computed(() => {
+    const name = this.user()?.nick ?? this.user()?.name ?? '';
+    if (!name) return '?';
+    const parts = name.trim().split(' ');
+    return ((parts[0]?.[0] ?? '') + (parts[1]?.[0] ?? '')).toUpperCase().slice(0, 2);
+  });
 
   readonly myEvents = computed(() => {
     const userId = this.user()?._id ?? 'mock-user-id';
@@ -87,6 +97,7 @@ export class HomePage {
       storefrontOutline,
       addCircleOutline,
       peopleOutline,
+      chevronForwardOutline,
     });
   }
 }

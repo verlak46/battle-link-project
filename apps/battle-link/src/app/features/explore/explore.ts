@@ -74,14 +74,28 @@ export class ExplorePage implements OnInit {
 
   private readonly allItems = signal<ExploreItem[]>(MOCK_EXPLORE_ITEMS);
 
+  readonly activeTimeFilter = signal<'upcoming' | 'today' | 'weekend'>('upcoming');
+  readonly activeCategoryFilter = signal<'all' | 'event' | 'tournament'>('all');
+
   filteredItems = computed(() => {
     const q = this.searchQuery().toLowerCase().trim();
-    if (!q) return this.allItems();
-    return this.allItems().filter(
-      (i) =>
-        i.data.title.toLowerCase().includes(q) ||
-        i.data.game.toLowerCase().includes(q),
-    );
+    const category = this.activeCategoryFilter();
+
+    let items = this.allItems();
+
+    if (q) {
+      items = items.filter(
+        (i) =>
+          i.data.title.toLowerCase().includes(q) ||
+          i.data.game.toLowerCase().includes(q),
+      );
+    }
+
+    if (category !== 'all') {
+      items = items.filter((i) => i.kind === category);
+    }
+
+    return items;
   });
 
   center = signal<google.maps.LatLngLiteral>({ lat: 40.4168, lng: -3.7038 });

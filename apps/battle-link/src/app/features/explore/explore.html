@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-title>{{ 'EXPLORE.TITLE' | translate }}</ion-title>
   </ion-toolbar>
@@ -15,6 +15,26 @@
         [value]="searchQuery()"
         debounce="300">
       </ion-searchbar>
+
+      <!-- Time filter chips -->
+      <div class="filter-row">
+        <button class="filter-chip" [class.active]="activeTimeFilter() === 'upcoming'" (click)="activeTimeFilter.set('upcoming')">Próximos</button>
+        <button class="filter-chip" [class.active]="activeTimeFilter() === 'today'" (click)="activeTimeFilter.set('today')">Hoy</button>
+        <button class="filter-chip" [class.active]="activeTimeFilter() === 'weekend'" (click)="activeTimeFilter.set('weekend')">Fin de semana</button>
+      </div>
+
+      <!-- Category filter chips -->
+      <div class="filter-row category-row">
+        <button class="filter-chip" [class.active]="activeCategoryFilter() === 'all'" (click)="activeCategoryFilter.set('all')">Todos</button>
+        <button class="filter-chip" [class.active]="activeCategoryFilter() === 'event'" (click)="activeCategoryFilter.set('event')">
+          <ion-icon name="calendar-outline"></ion-icon>
+          Partidas
+        </button>
+        <button class="filter-chip" [class.active]="activeCategoryFilter() === 'tournament'" (click)="activeCategoryFilter.set('tournament')">
+          <ion-icon name="trophy-outline"></ion-icon>
+          Torneos
+        </button>
+      </div>
 
       @if (filteredItems().length === 0) {
         <div class="empty-search">
@@ -33,7 +53,9 @@
           @case ('tournament') {
             <ion-card class="explore-card">
               @if (item.data.imageUrl) {
-                <img [src]="item.data.imageUrl" [alt]="item.data.title" class="card-img" />
+                <div class="card-img-wrap">
+                  <img [src]="item.data.imageUrl" [alt]="item.data.title" class="card-img" />
+                </div>
               }
               <ion-card-header>
                 <div class="card-kind-badge">

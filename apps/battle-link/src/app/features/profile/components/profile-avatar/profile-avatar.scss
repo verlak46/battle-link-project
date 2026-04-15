@@ -1,19 +1,129 @@
+// ── Entrance Animations ──────────────────────────────
+@keyframes corner-in {
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes avatar-in {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes nick-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow:
+      0 0 0 2px rgba(77, 141, 255, 0.30),
+      0 0 18px rgba(77, 141, 255, 0.18);
+  }
+  50% {
+    box-shadow:
+      0 0 0 2px rgba(77, 141, 255, 0.55),
+      0 0 28px rgba(77, 141, 255, 0.32);
+  }
+}
+
+// ── Host ─────────────────────────────────────────────
 :host {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: var(--bl-space-6) 0 var(--bl-space-4);
 }
 
+// ── Avatar Stage ─────────────────────────────────────
+// The stage provides a fixed canvas for avatar + reticle corners
+.avatar-stage {
+  position: relative;
+  width: 148px;
+  height: 148px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// ── Reticle Corners ───────────────────────────────────
+// Four "L"-shaped corner marks — like a tactical targeting scope
+.reticle-corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--ion-color-primary);
+  opacity: 0.65;
+  animation: corner-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+
+  &.tl {
+    top: 6px;
+    left: 6px;
+    border-top: 1.5px solid;
+    border-left: 1.5px solid;
+    animation-delay: 0.05s;
+  }
+
+  &.tr {
+    top: 6px;
+    right: 6px;
+    border-top: 1.5px solid;
+    border-right: 1.5px solid;
+    animation-delay: 0.10s;
+  }
+
+  &.bl {
+    bottom: 6px;
+    left: 6px;
+    border-bottom: 1.5px solid;
+    border-left: 1.5px solid;
+    animation-delay: 0.15s;
+  }
+
+  &.br {
+    bottom: 6px;
+    right: 6px;
+    border-bottom: 1.5px solid;
+    border-right: 1.5px solid;
+    animation-delay: 0.20s;
+  }
+}
+
+// ── Avatar Wrapper ────────────────────────────────────
 .avatar-wrapper {
   position: relative;
-  width: 110px;
-  height: 110px;
+  width: 112px;
+  height: 112px;
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
   flex-shrink: 0;
+  outline: none;
+
+  // Pulsing glow ring
+  animation:
+    avatar-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.05s both,
+    pulse-glow 3.5s ease-in-out 0.6s infinite;
+
+  transition: transform var(--bl-transition-spring);
+
+  &:focus-visible {
+    box-shadow:
+      0 0 0 3px var(--ion-color-primary),
+      0 0 24px rgba(77, 141, 255, 0.45);
+    animation: none;
+  }
+
+  &:active {
+    transform: scale(0.94);
+    animation: none;
+    box-shadow:
+      0 0 0 2px rgba(77, 141, 255, 0.5),
+      0 0 14px rgba(77, 141, 255, 0.25);
+  }
 }
 
+// ── Avatar Image ──────────────────────────────────────
 .avatar-img {
   width: 100%;
   height: 100%;
@@ -21,43 +131,85 @@
   display: block;
 }
 
+// ── Avatar Initials ───────────────────────────────────
 .avatar-initials {
   width: 100%;
   height: 100%;
-  background: color-mix(in srgb, var(--ion-color-primary) 15%, var(--ion-card-background));
+  background: linear-gradient(
+    145deg,
+    rgba(77, 141, 255, 0.14) 0%,
+    rgba(77, 141, 255, 0.04) 100%
+  );
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.6rem;
-  font-weight: 700;
+  font-family: var(--bl-font-display);
+  font-size: 2.8rem;
+  font-weight: var(--bl-font-bold);
+  letter-spacing: var(--bl-tracking-wider);
   color: var(--ion-color-primary);
 
   ion-icon {
     font-size: 3.5rem;
+    opacity: 0.6;
   }
 }
 
+// ── Edit Overlay ──────────────────────────────────────
 .avatar-edit-overlay {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 38%;
-  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.72));
+  height: 42%;
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.80));
   display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding-bottom: 6px;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: rgba(255, 255, 255, 0.85);
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 8px;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity var(--bl-transition-base);
+
+  ion-icon {
+    font-size: 1rem;
+    color: white;
+  }
+
+  span {
+    font-family: var(--bl-font-body);
+    font-size: 0.58rem;
+    font-weight: var(--bl-font-semibold);
+    letter-spacing: var(--bl-tracking-wider);
+    color: rgba(255, 255, 255, 0.8);
+    text-transform: uppercase;
+  }
 }
 
+// Show on hover (desktop)
+.avatar-wrapper:hover .avatar-edit-overlay,
+.avatar-wrapper:focus .avatar-edit-overlay {
+  opacity: 1;
+}
+
+// Always visible at low opacity on touch devices
+@media (pointer: coarse) {
+  .avatar-edit-overlay {
+    opacity: 0.75;
+  }
+}
+
+// ── Nick ──────────────────────────────────────────────
 .profile-nick {
-  margin: 18px 0 24px;
-  font-size: 1.5rem;
-  font-weight: 600;
+  margin: var(--bl-space-5) 0 var(--bl-space-2);
+  font-family: var(--bl-font-display);
+  font-size: var(--bl-text-2xl);
+  font-weight: var(--bl-font-bold);
+  letter-spacing: var(--bl-tracking-wide);
   color: var(--ion-text-color);
   text-align: center;
+  line-height: var(--bl-leading-tight);
+
+  animation: nick-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.28s both;
 }

@@ -77,7 +77,7 @@
                 "input": "node_modules/@ionic/angular/css/flex-utils.css"
               },
               {
-                "input": "apps/battle-link/src/theme/variables.css"
+                "input": "apps/battle-link/src/theme/variables.scss"
               }
             ]
           },

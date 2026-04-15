@@ -1,21 +1,36 @@
-<div
-  class="avatar-wrapper"
-  (click)="editClick.emit()"
-  (keyup.enter)="editClick.emit()"
-  tabindex="0"
-  role="button"
-  aria-label="Editar avatar"
->
-  @if (photoURL()) {
-    <img class="avatar-img" [src]="photoURL()!" [alt]="nick()" />
-  } @else if (initials()) {
-    <div class="avatar-initials">{{ initials() }}</div>
-  } @else {
-    <div class="avatar-initials">
-      <ion-icon name="person-circle-outline"></ion-icon>
+<div class="avatar-stage">
+
+  <!-- Reticle corners — tactical targeting frame -->
+  <div class="reticle-corner tl"></div>
+  <div class="reticle-corner tr"></div>
+  <div class="reticle-corner bl"></div>
+  <div class="reticle-corner br"></div>
+
+  <!-- Avatar -->
+  <div
+    class="avatar-wrapper"
+    (click)="editClick.emit()"
+    (keyup.enter)="editClick.emit()"
+    tabindex="0"
+    role="button"
+    aria-label="Editar avatar"
+  >
+    @if (photoURL()) {
+      <img class="avatar-img" [src]="photoURL()!" [alt]="nick()" />
+    } @else if (initials()) {
+      <div class="avatar-initials">{{ initials() }}</div>
+    } @else {
+      <div class="avatar-initials">
+        <ion-icon name="person-circle-outline"></ion-icon>
+      </div>
+    }
+
+    <div class="avatar-edit-overlay">
+      <ion-icon name="camera-outline"></ion-icon>
+      <span>{{ 'PROFILE.EDIT_OVERLAY' | translate }}</span>
     </div>
-  }
-  <div class="avatar-edit-overlay">{{ 'PROFILE.EDIT_OVERLAY' | translate }}</div>
+  </div>
+
 </div>
 
 <h2 class="profile-nick">{{ nick() }}</h2>

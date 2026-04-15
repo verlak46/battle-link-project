@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, input, output } from '@angular/core';
 import { IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { personCircleOutline } from 'ionicons/icons';
+import { personCircleOutline, cameraOutline } from 'ionicons/icons';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -19,6 +19,6 @@ export class ProfileAvatarComponent {
   editClick = output<void>();
 
   constructor() {
-    addIcons({ personCircleOutline });
+    addIcons({ personCircleOutline, cameraOutline });
   }
 }

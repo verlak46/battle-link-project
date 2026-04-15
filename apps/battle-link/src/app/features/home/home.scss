@@ -1,66 +1,182 @@
-.greeting {
-  padding: 8px 0 16px;
+// ── Header Avatar ──────────────────────────────────
+.header-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bl-gradient-primary);
+  border: none;
+  color: white;
+  font-family: var(--bl-font-display);
+  font-size: var(--bl-text-sm);
+  font-weight: var(--bl-font-bold);
+  letter-spacing: var(--bl-tracking-wide);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: var(--bl-space-2);
+  box-shadow: var(--bl-shadow-glow-primary);
+  transition: transform var(--bl-transition-spring);
 
-  h2 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin: 0 0 4px;
+  &:active {
+    transform: scale(0.9);
+  }
+}
+
+// ── Greeting ────────────────────────────────────────
+.greeting {
+  padding: var(--bl-space-4) 0 var(--bl-space-6);
+
+  h1 {
+    font-family: var(--bl-font-display);
+    font-size: var(--bl-text-2xl);
+    font-weight: var(--bl-font-bold);
+    letter-spacing: var(--bl-tracking-wide);
+    line-height: var(--bl-leading-tight);
+    margin: 0 0 var(--bl-space-1);
   }
 
   .subtitle {
     margin: 0;
     color: var(--ion-color-medium);
-    font-size: 0.95rem;
+    font-family: var(--bl-font-body);
+    font-size: var(--bl-text-sm);
   }
 }
 
+// ── CTA Card ────────────────────────────────────────
+.cta-card {
+  display: flex;
+  align-items: center;
+  gap: var(--bl-space-4);
+  padding: var(--bl-space-4) var(--bl-space-5);
+  background: rgba(77, 141, 255, 0.08);
+  border: var(--bl-border-primary);
+  border-radius: var(--bl-radius-xl);
+  margin-bottom: var(--bl-space-8);
+  text-decoration: none;
+  transition: background var(--bl-transition-fast), transform var(--bl-transition-spring);
+
+  &:active {
+    background: rgba(77, 141, 255, 0.15);
+    transform: scale(0.98);
+  }
+
+  .cta-icon-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--bl-radius-md);
+    background: var(--bl-gradient-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: var(--bl-shadow-glow-primary);
+
+    ion-icon {
+      font-size: var(--bl-text-xl);
+      color: white;
+    }
+  }
+
+  .cta-body {
+    flex: 1;
+    min-width: 0;
+
+    .cta-title {
+      display: block;
+      font-family: var(--bl-font-display);
+      font-size: var(--bl-text-md);
+      font-weight: var(--bl-font-semibold);
+      letter-spacing: var(--bl-tracking-wide);
+      color: var(--ion-color-primary);
+      margin-bottom: 2px;
+    }
+
+    .cta-subtitle {
+      display: block;
+      font-family: var(--bl-font-body);
+      font-size: var(--bl-text-xs);
+      color: var(--ion-color-medium);
+    }
+  }
+
+  .cta-chevron {
+    font-size: var(--bl-text-lg);
+    color: var(--ion-color-primary);
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+}
+
+// ── Sections ─────────────────────────────────────────
 .home-section {
-  margin-bottom: 24px;
+  margin-bottom: var(--bl-space-8);
 }
 
 .section-header {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: var(--bl-space-2);
+  margin-bottom: var(--bl-space-4);
 
-  ion-icon {
-    font-size: 1.2rem;
-    color: var(--ion-color-primary);
+  h2 {
+    margin: 0;
+    font-family: var(--bl-font-display);
+    font-size: var(--bl-text-xl);
+    font-weight: var(--bl-font-bold);
+    letter-spacing: var(--bl-tracking-wide);
+    line-height: 1;
   }
 
-  h3 {
-    margin: 0;
-    font-size: 1.05rem;
-    font-weight: 600;
+  .count-badge {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--ion-color-medium);
+    font-family: var(--bl-font-body);
+    font-size: var(--bl-text-xs);
+    font-weight: var(--bl-font-medium);
+    padding: 2px 9px;
+    border-radius: var(--bl-radius-full);
+    line-height: 1.7;
   }
 }
 
+// ── Tournament Cards ─────────────────────────────────
 .event-card {
-  margin: 0 0 12px;
-  border-radius: 12px;
+  margin: 0 0 var(--bl-space-3);
+  border-radius: var(--bl-radius-lg);
+  overflow: hidden;
+  border: var(--bl-border-subtle);
+  box-shadow: var(--bl-shadow-md);
 
-  .card-img {
-    width: 100%;
+  .card-img-wrap {
     height: 160px;
-    object-fit: cover;
-    border-radius: 12px 12px 0 0;
-    display: block;
+    overflow: hidden;
+
+    .card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
   }
 
   ion-card-title {
-    font-size: 1rem;
+    font-family: var(--bl-font-display);
+    font-size: var(--bl-text-lg);
+    font-weight: var(--bl-font-semibold);
+    letter-spacing: var(--bl-tracking-wide);
   }
 
   .card-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
-    margin-bottom: 8px;
+    gap: var(--bl-space-1);
+    margin-bottom: var(--bl-space-2);
 
     ion-chip {
       height: 24px;
-      font-size: 0.75rem;
+      font-size: var(--bl-text-xs);
     }
   }
 
@@ -68,9 +184,10 @@
   .card-place {
     display: flex;
     align-items: center;
-    gap: 4px;
-    margin: 4px 0;
-    font-size: 0.85rem;
+    gap: var(--bl-space-1);
+    margin: 3px 0;
+    font-family: var(--bl-font-body);
+    font-size: var(--bl-text-sm);
     color: var(--ion-color-medium-shade);
 
     ion-icon {
@@ -79,78 +196,109 @@
     }
   }
 
-  .card-players {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 0.85rem;
-    margin-top: 4px;
-    color: var(--ion-color-medium-shade);
-
-    ion-icon {
-      font-size: 0.9rem;
-    }
-  }
-
   .entry-fee {
-    font-size: 0.85rem;
-    margin: 4px 0 0;
+    font-family: var(--bl-font-body);
+    font-size: var(--bl-text-sm);
+    font-weight: var(--bl-font-medium);
     color: var(--ion-color-success-shade);
-    font-weight: 500;
+    margin: var(--bl-space-2) 0 0;
   }
 }
 
+// ── Discover Card ────────────────────────────────────
 .discover-card {
-  border-radius: 12px;
-  background: linear-gradient(135deg, var(--ion-color-primary) 0%, var(--ion-color-secondary) 100%);
-  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: var(--bl-space-3);
+  padding: var(--bl-space-5) var(--bl-space-6);
+  background: var(--bl-gradient-primary);
+  border-radius: var(--bl-radius-xl);
+  text-decoration: none;
+  box-shadow: var(--bl-shadow-glow-primary), var(--bl-shadow-lg);
+  transition: transform var(--bl-transition-spring);
 
-  ion-card-content {
-    color: white;
+  &:active {
+    transform: scale(0.98);
   }
 
-  .discover-content {
+  .discover-inner {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 8px;
+    gap: var(--bl-space-4);
+
+    .discover-icon {
+      font-size: 2rem;
+      color: rgba(255, 255, 255, 0.9);
+      flex-shrink: 0;
+    }
 
     h3 {
-      margin: 0 0 4px;
-      font-size: 1.05rem;
-      font-weight: 600;
+      margin: 0 0 3px;
+      font-family: var(--bl-font-display);
+      font-size: var(--bl-text-lg);
+      font-weight: var(--bl-font-bold);
+      letter-spacing: var(--bl-tracking-wide);
+      color: white;
     }
 
     p {
       margin: 0;
-      font-size: 0.85rem;
-      opacity: 0.85;
+      font-family: var(--bl-font-body);
+      font-size: var(--bl-text-sm);
+      color: rgba(255, 255, 255, 0.75);
     }
   }
 
-  .discover-icon {
-    font-size: 2.5rem;
-    opacity: 0.8;
-  }
-
-  ion-button {
-    --color: white;
+  .discover-cta {
+    font-family: var(--bl-font-body);
+    font-size: var(--bl-text-sm);
+    font-weight: var(--bl-font-semibold);
+    color: rgba(255, 255, 255, 0.85);
+    letter-spacing: var(--bl-tracking-wide);
+    align-self: flex-start;
   }
 }
 
+// ── Empty States ─────────────────────────────────────
 .empty-state {
-  text-align: center;
-  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--bl-space-3);
+  padding: var(--bl-space-8) var(--bl-space-4);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--bl-radius-lg);
+  border: var(--bl-border-subtle);
   color: var(--ion-color-medium);
+
+  ion-icon {
+    font-size: 2.2rem;
+    opacity: 0.35;
+  }
 
   p {
-    margin-bottom: 12px;
+    margin: 0;
+    font-family: var(--bl-font-body);
+    font-size: var(--bl-text-sm);
+    text-align: center;
   }
 }
 
-.no-places {
-  color: var(--ion-color-medium);
-  font-size: 0.9rem;
-  text-align: center;
-  padding: 8px 0;
+// ── Places List ──────────────────────────────────────
+.places-list {
+  background: transparent;
+  border-radius: var(--bl-radius-md);
+  overflow: hidden;
+  border: var(--bl-border-subtle);
+
+  ion-item {
+    --background: rgba(255, 255, 255, 0.02);
+    --border-color: rgba(255, 255, 255, 0.05);
+
+    ion-label h2 {
+      font-family: var(--bl-font-display);
+      font-weight: var(--bl-font-semibold);
+      letter-spacing: var(--bl-tracking-normal);
+    }
+  }
 }
