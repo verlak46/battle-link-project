@@ -1,6 +1,5 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, NgZone, ViewChild, effect, inject, input, output } from '@angular/core';
 import { IonButton, IonInput, IonItem, IonLabel, IonSpinner } from '@ionic/angular/standalone';
-import { DecimalPipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -40,20 +39,10 @@ import { TranslatePipe } from '@ngx-translate/core';
 
       @if (location()) {
         <div #mapDiv class="location-map"></div>
-        <p class="onboarding__location">
-          {{ 'ONBOARDING.LOCATION_SAVED' | translate:{ lat: (location()![0] | number:'1.4-4'), lng: (location()![1] | number:'1.4-4') } }}
-        </p>
+        @if (locationLabel()) {
+          <p class="location-formatted">{{ locationLabel() }}</p>
+        }
       }
-
-      <ion-item class="location-label-item">
-        <ion-label position="stacked">{{ 'ONBOARDING.LOCATION_LABEL' | translate }}</ion-label>
-        <ion-input
-          [value]="locationLabel()"
-          (ionInput)="locationLabelChange.emit($any($event).detail.value)"
-          [placeholder]="'ONBOARDING.LOCATION_LABEL_PLACEHOLDER' | translate"
-          clearInput>
-        </ion-input>
-      </ion-item>
     </section>
   `,
   styles: [`
@@ -88,17 +77,15 @@ import { TranslatePipe } from '@ngx-translate/core';
       margin-top: 16px;
     }
 
-    .onboarding__location {
-      margin-top: 8px;
-      font-size: 12px;
+    .location-formatted {
+      margin-top: 10px;
+      font-size: 13px;
+      font-weight: 500;
       color: var(--ion-color-medium);
-    }
-
-    .location-label-item {
-      margin-top: 16px;
+      letter-spacing: 0.02em;
     }
   `],
-  imports: [IonButton, IonSpinner, IonItem, IonLabel, IonInput, DecimalPipe, TranslatePipe],
+  imports: [IonButton, IonSpinner, IonItem, IonLabel, IonInput, TranslatePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OnboardingStepLocationComponent implements AfterViewInit {
@@ -106,6 +93,7 @@ export class OnboardingStepLocationComponent implements AfterViewInit {
 
   private map: google.maps.Map | null = null;
   private marker: google.maps.Marker | null = null;
+  private geocoder: google.maps.Geocoder | null = null;
 
   location = input<[number, number] | null>(null);
   locationLoading = input(false);
@@ -125,22 +113,37 @@ export class OnboardingStepLocationComponent implements AfterViewInit {
         this.map.setCenter(latLng);
         this.marker.setPosition(latLng);
       }
+      // Geocode when coords change after initialization
+      if (coords && this.geocoder) {
+        this.reverseGeocode({ lat: coords[0], lng: coords[1] });
+      }
     });
   }
 
   ngAfterViewInit(): void {
+    this.geocoder = new google.maps.Geocoder();
+
+    // Geocode initial coords if location is already set and no label yet
+    const coords = this.location();
+    if (coords && !this.locationLabel()) {
+      this.reverseGeocode({ lat: coords[0], lng: coords[1] });
+    }
+
     this.addressInputRef.getInputElement().then((el) => {
       const autocomplete = new google.maps.places.Autocomplete(el, {
         types: ['geocode'],
-        fields: ['geometry', 'formatted_address'],
+        fields: ['geometry', 'address_components'],
       });
 
       autocomplete.addListener('place_changed', () => {
         const place = autocomplete.getPlace();
         const loc = place.geometry?.location;
         if (loc) {
+          const formatted = this.formatAddress(place.address_components ?? []);
           this.zone.run(() => {
             this.locationChange.emit([loc.lat(), loc.lng()]);
+            this.locationLabelChange.emit(formatted);
+            el.value = formatted;
           });
         }
       });
@@ -176,5 +179,38 @@ export class OnboardingStepLocationComponent implements AfterViewInit {
       position: center,
       map: this.map,
     });
+  }
+
+  private reverseGeocode(latLng: google.maps.LatLngLiteral): void {
+    this.geocoder!.geocode({ location: latLng }, (results, status) => {
+      if (status === 'OK' && results && results.length > 0) {
+        const result =
+          results.find((r) =>
+            r.address_components.some((c) => c.types.includes('postal_code')),
+          ) ?? results[0];
+        const formatted = this.formatAddress(result.address_components);
+        this.zone.run(() => {
+          this.locationLabelChange.emit(formatted);
+        });
+      }
+    });
+  }
+
+  private formatAddress(components: google.maps.GeocoderAddressComponent[]): string {
+    const get = (type: string) =>
+      components.find((c) => c.types.includes(type))?.long_name ?? '';
+
+    const postalCode = get('postal_code');
+    const locality =
+      get('locality') || get('sublocality') || get('administrative_area_level_3');
+    const province =
+      get('administrative_area_level_2') || get('administrative_area_level_1');
+
+    if (postalCode && locality) {
+      return province
+        ? `${postalCode}, ${locality}, ${province}`
+        : `${postalCode}, ${locality}`;
+    }
+    return locality && province ? `${locality}, ${province}` : locality || '';
   }
 }
