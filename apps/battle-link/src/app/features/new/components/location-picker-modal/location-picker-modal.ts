@@ -1,4 +1,14 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone, ViewChild, inject, signal } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  NgZone,
+  ViewChild,
+  inject,
+  signal,
+} from '@angular/core';
 import {
   IonButton,
   IonButtons,
@@ -12,7 +22,6 @@ import {
   IonToolbar,
   ModalController,
 } from '@ionic/angular/standalone';
-import { DecimalPipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -20,9 +29,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   template: `
     <ion-header>
       <ion-toolbar>
-        <ion-title>
-          {{ (showRadius ? 'NEW.LOCATION_APPROXIMATE' : 'NEW.LOCATION_MAP') | translate }}
-        </ion-title>
+        <ion-title>{{ 'NEW.LOCATION_MAP' | translate }}</ion-title>
         <ion-buttons slot="end">
           <ion-button (click)="dismiss(false)">{{ 'COMMON.CANCEL' | translate }}</ion-button>
         </ion-buttons>
@@ -42,36 +49,30 @@ import { TranslatePipe } from '@ngx-translate/core';
 
       <div #mapDiv class="map-container"></div>
 
-      @if (selectedCoords()) {
-        <p class="pin-info">
-          {{ 'NEW.LOCATION_PIN_SET' | translate }}:
-          {{ selectedCoords()![0] | number:'1.4-4' }},
-          {{ selectedCoords()![1] | number:'1.4-4' }}
-        </p>
+      @if (formattedAddress()) {
+        <p class="pin-info">{{ formattedAddress() }}</p>
       }
 
-      @if (showRadius) {
-        <div class="radius-selector">
-          <ion-button
-            [fill]="selectedRadius() === 500 ? 'solid' : 'outline'"
-            size="small"
-            (click)="selectedRadius.set(500)">
-            {{ 'NEW.LOCATION_RADIUS_500' | translate }}
-          </ion-button>
-          <ion-button
-            [fill]="selectedRadius() === 1000 ? 'solid' : 'outline'"
-            size="small"
-            (click)="selectedRadius.set(1000)">
-            {{ 'NEW.LOCATION_RADIUS_1000' | translate }}
-          </ion-button>
-          <ion-button
-            [fill]="selectedRadius() === 5000 ? 'solid' : 'outline'"
-            size="small"
-            (click)="selectedRadius.set(5000)">
-            {{ 'NEW.LOCATION_RADIUS_5000' | translate }}
-          </ion-button>
-        </div>
-      }
+      <div class="radius-selector">
+        <ion-button
+          [fill]="selectedRadius() === 500 ? 'solid' : 'outline'"
+          size="small"
+          (click)="setRadius(500)">
+          {{ 'NEW.LOCATION_RADIUS_500' | translate }}
+        </ion-button>
+        <ion-button
+          [fill]="selectedRadius() === 1000 ? 'solid' : 'outline'"
+          size="small"
+          (click)="setRadius(1000)">
+          {{ 'NEW.LOCATION_RADIUS_1000' | translate }}
+        </ion-button>
+        <ion-button
+          [fill]="selectedRadius() === 5000 ? 'solid' : 'outline'"
+          size="small"
+          (click)="setRadius(5000)">
+          {{ 'NEW.LOCATION_RADIUS_5000' | translate }}
+        </ion-button>
+      </div>
     </ion-content>
 
     <ion-footer>
@@ -93,14 +94,16 @@ import { TranslatePipe } from '@ngx-translate/core';
     }
     .map-container {
       width: 100%;
-      height: 260px;
+      height: 300px;
       margin-top: 8px;
     }
     .pin-info {
-      font-size: 12px;
+      font-size: 13px;
+      font-weight: 500;
       color: var(--ion-color-medium);
       text-align: center;
-      margin: 8px 16px 0;
+      margin: 10px 16px 0;
+      letter-spacing: 0.02em;
     }
     .radius-selector {
       display: flex;
@@ -115,7 +118,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   imports: [
     IonHeader, IonToolbar, IonTitle, IonButtons, IonButton,
     IonContent, IonFooter, IonItem, IonLabel, IonInput,
-    DecimalPipe, TranslatePipe,
+    TranslatePipe,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -124,21 +127,24 @@ export class LocationPickerModalComponent implements AfterViewInit {
   private readonly zone = inject(NgZone);
   private readonly cdr = inject(ChangeDetectorRef);
 
-  // Set by ModalController via componentProps
+  /** Set by ModalController via componentProps */
   coords: [number, number] | undefined;
-  showRadius = false;
 
   selectedCoords = signal<[number, number] | null>(null);
   selectedRadius = signal<number>(1000);
+  formattedAddress = signal<string>('');
 
   private map!: google.maps.Map;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private marker!: any;
+  private circle: google.maps.Circle | null = null;
+  private geocoder!: google.maps.Geocoder;
 
   @ViewChild('mapDiv') private mapDivRef!: ElementRef<HTMLDivElement>;
   @ViewChild('addressInput') private addressInputRef!: IonInput;
 
   ngAfterViewInit(): void {
+    this.geocoder = new google.maps.Geocoder();
     this.initMap();
     this.initAutocomplete();
   }
@@ -155,7 +161,7 @@ export class LocationPickerModalComponent implements AfterViewInit {
 
     this.map = new google.maps.Map(this.mapDivRef.nativeElement, {
       center,
-      zoom: 14,
+      zoom: 13,
       disableDefaultUI: true,
       zoomControl: true,
     });
@@ -167,19 +173,30 @@ export class LocationPickerModalComponent implements AfterViewInit {
       draggable: true,
     });
 
+    if (this.coords) {
+      this.drawCircle(center, this.selectedRadius());
+      this.reverseGeocode(center);
+    }
+
     this.marker.addListener('dragend', () => {
       const pos = this.marker.getPosition() as google.maps.LatLng;
+      const latLng = { lat: pos.lat(), lng: pos.lng() };
       this.zone.run(() => {
         this.selectedCoords.set([pos.lat(), pos.lng()]);
+        this.drawCircle(latLng, this.selectedRadius());
+        this.reverseGeocode(latLng);
         this.cdr.markForCheck();
       });
     });
 
     this.map.addListener('click', (e: google.maps.MapMouseEvent) => {
       if (e.latLng) {
+        const latLng = { lat: e.latLng.lat(), lng: e.latLng.lng() };
         this.marker.setPosition(e.latLng);
         this.zone.run(() => {
           this.selectedCoords.set([e.latLng!.lat(), e.latLng!.lng()]);
+          this.drawCircle(latLng, this.selectedRadius());
+          this.reverseGeocode(latLng);
           this.cdr.markForCheck();
         });
       }
@@ -190,7 +207,7 @@ export class LocationPickerModalComponent implements AfterViewInit {
     this.addressInputRef.getInputElement().then((el) => {
       const autocomplete = new google.maps.places.Autocomplete(el, {
         types: ['geocode'],
-        fields: ['geometry', 'formatted_address'],
+        fields: ['geometry', 'address_components'],
       });
 
       autocomplete.addListener('place_changed', () => {
@@ -200,9 +217,12 @@ export class LocationPickerModalComponent implements AfterViewInit {
           const latLng = { lat: loc.lat(), lng: loc.lng() };
           this.marker.setPosition(latLng);
           this.map.panTo(latLng);
-          this.map.setZoom(15);
+          const formatted = this.formatAddress(place.address_components ?? []);
           this.zone.run(() => {
             this.selectedCoords.set([loc.lat(), loc.lng()]);
+            this.formattedAddress.set(formatted);
+            this.drawCircle(latLng, this.selectedRadius());
+            el.value = formatted;
             this.cdr.markForCheck();
           });
         }
@@ -210,11 +230,78 @@ export class LocationPickerModalComponent implements AfterViewInit {
     });
   }
 
+  private reverseGeocode(latLng: google.maps.LatLngLiteral): void {
+    this.geocoder.geocode({ location: latLng }, (results, status) => {
+      if (status === 'OK' && results && results.length > 0) {
+        const result =
+          results.find((r) =>
+            r.address_components.some((c) => c.types.includes('postal_code')),
+          ) ?? results[0];
+        const formatted = this.formatAddress(result.address_components);
+        this.zone.run(() => {
+          this.formattedAddress.set(formatted);
+          this.addressInputRef.getInputElement().then((el) => {
+            el.value = formatted;
+          });
+          this.cdr.markForCheck();
+        });
+      }
+    });
+  }
+
+  private formatAddress(components: google.maps.GeocoderAddressComponent[]): string {
+    const get = (type: string) =>
+      components.find((c) => c.types.includes(type))?.long_name ?? '';
+
+    const postalCode = get('postal_code');
+    const locality =
+      get('locality') || get('sublocality') || get('administrative_area_level_3');
+    const province =
+      get('administrative_area_level_2') || get('administrative_area_level_1');
+
+    if (postalCode && locality) {
+      return province
+        ? `${postalCode}, ${locality}, ${province}`
+        : `${postalCode}, ${locality}`;
+    }
+    return locality && province ? `${locality}, ${province}` : locality || '';
+  }
+
+  private drawCircle(center: google.maps.LatLngLiteral, radius: number): void {
+    if (this.circle) {
+      this.circle.setCenter(center);
+      this.circle.setRadius(radius);
+    } else {
+      this.circle = new google.maps.Circle({
+        map: this.map,
+        center,
+        radius,
+        fillColor: '#4D8DFF',
+        fillOpacity: 0.18,
+        strokeColor: '#4D8DFF',
+        strokeOpacity: 0.45,
+        strokeWeight: 1.5,
+        clickable: false,
+      });
+    }
+    const bounds = this.circle.getBounds();
+    if (bounds) this.map.fitBounds(bounds);
+  }
+
+  setRadius(radius: number): void {
+    this.selectedRadius.set(radius);
+    const coords = this.selectedCoords();
+    if (coords) {
+      this.drawCircle({ lat: coords[0], lng: coords[1] }, radius);
+    }
+  }
+
   dismiss(save: boolean): void {
     if (save && this.selectedCoords()) {
       this.modalCtrl.dismiss({
         coords: this.selectedCoords()!,
-        radius: this.showRadius ? this.selectedRadius() : undefined,
+        radius: this.selectedRadius(),
+        formattedAddress: this.formattedAddress(),
       });
     } else {
       this.modalCtrl.dismiss(null);

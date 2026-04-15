@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component, NgZone, ViewChild, inject, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, NgZone, ViewChild, inject, input, output, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IonButton, IonIcon, IonInput, IonItem, IonLabel, IonSelect, IonSelectOption, ModalController } from '@ionic/angular/standalone';
-import { DecimalPipe } from '@angular/common';
 import { addIcons } from 'ionicons';
 import { addCircleOutline } from 'ionicons/icons';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -57,47 +56,13 @@ import { LocationPickerModalComponent } from '../location-picker-modal/location-
 
           <ion-button
             expand="block"
-            [fill]="locationMode() === 'map' ? 'solid' : 'outline'"
+            [fill]="(locationMode() === 'map' || locationMode() === 'approximate') ? 'solid' : 'outline'"
             color="secondary"
-            (click)="openMapPicker()">
+            (click)="openLocationPicker()">
             📍 {{ 'NEW.LOCATION_MAP' | translate }}
           </ion-button>
-          @if (locationMode() === 'map' && locationCoords()) {
-            <p class="location-pin-info">
-              {{ 'NEW.LOCATION_PIN_SET' | translate }}:
-              {{ locationCoords()![0] | number:'1.4-4' }},
-              {{ locationCoords()![1] | number:'1.4-4' }}
-            </p>
-          }
-
-          <!-- <ion-button
-            expand="block"
-            [fill]="locationMode() === 'approximate' ? 'solid' : 'outline'"
-            color="secondary"
-            (click)="openApproximatePicker()">
-            🔒 {{ 'NEW.LOCATION_APPROXIMATE' | translate }}
-          </ion-button> -->
-          @if (locationMode() === 'approximate') {
-            <div class="radius-chips">
-              <ion-button
-                size="small"
-                [fill]="locationRadius() === 500 ? 'solid' : 'outline'"
-                (click)="locationRadiusChange.emit(500)">
-                {{ 'NEW.LOCATION_RADIUS_500' | translate }}
-              </ion-button>
-              <ion-button
-                size="small"
-                [fill]="locationRadius() === 1000 ? 'solid' : 'outline'"
-                (click)="locationRadiusChange.emit(1000)">
-                {{ 'NEW.LOCATION_RADIUS_1000' | translate }}
-              </ion-button>
-              <ion-button
-                size="small"
-                [fill]="locationRadius() === 5000 ? 'solid' : 'outline'"
-                (click)="locationRadiusChange.emit(5000)">
-                {{ 'NEW.LOCATION_RADIUS_5000' | translate }}
-              </ion-button>
-            </div>
+          @if ((locationMode() === 'map' || locationMode() === 'approximate') && locationLabel()) {
+            <p class="location-pin-info">{{ locationLabel() }}</p>
           }
         </div>
       </div>
@@ -164,14 +129,11 @@ import { LocationPickerModalComponent } from '../location-picker-modal/location-
       margin: 4px 16px 0;
     }
     .location-pin-info {
-      font-size: 12px;
+      font-size: 13px;
+      font-weight: 500;
       color: var(--ion-color-medium);
       margin: 4px 16px 0;
-    }
-    .radius-chips {
-      display: flex;
-      gap: 8px;
-      padding: 4px 0;
+      letter-spacing: 0.02em;
     }
     .required-mark {
       color: var(--ion-color-danger);
@@ -181,7 +143,7 @@ import { LocationPickerModalComponent } from '../location-picker-modal/location-
   imports: [
     IonItem, IonLabel, IonInput, IonSelect, IonSelectOption,
     IonButton, IonIcon,
-    RouterLink, DecimalPipe, TranslatePipe,
+    RouterLink, TranslatePipe,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -191,6 +153,9 @@ export class StepLocationComponent {
 
   private readonly initializedInputs = new WeakSet<HTMLElement>();
   private addressInputEl: IonInput | undefined;
+
+  /** Local display label for the selected CP location */
+  readonly locationLabel = signal<string>('');
 
   constructor() {
     addIcons({ addCircleOutline });
@@ -257,7 +222,7 @@ export class StepLocationComponent {
     this.locationModeChange.emit('profile');
   }
 
-  async openMapPicker(): Promise<void> {
+  async openLocationPicker(): Promise<void> {
     const profileCoords = this.userLocation()?.coordinates;
     const existingCoords = this.locationCoords();
     const coords: [number, number] | undefined = existingCoords
@@ -265,35 +230,25 @@ export class StepLocationComponent {
 
     const modal = await this.modalCtrl.create({
       component: LocationPickerModalComponent,
-      componentProps: { coords, showRadius: false },
+      componentProps: { coords },
     });
     await modal.present();
 
-    const { data } = await modal.onDidDismiss<{ coords: [number, number]; radius?: number } | null>();
-    if (data?.coords) {
-      this.locationModeChange.emit('map');
-      this.locationCoordsChange.emit(data.coords);
-    }
-  }
+    const { data } = await modal.onDidDismiss<{
+      coords: [number, number];
+      radius: number;
+      formattedAddress: string;
+    } | null>();
 
-  async openApproximatePicker(): Promise<void> {
-    const profileCoords = this.userLocation()?.coordinates;
-    const existingCoords = this.locationCoords();
-    const coords: [number, number] | undefined = existingCoords
-      ?? (profileCoords ? [profileCoords[1], profileCoords[0]] : undefined);
-
-    const modal = await this.modalCtrl.create({
-      component: LocationPickerModalComponent,
-      componentProps: { coords, showRadius: true },
-    });
-    await modal.present();
-
-    const { data } = await modal.onDidDismiss<{ coords: [number, number]; radius?: number } | null>();
     if (data?.coords) {
       this.locationModeChange.emit('approximate');
       this.locationCoordsChange.emit(data.coords);
-      if (data.radius !== undefined) {
-        this.locationRadiusChange.emit(data.radius);
+      this.locationRadiusChange.emit(data.radius);
+      if (data.formattedAddress) {
+        this.locationLabel.set(data.formattedAddress);
+        // Extract municipality (2nd part of "CP, Municipio, Provincia")
+        const municipality = data.formattedAddress.split(',')[1]?.trim();
+        if (municipality) this.cityChange.emit(municipality);
       }
     }
   }
