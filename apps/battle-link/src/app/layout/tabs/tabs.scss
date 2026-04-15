@@ -1,9 +1,77 @@
+// Tab bar buttons
+ion-tab-button {
+  --color: rgba(255, 255, 255, 0.4); // dark mode default
+  --color-selected: var(--ion-color-primary);
+  font-family: var(--bl-font-display);
+  letter-spacing: var(--bl-tracking-wider);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  transition: color var(--bl-transition-base);
+  position: relative;
+
+  ion-icon {
+    font-size: 1.6rem;
+    margin-bottom: 2px;
+    transition: transform var(--bl-transition-spring), filter var(--bl-transition-base);
+  }
+
+  // Active top indicator line
+  &.tab-selected::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 2px;
+    background: var(--bl-gradient-primary);
+    border-radius: 0 0 var(--bl-radius-sm) var(--bl-radius-sm);
+    box-shadow: 0 0 8px rgba(77, 141, 255, 0.6);
+  }
+
+  &.tab-selected ion-icon {
+    transform: translateY(-2px);
+    filter: drop-shadow(0 0 7px rgba(77, 141, 255, 0.55));
+  }
+
+  &.tab-selected ion-label {
+    color: var(--ion-color-primary);
+    font-weight: var(--bl-font-bold);
+  }
+}
+
+// Center action button
 .tab-nuevo-icon {
-  font-size: 2.8rem;
+  font-size: 2.4rem !important;
   color: var(--ion-color-primary);
+  filter:
+    drop-shadow(0 0 8px rgba(77, 141, 255, 0.55))
+    drop-shadow(0 0 16px rgba(77, 141, 255, 0.25));
+  transition: transform var(--bl-transition-spring), filter var(--bl-transition-base);
 }
 
 ion-tab-button.tab-nuevo {
   --color: var(--ion-color-primary);
+  font-size: 2.4rem;
+  &.tab-selected::before {
+    display: none;
+  }
+
+  &:active .tab-nuevo-icon {
+    transform: scale(0.88) rotate(45deg);
+    filter: drop-shadow(0 0 12px rgba(77, 141, 255, 0.7));
+  }
 }
 
+// Light mode: dark icon/label color instead of white
+:host-context(html:not(.ion-palette-dark)) ion-tab-button {
+  --color: rgba(0, 0, 0, 1);
+}
+
+:host-context(html:not(.ion-palette-dark)) ion-tab-button ion-label {
+  color: rgba(0, 0, 0, 1);
+}
+
+:host-context(html:not(.ion-palette-dark)) ion-tab-button.tab-selected ion-label {
+  color: var(--ion-color-primary);
+}

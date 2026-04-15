@@ -1,6 +1,8 @@
 <ion-content class="ion-padding auth-page">
   <div class="auth-card">
-    <img [src]="logoUrl" alt="Logo" class="auth-logo" />
+    <div class="auth-logo-wrap">
+      <img [src]="logoUrl()" alt="Logo" class="auth-logo" />
+    </div>
 
     @if (sessionExpired()) {
       <p class="session-expired-banner" role="alert">
@@ -8,6 +10,7 @@
       </p>
     }
 
+    <div class="auth-panel">
     <ion-segment [value]="mode()" (ionChange)="onSegmentChange($event)" class="auth-segment">
       <ion-segment-button value="login">
         <ion-label>{{ 'LOGIN.SIGN_IN' | translate }}</ion-label>
@@ -95,5 +98,6 @@
       <ion-icon name="logo-google" slot="start"></ion-icon>
       {{ 'LOGIN.CONTINUE_GOOGLE' | translate }}
     </ion-button>
+    </div>
   </div>
 </ion-content>

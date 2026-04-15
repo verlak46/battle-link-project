@@ -63,7 +63,7 @@
   },
   "HOME": {
     "TITLE": "Inicio",
-    "GREETING": "Hola, {{ nick }} 👋",
+    "GREETING": "Hola, {{ nick }}",
     "READY": "¿Listo para jugar?",
     "MY_EVENTS": "Mis próximas partidas",
     "NO_EVENTS": "No tienes partidas próximas.",

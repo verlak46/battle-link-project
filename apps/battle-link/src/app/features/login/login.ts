@@ -16,6 +16,7 @@ import { addIcons } from 'ionicons';
 import { logoGoogle } from 'ionicons/icons';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../core/services/auth.service';
+import { ThemeService } from '../../core/services/theme.service';
 import { getApiError } from '../../core/utils/api-error';
 
 @Component({
@@ -40,11 +41,12 @@ import { getApiError } from '../../core/utils/api-error';
 export class LoginPage {
   private readonly fb = inject(FormBuilder);
   private readonly auth = inject(AuthService);
+  private readonly theme = inject(ThemeService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly translate = inject(TranslateService);
 
-  readonly logoUrl = '/logo_white.png';
+  readonly logoUrl = computed(() => this.theme.current() === 'dark' ? '/logo.png' : '/logo_white.png');
 
   mode = signal<'login' | 'register'>('login');
   loading = signal(false);

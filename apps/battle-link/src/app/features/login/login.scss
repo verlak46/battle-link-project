@@ -1,43 +1,158 @@
 .auth-page {
   --background: var(--ion-background-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100%;
+
+  // Ionic: target the inner scroll container for flex centering
+  &::part(scroll) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+    padding-top: max(24px, env(safe-area-inset-top));
+    padding-bottom: max(32px, env(safe-area-inset-bottom));
+    box-sizing: border-box;
+  }
+
+  // Tactical grid background
+  &::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(61, 126, 245, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(61, 126, 245, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  // Atmospheric glow radials
+  &::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 15% 0%, rgba(61, 126, 245, 0.18) 0%, transparent 65%),
+      radial-gradient(ellipse 60% 45% at 85% 100%, rgba(200, 130, 74, 0.14) 0%, transparent 65%),
+      radial-gradient(ellipse 40% 30% at 50% 50%, rgba(61, 126, 245, 0.05) 0%, transparent 80%);
+    pointer-events: none;
+    z-index: 0;
+  }
 }
 
 .auth-card {
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+// ── Logo ──────────────────────────────────────────────
+.auth-logo-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 28px;
 }
 
 .auth-logo {
   display: block;
-  width: 180px;
-  height: auto;
-  margin: 0 auto 24px;
+  width: 140px;
+  height: 140px;
   object-fit: contain;
+  border-radius: var(--bl-radius-xl);
+  outline: 1.5px solid rgba(61, 126, 245, 0.35);
+  outline-offset: 3px;
+  box-shadow:
+    0 0 0 1px rgba(61, 126, 245, 0.15),
+    0 0 24px rgba(61, 126, 245, 0.4),
+    0 0 56px rgba(61, 126, 245, 0.18),
+    0 0 80px rgba(200, 130, 74, 0.1);
+  transition: box-shadow var(--bl-transition-base);
+
+  &:hover {
+    box-shadow:
+      0 0 0 1px rgba(61, 126, 245, 0.25),
+      0 0 32px rgba(61, 126, 245, 0.55),
+      0 0 72px rgba(61, 126, 245, 0.22),
+      0 0 100px rgba(200, 130, 74, 0.15);
+  }
 }
 
+// Light mode: logo_white.png (white bg fuses with light page)
+// The outline + shadow provide definition since the bg is invisible
+html:not(.ion-palette-dark) .auth-logo {
+  outline-color: rgba(61, 126, 245, 0.3);
+  box-shadow:
+    0 0 0 1px rgba(61, 126, 245, 0.12),
+    0 0 20px rgba(61, 126, 245, 0.2),
+    0 4px 24px rgba(0, 0, 0, 0.12);
+}
+
+// ── Session expired ────────────────────────────────────
 .session-expired-banner {
   margin: 0 0 16px;
-  padding: 12px;
-  border-radius: 8px;
-  background: color-mix(in srgb, var(--ion-color-warning) 15%, transparent);
+  padding: 12px 16px;
+  border-radius: var(--bl-radius-md);
+  background: color-mix(in srgb, var(--ion-color-warning) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ion-color-warning) 30%, transparent);
   color: var(--ion-color-warning-shade);
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   text-align: center;
+  letter-spacing: var(--bl-tracking-wide);
 }
 
+// ── Segment switcher ──────────────────────────────────
 .auth-segment {
-  margin-bottom: 24px;
+  margin-bottom: 28px;
+  --background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--bl-radius-md);
+  border: var(--bl-border-subtle);
+  overflow: hidden;
 }
 
+// ── Form card panel ───────────────────────────────────
+.auth-panel {
+  padding: 24px 20px;
+  border-radius: var(--bl-radius-lg);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: var(--bl-border-subtle);
+  box-shadow:
+    0 0 0 1px rgba(61, 126, 245, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    var(--bl-shadow-lg);
+
+  // Top edge highlight
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 20%;
+    right: 20%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(61, 126, 245, 0.4), transparent);
+    border-radius: 1px;
+  }
+
+  position: relative;
+}
+
+// ── Form fields ───────────────────────────────────────
 .auth-form ion-item {
   --padding-start: 0;
   --inner-padding-end: 0;
-  margin-bottom: 8px;
+  --background: rgba(255, 255, 255, 0.04);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --highlight-color-focused: var(--ion-color-primary);
+  border-radius: var(--bl-radius-sm);
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: box-shadow var(--bl-transition-base);
+
+  &:focus-within {
+    box-shadow: 0 0 0 1px rgba(61, 126, 245, 0.35), 0 0 12px rgba(61, 126, 245, 0.12);
+  }
 }
 
 .auth-form ion-item::part(native) {
@@ -45,36 +160,64 @@
 }
 
 .input-error {
-  margin: -4px 0 8px;
+  margin: -6px 0 10px;
   padding: 0;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--ion-color-danger);
+  letter-spacing: var(--bl-tracking-wide);
 }
 
 .auth-error {
   margin: 12px 0;
-  padding: 12px;
-  border-radius: 8px;
-  background: color-mix(in srgb, var(--ion-color-danger) 15%, transparent);
+  padding: 12px 16px;
+  border-radius: var(--bl-radius-md);
+  background: color-mix(in srgb, var(--ion-color-danger) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ion-color-danger) 30%, transparent);
   color: var(--ion-color-danger);
-  font-size: 0.9rem;
+  font-size: 0.875rem;
+  letter-spacing: var(--bl-tracking-wide);
 }
 
+// ── CTA button ────────────────────────────────────────
 .auth-submit {
-  margin-top: 16px;
+  margin-top: 20px;
+  --border-radius: var(--bl-radius-md);
+  --box-shadow: 0 0 18px rgba(61, 126, 245, 0.25);
+  position: relative;
+  overflow: hidden;
+
+  // Shimmer on hover
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.08) 50%, transparent 60%);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+    pointer-events: none;
+  }
+
+  &:hover::after {
+    transform: translateX(100%);
+  }
 }
 
 .auth-submit ion-spinner {
   margin-inline-end: 8px;
 }
 
+// ── Divider ───────────────────────────────────────────
 .auth-divider {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin: 24px 0 16px;
+  gap: 16px;
+  margin: 24px 0 18px;
   color: var(--ion-color-medium);
-  font-size: 0.9rem;
+  font-family: var(--bl-font-display);
+  font-size: 0.7rem;
+  font-weight: var(--bl-font-bold);
+  letter-spacing: var(--bl-tracking-widest);
+  text-transform: uppercase;
 }
 
 .auth-divider::before,
@@ -82,16 +225,39 @@
   content: '';
   flex: 1;
   height: 1px;
-  background: var(--ion-color-medium-tint);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.12),
+    transparent
+  );
 }
 
+// ── Google button ─────────────────────────────────────
 .auth-google {
   margin-bottom: 24px;
+  --border-radius: var(--bl-radius-md);
+  --border-color: rgba(255, 255, 255, 0.12);
+  transition: --border-color var(--bl-transition-base), box-shadow var(--bl-transition-base);
+
+  &:hover {
+    --border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 14px rgba(255, 255, 255, 0.05);
+  }
 }
 
+// ── Forgot password link ──────────────────────────────
 .forgot-link {
   display: block;
   margin-top: 4px;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
+  opacity: 0.6;
+  letter-spacing: var(--bl-tracking-wide);
+  transition: opacity var(--bl-transition-fast);
+
+  &:hover {
+    opacity: 0.9;
+  }
 }
 
+// Light mode overrides moved to global styles.scss (avoids ViewEncapsulation)

@@ -54,7 +54,12 @@
       "Bash(find \"G:/battle-link-project\" -path \"*/shared-models/*\" -type f 2>/dev/null | head -20)",
       "Bash(find \"G:/battle-link-project/apps/battle-link-api/src\" -type f -path \"*event*\" -name \"*.ts\" 2>/dev/null | head -10)",
       "Bash(find \"/g/battle-link-project/apps/battle-link/src\" -path \"*/theme/*\" -o -name \"*theme*\" -o -name \"*global*\" -o -name \"*variables*\" | grep -E \"\\\\.\\(scss|css\\)$\")",
-      "Bash(find \"/g/battle-link-project/apps/battle-link\" -name \"ionic.config.json\" -o -name \"angular.json\" | head -1 | xargs cat 2>/dev/null | head -100)"
+      "Bash(find \"/g/battle-link-project/apps/battle-link\" -name \"ionic.config.json\" -o -name \"angular.json\" | head -1 | xargs cat 2>/dev/null | head -100)",
+      "Bash(npx nx:*)",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__take_screenshot",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__navigate_page",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__evaluate_script",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__emulate"
     ]
   }
 }

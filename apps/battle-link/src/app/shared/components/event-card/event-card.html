@@ -1,6 +1,8 @@
 <ion-card class="event-card">
   @if (event().imageUrl) {
-    <img [src]="event().imageUrl" [alt]="event().title" class="card-img" />
+    <div class="card-img-wrap">
+      <img [src]="event().imageUrl" [alt]="event().title" class="card-img" />
+    </div>
   }
   <ion-card-header>
     <div class="card-kind-badge">

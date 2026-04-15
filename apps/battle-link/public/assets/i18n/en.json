@@ -63,7 +63,7 @@
   },
   "HOME": {
     "TITLE": "Home",
-    "GREETING": "Hi, {{ nick }} 👋",
+    "GREETING": "Hi, {{ nick }}",
     "READY": "Ready to play?",
     "MY_EVENTS": "My upcoming games",
     "NO_EVENTS": "You have no upcoming games.",
