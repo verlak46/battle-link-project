@@ -1,4 +1,5 @@
 import { Component, signal, computed, inject } from '@angular/core';
+import { ViewWillEnter } from '@ionic/angular';
 import {
   IonHeader,
   IonToolbar,
@@ -53,7 +54,7 @@ import { StepDetailsComponent } from './components/step-details/step-details';
     TranslatePipe,
   ],
 })
-export class NewPage {
+export class NewPage implements ViewWillEnter {
   private readonly api = inject(ApiService);
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
@@ -117,6 +118,14 @@ export class NewPage {
       chevronForwardOutline,
       chevronBackOutline,
     });
+  }
+
+  ionViewWillEnter(): void {
+    this.form.set({ ...this.emptyForm });
+    this.currentStep.set(1);
+    this.type.set('game');
+    this.errorMessage.set(null);
+    this.saving.set(false);
   }
 
   onTypeChange(next: CreationType | null): void {
