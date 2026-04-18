@@ -3,7 +3,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
 import { ApiService } from './api.service';
 import { environment } from '../../../environments/environment';
-import { CreateEventPayload, CreatePlacePayload } from '@battle-link/shared-models';
+import { CreateEventPayload, CreatePlacePayload, EventsPage } from '@battle-link/shared-models';
 
 const base = environment.apiUrl.replace(/\/$/, '');
 
@@ -169,11 +169,27 @@ describe('ApiService', () => {
   });
 
   describe('getEvents()', () => {
-    it('should GET /events and unwrap', () => {
-      service.getEvents().subscribe((res) => expect(res).toEqual([mockEvent]));
+    it('should GET /events and return EventsPage shape', () => {
+      const mockPage: EventsPage = { items: [mockEvent], total: 1 };
+      service.getEvents().subscribe((res) => expect(res).toEqual(mockPage));
       const req = http.expectOne(`${base}/events`);
       expect(req.request.method).toBe('GET');
-      req.flush(wrap([mockEvent]));
+      req.flush(wrap(mockPage));
+    });
+
+    it('should forward lat/lng/page/limit as query params', () => {
+      const mockPage: EventsPage = { items: [], total: 0 };
+      service.getEvents({ lat: 40.4168, lng: -3.7038, page: 2, limit: 20 }).subscribe();
+      const req = http.expectOne(
+        (r) =>
+          r.url === `${base}/events` &&
+          r.params.get('lat') === '40.4168' &&
+          r.params.get('lng') === '-3.7038' &&
+          r.params.get('page') === '2' &&
+          r.params.get('limit') === '20',
+      );
+      expect(req.request.method).toBe('GET');
+      req.flush(wrap(mockPage));
     });
   });
 

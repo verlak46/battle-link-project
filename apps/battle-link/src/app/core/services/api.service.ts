@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import {
@@ -10,10 +10,11 @@ import {
   Place,
   CreatePlacePayload,
   Event,
+  EventsPage,
   CreateEventPayload,
 } from '@battle-link/shared-models';
 
-export type { User as AuthUser, GeoLocation as UserLocation, ExperienceLevel, Event, CreateEventPayload } from '@battle-link/shared-models';
+export type { User as AuthUser, GeoLocation as UserLocation, ExperienceLevel, Event, EventsPage, CreateEventPayload } from '@battle-link/shared-models';
 
 export interface AuthResponse {
   token: string;
@@ -48,6 +49,13 @@ export class ApiService {
 
   private get<T>(path: string): Observable<T> {
     return this.http.get<ApiResponse<T>>(`${this.baseUrl}/${path}`).pipe(map((res) => res.data));
+  }
+
+  private getWithParams<T>(path: string, params: Record<string, string>): Observable<T> {
+    const httpParams = new HttpParams({ fromObject: params });
+    return this.http
+      .get<ApiResponse<T>>(`${this.baseUrl}/${path}`, { params: httpParams })
+      .pipe(map((res) => res.data));
   }
 
   private post<T>(path: string, body: unknown): Observable<T> {
@@ -106,8 +114,14 @@ export class ApiService {
     return this.post('events', payload);
   }
 
-  getEvents(): Observable<Event[]> {
-    return this.get('events');
+  getEvents(params: { lat?: number; lng?: number; page?: number; limit?: number; excludeUserId?: string } = {}): Observable<EventsPage> {
+    const p: Record<string, string> = {};
+    if (params.lat != null) p['lat'] = String(params.lat);
+    if (params.lng != null) p['lng'] = String(params.lng);
+    if (params.page != null) p['page'] = String(params.page);
+    if (params.limit != null) p['limit'] = String(params.limit);
+    if (params.excludeUserId) p['excludeUserId'] = params.excludeUserId;
+    return this.getWithParams<EventsPage>('events', p);
   }
 
   getMyEvents(): Observable<Event[]> {

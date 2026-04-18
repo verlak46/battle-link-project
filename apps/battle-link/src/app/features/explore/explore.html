@@ -42,67 +42,13 @@
         </div>
       }
 
-      @for (item of filteredItems(); track item.data._id) {
-
-        @switch (item.kind) {
-
-          @case ('event') {
-            <app-event-card [event]="item.data" [showKindBadge]="true" />
-          }
-
-          @case ('tournament') {
-            <ion-card class="explore-card">
-              @if (item.data.imageUrl) {
-                <div class="card-img-wrap">
-                  <img [src]="item.data.imageUrl" [alt]="item.data.title" class="card-img" />
-                </div>
-              }
-              <ion-card-header>
-                <div class="card-kind-badge">
-                  <ion-chip color="warning">
-                    <ion-icon name="trophy-outline" slot="start"></ion-icon>
-                    <ion-label>{{ 'EXPLORE.TOURNAMENT_BADGE' | translate }}</ion-label>
-                  </ion-chip>
-                </div>
-                <ion-card-title>{{ item.data.title }}</ion-card-title>
-              </ion-card-header>
-              <ion-card-content>
-                <div class="card-meta">
-                  <ion-chip color="medium">
-                    <ion-label>{{ item.data.game }}</ion-label>
-                  </ion-chip>
-                  <ion-chip color="medium">
-                    <ion-label>{{ item.data.format }}</ion-label>
-                  </ion-chip>
-                </div>
-                @if (item.data.description) {
-                  <p class="card-description">{{ item.data.description }}</p>
-                }
-                <p class="card-info">
-                  <ion-icon name="calendar-outline"></ion-icon>
-                  {{ item.data.startDate | date:'EEE d MMM' }}
-                </p>
-                @if (item.data.placeName) {
-                  <p class="card-info">
-                    <ion-icon name="storefront-outline"></ion-icon>
-                    {{ item.data.placeName }}
-                  </p>
-                }
-                <p class="card-info">
-                  <ion-icon name="people-outline"></ion-icon>
-                  {{ 'COMMON.SLOTS_COUNT' | translate:{ current: item.data.currentPlayers, max: item.data.maxPlayers } }}
-                </p>
-                @if (item.data.entryFee != null) {
-                  <p class="entry-fee">
-                    {{ 'HOME.ENTRY_FEE' | translate:{ fee: item.data.entryFee === 0 ? ('COMMON.FREE' | translate) : item.data.entryFee + '€' } }}
-                  </p>
-                }
-              </ion-card-content>
-            </ion-card>
-          }
-
-        }
+      @for (item of filteredItems(); track item._id) {
+        <app-event-card [event]="item" [showKindBadge]="true" />
       }
+
+      <ion-infinite-scroll [disabled]="!hasMore()" (ionInfinite)="onIonInfinite($event)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
     </div>
 
     <div class="view-toggle-btn">
@@ -121,12 +67,12 @@
       width="100%"
       height="100%">
 
-      @for (item of filteredItems(); track item.data._id) {
+      @for (item of filteredItems(); track item._id) {
         @if (markerPosition(item); as pos) {
           <map-marker
             #marker="mapMarker"
             [position]="pos"
-            [title]="item.data.title"
+            [title]="item.title"
             (mapClick)="openInfo(marker, item)">
           </map-marker>
         }
@@ -135,16 +81,16 @@
       <map-info-window>
         @if (selectedItem()) {
           <div class="info-window">
-            <h3>{{ selectedItem()!.data.title }}</h3>
+            <h3>{{ selectedItem()!.title }}</h3>
             <p class="info-kind">
-              {{ (selectedItem()!.kind === 'event' ? 'EXPLORE.GAME_BADGE' : 'EXPLORE.TOURNAMENT_BADGE') | translate }}
-              · {{ selectedItem()!.data.game }}
+              {{ (selectedItem()!.type === 'tournament' ? 'EXPLORE.TOURNAMENT_BADGE' : 'EXPLORE.GAME_BADGE') | translate }}
+              · {{ selectedItem()!.game }}
             </p>
             <p class="info-date">
-              {{ selectedItem()!.data.startDate | date:'d MMM yyyy' }}
+              {{ selectedItem()!.startDate | date:'d MMM yyyy' }}
             </p>
-            @if (selectedItem()!.data.placeName) {
-              <p class="info-place">{{ selectedItem()!.data.placeName }}</p>
+            @if (selectedItem()!.placeName) {
+              <p class="info-place">{{ selectedItem()!.placeName }}</p>
             }
           </div>
         }

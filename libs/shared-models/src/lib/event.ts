@@ -30,6 +30,11 @@ export interface Event {
   updatedAt: string;
 }
 
+export interface EventsPage {
+  items: Event[];
+  total: number;
+}
+
 export interface CreateEventPayload {
   title: string;
   type: CreationType;

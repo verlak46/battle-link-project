@@ -59,7 +59,10 @@
       "mcp__plugin_chrome-devtools-mcp_chrome-devtools__take_screenshot",
       "mcp__plugin_chrome-devtools-mcp_chrome-devtools__navigate_page",
       "mcp__plugin_chrome-devtools-mcp_chrome-devtools__evaluate_script",
-      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__emulate"
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__emulate",
+      "Bash(find /g/battle-link-project/apps/battle-link-api/src -name \"*.ts\" -type f | xargs grep -l \"PaginationQuery\\\\|QueryBuilder\\\\|$near\\\\|\\\\$geoNear\" 2>/dev/null)",
+      "Bash(grep -r \"near\\\\|geoNear\\\\|$geoWithin\\\\|distance\" /g/battle-link-project/apps/battle-link-api/src --include=\"*.ts\")",
+      "Bash(find /g/battle-link-project/libs/shared-models -type f -name \"*.ts\" | xargs grep -l \"Game\\\\|Place\")"
     ]
   }
 }
