@@ -2,7 +2,7 @@ import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonSpinner } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { gameControllerOutline, locationOutline } from 'ionicons/icons';
+import { gameControllerOutline, locationOutline, personCircleOutline } from 'ionicons/icons';
 import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../core/services/auth.service';
@@ -80,7 +80,7 @@ export class OnboardingPage implements OnInit {
   });
 
   constructor() {
-    addIcons({ gameControllerOutline, locationOutline });
+    addIcons({ personCircleOutline, gameControllerOutline, locationOutline });
   }
 
   ngOnInit(): void {
