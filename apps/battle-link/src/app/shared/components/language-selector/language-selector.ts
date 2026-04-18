@@ -7,7 +7,7 @@ import { LanguageService, AppLanguage } from '../../../core/services/language.se
   selector: 'app-language-selector',
   template: `
     <ion-list>
-      <ion-list-header>{{ 'LANGUAGE.LABEL' | translate }}</ion-list-header>
+      <ion-list-header><h3>{{ 'LANGUAGE.LABEL' | translate }}</h3></ion-list-header>
       <ion-item lines="none">
         <ion-segment [value]="lang.current" (ionChange)="onChange($any($event).detail.value)">
           <ion-segment-button value="es">

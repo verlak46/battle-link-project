@@ -53,7 +53,8 @@ import { TranslatePipe } from '@ngx-translate/core';
         <p class="pin-info">{{ formattedAddress() }}</p>
       }
 
-      <div class="radius-selector">
+      <!-- NOT NECESSARY -->
+      <!-- <div class="radius-selector">
         <ion-button
           [fill]="selectedRadius() === 500 ? 'solid' : 'outline'"
           size="small"
@@ -72,7 +73,7 @@ import { TranslatePipe } from '@ngx-translate/core';
           (click)="setRadius(5000)">
           {{ 'NEW.LOCATION_RADIUS_5000' | translate }}
         </ion-button>
-      </div>
+      </div> -->
     </ion-content>
 
     <ion-footer>
