@@ -36,6 +36,18 @@
         </button>
       </div>
 
+      @if (loadingEvents()) {
+        @for (i of [1, 2, 3]; track i) {
+          <ion-card style="margin: 8px 16px; border-radius: 12px;">
+            <ion-card-content>
+              <ion-skeleton-text [animated]="true" style="width: 60%; height: 20px; border-radius: 4px;"></ion-skeleton-text>
+              <ion-skeleton-text [animated]="true" style="width: 40%; height: 14px; margin-top: 10px; border-radius: 4px;"></ion-skeleton-text>
+              <ion-skeleton-text [animated]="true" style="width: 55%; height: 14px; margin-top: 6px; border-radius: 4px;"></ion-skeleton-text>
+            </ion-card-content>
+          </ion-card>
+        }
+      } @else {
+
       @if (filteredItems().length === 0) {
         <div class="empty-search">
           <p>{{ 'EXPLORE.NO_RESULTS' | translate:{ query: searchQuery() } }}</p>
@@ -47,7 +59,13 @@
         @switch (item.kind) {
 
           @case ('event') {
-            <app-event-card [event]="item.data" [showKindBadge]="true" />
+            <app-event-card
+              [event]="item.data"
+              [showKindBadge]="true"
+              [showJoinButton]="true"
+              [currentUserId]="currentUserId()"
+              (joined)="onEventJoined($event)"
+              (left)="onEventLeft($event)" />
           }
 
           @case ('tournament') {
@@ -103,6 +121,8 @@
 
         }
       }
+
+      } <!-- end @else loadingEvents -->
     </div>
 
     <div class="view-toggle-btn">

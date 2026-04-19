@@ -3,6 +3,7 @@ import {
   OnInit,
   signal,
   computed,
+  inject,
   ViewChild,
   ChangeDetectionStrategy,
 } from '@angular/core';
@@ -20,6 +21,7 @@ import {
   IonIcon,
   IonButton,
   IonSearchbar,
+  IonSkeletonText,
 } from '@ionic/angular/standalone';
 import { DatePipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -33,11 +35,10 @@ import {
   storefrontOutline,
   peopleOutline,
 } from 'ionicons/icons';
-import {
-  MOCK_EXPLORE_ITEMS,
-  ExploreItem,
-} from '../../shared/mock/events.mock';
+import { MOCK_TOURNAMENTS, ExploreItem } from '../../shared/mock/events.mock';
 import { EventCardComponent } from '../../shared/components/event-card/event-card';
+import { ApiService, Event } from '../../core/services/api.service';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-explore',
@@ -58,6 +59,7 @@ import { EventCardComponent } from '../../shared/components/event-card/event-car
     IonIcon,
     IonButton,
     IonSearchbar,
+    IonSkeletonText,
     DatePipe,
     TranslatePipe,
     GoogleMap,
@@ -67,12 +69,22 @@ import { EventCardComponent } from '../../shared/components/event-card/event-car
   ],
 })
 export class ExplorePage implements OnInit {
+  private readonly api = inject(ApiService);
+  private readonly auth = inject(AuthService);
+
   @ViewChild(MapInfoWindow) infoWindow?: MapInfoWindow;
 
   viewMode = signal<'list' | 'map'>('list');
   searchQuery = signal('');
 
-  private readonly allItems = signal<ExploreItem[]>(MOCK_EXPLORE_ITEMS);
+  readonly events = signal<Event[]>([]);
+  readonly loadingEvents = signal(true);
+  readonly currentUserId = computed(() => this.auth.user()?._id ?? null);
+
+  private readonly allItems = computed<ExploreItem[]>(() => [
+    ...this.events().map((data) => ({ kind: 'event' as const, data })),
+    ...MOCK_TOURNAMENTS.map((data) => ({ kind: 'tournament' as const, data })),
+  ]);
 
   readonly activeTimeFilter = signal<'upcoming' | 'today' | 'weekend'>('upcoming');
   readonly activeCategoryFilter = signal<'all' | 'event' | 'tournament'>('all');
@@ -131,6 +143,32 @@ export class ExplorePage implements OnInit {
         },
       );
     }
+    this.loadEvents();
+  }
+
+  private loadEvents(): void {
+    this.loadingEvents.set(true);
+    this.api.getEvents().subscribe({
+      next: (data) => {
+        this.events.set(data);
+        this.loadingEvents.set(false);
+      },
+      error: () => {
+        this.loadingEvents.set(false);
+      },
+    });
+  }
+
+  onEventJoined(updated: Event): void {
+    this.events.update((list) =>
+      list.map((e) => (e._id === updated._id ? updated : e)),
+    );
+  }
+
+  onEventLeft(updated: Event): void {
+    this.events.update((list) =>
+      list.map((e) => (e._id === updated._id ? updated : e)),
+    );
   }
 
   markerPosition(item: ExploreItem): google.maps.LatLngLiteral | null {

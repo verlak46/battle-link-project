@@ -80,5 +80,51 @@
         {{ 'COMMON.PLAYERS_COUNT' | translate:{ current: event().currentPlayers, max: event().maxPlayers } }}
       </p>
     }
+
+    @if (showJoinButton()) {
+      <div class="card-actions">
+        @if (error()) {
+          <p class="card-action-error">{{ error() }}</p>
+        }
+        @if (isOwner()) {
+          <ion-chip color="medium">
+            <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+            <ion-label>{{ 'EVENT.YOU_CREATED' | translate }}</ion-label>
+          </ion-chip>
+        } @else if (isParticipant()) {
+          <ion-button
+            fill="outline"
+            color="medium"
+            size="small"
+            [disabled]="joining()"
+            (click)="leave(); $event.stopPropagation()">
+            @if (joining()) {
+              <ion-spinner name="crescent" slot="start"></ion-spinner>
+            } @else {
+              <ion-icon name="exit-outline" slot="start"></ion-icon>
+            }
+            {{ 'EVENT.LEAVE' | translate }}
+          </ion-button>
+        } @else if (isFull()) {
+          <ion-chip color="danger">
+            <ion-label>{{ 'EVENT.FULL' | translate }}</ion-label>
+          </ion-chip>
+        } @else {
+          <ion-button
+            fill="solid"
+            color="primary"
+            size="small"
+            [disabled]="joining()"
+            (click)="join(); $event.stopPropagation()">
+            @if (joining()) {
+              <ion-spinner name="crescent" slot="start"></ion-spinner>
+            } @else {
+              <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+            }
+            {{ 'EVENT.JOIN' | translate }}
+          </ion-button>
+        }
+      </div>
+    }
   </ion-card-content>
 </ion-card>

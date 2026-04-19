@@ -275,5 +275,11 @@
     "ADD": "Añadir imagen",
     "CHANGE": "Cambiar imagen",
     "ERROR": "Error al subir la imagen"
+  },
+  "EVENT": {
+    "JOIN": "Apuntarme",
+    "LEAVE": "Abandonar",
+    "FULL": "Completo",
+    "YOU_CREATED": "Tu partida"
   }
 }
