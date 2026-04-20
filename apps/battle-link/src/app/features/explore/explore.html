@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [class.map-mode]="viewMode() === 'map'">
+<ion-content class="ion-padding" [class.map-mode]="viewMode() === 'map'">
   @if (viewMode() === 'list') {
     <div class="explore-list">
       <ion-searchbar

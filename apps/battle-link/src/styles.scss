@@ -181,6 +181,9 @@ ion-item {
     font-family: var(--bl-font-body);
     font-weight: var(--bl-font-semibold);
   }
+  .input-wrapper {
+    padding: 0 var(--bl-space-2);
+  }
 }
 
 // ── Light mode global overrides ───────────────────────────────────────────────
