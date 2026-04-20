@@ -78,7 +78,11 @@ export class HomePage {
     return ((parts[0]?.[0] ?? '') + (parts[1]?.[0] ?? '')).toUpperCase().slice(0, 2);
   });
 
-  readonly myEvents = toSignal(this.api.getMyEvents(), { initialValue: [] as Event[] });
+  private readonly eventsReload = signal(0);
+  readonly myEvents = toSignal(
+    toObservable(this.eventsReload).pipe(switchMap(() => this.api.getMyEvents())),
+    { initialValue: [] as Event[] },
+  );
 
   readonly myTournaments = computed(() => {
     const userId = this.user()?._id ?? 'mock-user-id';
@@ -93,6 +97,7 @@ export class HomePage {
 
   ionViewWillEnter(): void {
     this.placesReload.update((v) => v + 1);
+    this.eventsReload.update((v) => v + 1);
   }
 
   constructor() {
