@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, computed, inject, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, computed, inject, signal } from '@angular/core';
 import {
   IonHeader,
   IonToolbar,
@@ -10,7 +10,6 @@ import {
   AlertController,
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { addIcons } from 'ionicons';
 import { arrowBack, settingsOutline } from 'ionicons/icons';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -24,7 +23,8 @@ import { ProfileSettingsComponent } from './components/profile-settings/profile-
 import { ProfileAccountComponent } from './components/profile-account/profile-account';
 import { ProfileAppearanceComponent } from './components/profile-appearance/profile-appearance';
 import { ProfileLanguageComponent } from './components/profile-language/profile-language';
-
+import { toSignal, toObservable } from '@angular/core/rxjs-interop';
+import { switchMap } from 'rxjs';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.html',
@@ -48,7 +48,7 @@ import { ProfileLanguageComponent } from './components/profile-language/profile-
     TranslatePipe,
   ],
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage {
   private readonly auth = inject(AuthService);
   private readonly api = inject(ApiService);
   private readonly router = inject(Router);
@@ -61,7 +61,11 @@ export class ProfilePage implements OnInit {
   showAppearance = signal(false);
   showLanguage = signal(false);
 
-  myEvents = toSignal(this.api.getMyEvents(), { initialValue: [] as Event[] });
+  private readonly eventsReload = signal(0);
+  myEvents = toSignal(
+    toObservable(this.eventsReload).pipe(switchMap(() => this.api.getMyEvents())),
+    { initialValue: [] as Event[] },
+  );
 
   private readonly user = computed(() => this.auth.user());
 
@@ -80,10 +84,9 @@ export class ProfilePage implements OnInit {
     addIcons({ arrowBack, settingsOutline });
   }
 
-  ngOnInit(): void {
-    this.auth.ready
-      .then(() => this.auth.refreshProfile())
-      .catch(() => { /* sesión restaurada desde caché, fallo silencioso aceptable */ });
+  ionViewWillEnter(): void {
+    this.auth.refreshProfile().catch(() => {});
+    this.eventsReload.update((v) => v + 1);
   }
 
   headerTitle = computed(() => {
@@ -95,9 +98,13 @@ export class ProfilePage implements OnInit {
     return 'PROFILE.TITLE';
   });
 
-  showBackButton = computed(() =>
-    this.showEdit() || this.showSettings() || this.showAccount() ||
-    this.showAppearance() || this.showLanguage()
+  showBackButton = computed(
+    () =>
+      this.showEdit() ||
+      this.showSettings() ||
+      this.showAccount() ||
+      this.showAppearance() ||
+      this.showLanguage(),
   );
 
   goBack(): void {

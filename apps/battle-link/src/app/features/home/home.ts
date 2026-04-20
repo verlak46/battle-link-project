@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject, computed } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, computed, signal } from '@angular/core';
 import {
   IonHeader,
   IonToolbar,
@@ -20,7 +20,8 @@ import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { EventCardComponent } from '../../shared/components/event-card/event-card';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { toSignal, toObservable } from '@angular/core/rxjs-interop';
+import { switchMap } from 'rxjs';
 import { addIcons } from 'ionicons';
 import {
   calendarOutline,
@@ -87,7 +88,15 @@ export class HomePage {
     return MOCK_TOURNAMENTS.filter((t) => t.participants.some((p) => p.userId === userId));
   });
 
-  readonly nearbyPlaces = toSignal(this.api.getPlaces(), { initialValue: [] as Place[] });
+  private readonly placesReload = signal(0);
+  readonly nearbyPlaces = toSignal(
+    toObservable(this.placesReload).pipe(switchMap(() => this.api.getPlaces())),
+    { initialValue: [] as Place[] },
+  );
+
+  ionViewWillEnter(): void {
+    this.placesReload.update((v) => v + 1);
+  }
 
   constructor() {
     addIcons({

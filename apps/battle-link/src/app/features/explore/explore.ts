@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
   signal,
   computed,
   ViewChild,
@@ -59,7 +58,7 @@ import { Event } from '@battle-link/shared-models';
     EventCardComponent,
   ],
 })
-export class ExplorePage implements OnInit {
+export class ExplorePage {
   @ViewChild(MapInfoWindow) infoWindow?: MapInfoWindow;
 
   private readonly auth = inject(AuthService);
@@ -118,7 +117,7 @@ export class ExplorePage implements OnInit {
     });
   }
 
-  ngOnInit() {
+  ionViewWillEnter(): void {
     const doLoad = (lat?: number, lng?: number) => {
       if (lat != null && lng != null) this.center.set({ lat, lng });
       this.loadPage(1);
