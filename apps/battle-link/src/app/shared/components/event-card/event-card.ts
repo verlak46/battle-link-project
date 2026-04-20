@@ -74,8 +74,8 @@ export class EventCardComponent {
   });
 
   readonly isFull = computed(() => {
-    const e = this.event();
-    return e.maxPlayers > 0 && e.currentPlayers >= e.maxPlayers;
+    const event = this.event();
+    return event.maxPlayers ? event.maxPlayers > 0 && event.currentPlayers >= event.maxPlayers : false;
   });
 
   readonly canJoin = computed(
