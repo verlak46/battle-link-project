@@ -33,9 +33,9 @@ import {
   chevronForwardOutline,
 } from 'ionicons/icons';
 import { AuthService } from '../../core/services/auth.service';
-import { ApiService } from '../../core/services/api.service';
+import { ApiService, Event } from '../../core/services/api.service';
 import { Place } from '@battle-link/shared-models';
-import { MOCK_EVENTS, MOCK_TOURNAMENTS } from '../../shared/mock/events.mock';
+import { MOCK_TOURNAMENTS } from '../../shared/mock/events.mock';
 
 @Component({
   selector: 'app-home',
@@ -78,10 +78,7 @@ export class HomePage {
     return ((parts[0]?.[0] ?? '') + (parts[1]?.[0] ?? '')).toUpperCase().slice(0, 2);
   });
 
-  readonly myEvents = computed(() => {
-    const userId = this.user()?._id ?? 'mock-user-id';
-    return MOCK_EVENTS.filter((e) => e.participants.includes(userId));
-  });
+  readonly myEvents = toSignal(this.api.getMyEvents(), { initialValue: [] as Event[] });
 
   readonly myTournaments = computed(() => {
     const userId = this.user()?._id ?? 'mock-user-id';

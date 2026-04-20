@@ -5,32 +5,63 @@
 </ion-header>
 
 <ion-content [class.map-mode]="viewMode() === 'map'">
-
   @if (viewMode() === 'list') {
-
     <div class="explore-list">
       <ion-searchbar
         [placeholder]="'EXPLORE.SEARCH_PLACEHOLDER' | translate"
         (ionInput)="onSearch($event)"
         [value]="searchQuery()"
-        debounce="300">
+        debounce="300"
+      >
       </ion-searchbar>
 
       <!-- Time filter chips -->
       <div class="filter-row">
-        <button class="filter-chip" [class.active]="activeTimeFilter() === 'upcoming'" (click)="activeTimeFilter.set('upcoming')">Próximos</button>
-        <button class="filter-chip" [class.active]="activeTimeFilter() === 'today'" (click)="activeTimeFilter.set('today')">Hoy</button>
-        <button class="filter-chip" [class.active]="activeTimeFilter() === 'weekend'" (click)="activeTimeFilter.set('weekend')">Fin de semana</button>
+        <button
+          class="filter-chip"
+          [class.active]="activeTimeFilter() === 'upcoming'"
+          (click)="activeTimeFilter.set('upcoming')"
+        >
+          Próximos
+        </button>
+        <button
+          class="filter-chip"
+          [class.active]="activeTimeFilter() === 'today'"
+          (click)="activeTimeFilter.set('today')"
+        >
+          Hoy
+        </button>
+        <button
+          class="filter-chip"
+          [class.active]="activeTimeFilter() === 'weekend'"
+          (click)="activeTimeFilter.set('weekend')"
+        >
+          Fin de semana
+        </button>
       </div>
 
       <!-- Category filter chips -->
       <div class="filter-row category-row">
-        <button class="filter-chip" [class.active]="activeCategoryFilter() === 'all'" (click)="activeCategoryFilter.set('all')">Todos</button>
-        <button class="filter-chip" [class.active]="activeCategoryFilter() === 'event'" (click)="activeCategoryFilter.set('event')">
+        <button
+          class="filter-chip"
+          [class.active]="activeCategoryFilter() === 'all'"
+          (click)="activeCategoryFilter.set('all')"
+        >
+          Todos
+        </button>
+        <button
+          class="filter-chip"
+          [class.active]="activeCategoryFilter() === 'event'"
+          (click)="activeCategoryFilter.set('event')"
+        >
           <ion-icon name="calendar-outline"></ion-icon>
           Partidas
         </button>
-        <button class="filter-chip" [class.active]="activeCategoryFilter() === 'tournament'" (click)="activeCategoryFilter.set('tournament')">
+        <button
+          class="filter-chip"
+          [class.active]="activeCategoryFilter() === 'tournament'"
+          (click)="activeCategoryFilter.set('tournament')"
+        >
           <ion-icon name="trophy-outline"></ion-icon>
           Torneos
         </button>
@@ -38,7 +69,7 @@
 
       @if (filteredItems().length === 0) {
         <div class="empty-search">
-          <p>{{ 'EXPLORE.NO_RESULTS' | translate:{ query: searchQuery() } }}</p>
+          <p>{{ 'EXPLORE.NO_RESULTS' | translate: { query: searchQuery() } }}</p>
         </div>
       }
 
@@ -57,23 +88,22 @@
         {{ 'EXPLORE.VIEW_MAP' | translate }}
       </ion-button>
     </div>
-
   } @else {
-
     <google-map
       [center]="center()"
       [zoom]="zoom()"
       [options]="mapOptions"
       width="100%"
-      height="100%">
-
+      height="100%"
+    >
       @for (item of filteredItems(); track item._id) {
         @if (markerPosition(item); as pos) {
           <map-marker
             #marker="mapMarker"
             [position]="pos"
             [title]="item.title"
-            (mapClick)="openInfo(marker, item)">
+            (mapClick)="openInfo(marker, item)"
+          >
           </map-marker>
         }
       }
@@ -83,11 +113,16 @@
           <div class="info-window">
             <h3>{{ selectedItem()!.title }}</h3>
             <p class="info-kind">
-              {{ (selectedItem()!.type === 'tournament' ? 'EXPLORE.TOURNAMENT_BADGE' : 'EXPLORE.GAME_BADGE') | translate }}
+              {{
+                (selectedItem()!.type === 'tournament'
+                  ? 'EXPLORE.TOURNAMENT_BADGE'
+                  : 'EXPLORE.GAME_BADGE'
+                ) | translate
+              }}
               · {{ selectedItem()!.game }}
             </p>
             <p class="info-date">
-              {{ selectedItem()!.startDate | date:'d MMM yyyy' }}
+              {{ selectedItem()!.startDate | date: 'd MMM yyyy' }}
             </p>
             @if (selectedItem()!.placeName) {
               <p class="info-place">{{ selectedItem()!.placeName }}</p>
@@ -95,7 +130,6 @@
           </div>
         }
       </map-info-window>
-
     </google-map>
 
     <div class="view-toggle-btn">
@@ -104,7 +138,5 @@
         {{ 'EXPLORE.VIEW_LIST' | translate }}
       </ion-button>
     </div>
-
   }
-
 </ion-content>

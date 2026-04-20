@@ -128,6 +128,18 @@ export class ApiService {
     return this.get('events/mine');
   }
 
+  getEvent(id: string): Observable<Event> {
+    return this.get(`events/${id}`);
+  }
+
+  joinEvent(id: string): Observable<Event> {
+    return this.patch(`events/${id}/join`, {});
+  }
+
+  leaveEvent(id: string): Observable<Event> {
+    return this.patch(`events/${id}/leave`, {});
+  }
+
   // Places
   getPlaces(): Observable<Place[]> {
     return this.get('places');

@@ -2,9 +2,9 @@ import {
   Component,
   signal,
   computed,
+  inject,
   ViewChild,
   ChangeDetectionStrategy,
-  inject,
 } from '@angular/core';
 import {
   IonHeader,
@@ -16,8 +16,7 @@ import {
   IonSearchbar,
   IonInfiniteScroll,
   IonInfiniteScrollContent,
-  InfiniteScrollCustomEvent,
-} from '@ionic/angular/standalone';
+  InfiniteScrollCustomEvent } from '@ionic/angular/standalone';
 import { DatePipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { GoogleMap, MapMarker, MapInfoWindow } from '@angular/google-maps';

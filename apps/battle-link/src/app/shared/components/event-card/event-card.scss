@@ -79,4 +79,25 @@
     color: var(--ion-color-success-shade);
     margin: var(--bl-space-1) 0 0;
   }
+
+  .card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: var(--bl-space-3);
+    padding-top: var(--bl-space-2);
+    border-top: var(--bl-border-subtle);
+
+    .card-action-error {
+      font-size: var(--bl-text-xs);
+      color: var(--ion-color-danger);
+      margin: 0 auto 0 0;
+      flex: 1;
+    }
+
+    ion-chip {
+      height: 28px;
+      font-size: var(--bl-text-xs);
+    }
+  }
 }

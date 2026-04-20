@@ -275,5 +275,11 @@
     "ADD": "Add image",
     "CHANGE": "Change image",
     "ERROR": "Error uploading image"
+  },
+  "EVENT": {
+    "JOIN": "Join",
+    "LEAVE": "Leave",
+    "FULL": "Full",
+    "YOU_CREATED": "Your event"
   }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
 import { EventsService } from './events.service';
 import { CreateEventDto } from './dto/create-event.dto';
@@ -44,5 +44,19 @@ export class EventsController {
   @ApiBearerAuth()
   remove(@Param('id') id: string, @CurrentUser() user: JwtPayload) {
     return this.eventsService.remove(id, user.sub);
+  }
+
+  @Patch(':id/join')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  join(@Param('id') id: string, @CurrentUser() user: JwtPayload) {
+    return this.eventsService.joinEvent(id, user.sub);
+  }
+
+  @Patch(':id/leave')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  leave(@Param('id') id: string, @CurrentUser() user: JwtPayload) {
+    return this.eventsService.leaveEvent(id, user.sub);
   }
 }

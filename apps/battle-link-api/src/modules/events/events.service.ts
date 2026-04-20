@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import { Injectable, NotFoundException, ForbiddenException, BadRequestException, ConflictException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { EventEntity, EventDocument } from './schemas/event.schema';
@@ -70,8 +70,8 @@ export class EventsService {
 
   async findByUser(userId: string): Promise<EventDocument[]> {
     return this.eventModel
-      .find({ createdBy: userId })
-      .sort({ startDate: -1 })
+      .find({ participants: userId })
+      .sort({ startDate: 1 })
       .lean()
       .exec() as unknown as EventDocument[];
   }
@@ -87,5 +87,30 @@ export class EventsService {
     if (!event) throw new NotFoundException('Evento no encontrado');
     if (event.createdBy !== userId) throw new ForbiddenException('No tienes permiso para eliminar este evento');
     await event.deleteOne();
+  }
+
+  async joinEvent(id: string, userId: string): Promise<EventDocument> {
+    const event = await this.eventModel.findById(id).exec();
+    if (!event) throw new NotFoundException('Evento no encontrado');
+    if (event.status !== 'published') throw new BadRequestException('Este evento no está disponible');
+    if (event.participants.includes(userId)) throw new ConflictException('Ya estás apuntado a este evento');
+    if (event.maxPlayers > 0 && event.currentPlayers >= event.maxPlayers)
+      throw new BadRequestException('El evento está completo');
+    return this.eventModel
+      .findByIdAndUpdate(id, { $addToSet: { participants: userId }, $inc: { currentPlayers: 1 } }, { new: true })
+      .lean()
+      .exec() as unknown as EventDocument;
+  }
+
+  async leaveEvent(id: string, userId: string): Promise<EventDocument> {
+    const event = await this.eventModel.findById(id).exec();
+    if (!event) throw new NotFoundException('Evento no encontrado');
+    if (event.status !== 'published') throw new BadRequestException('Este evento no está disponible');
+    if (event.createdBy === userId) throw new ForbiddenException('El creador no puede abandonar el evento');
+    if (!event.participants.includes(userId)) throw new BadRequestException('No estás apuntado a este evento');
+    return this.eventModel
+      .findByIdAndUpdate(id, { $pull: { participants: userId }, $inc: { currentPlayers: -1 } }, { new: true })
+      .lean()
+      .exec() as unknown as EventDocument;
   }
 }
