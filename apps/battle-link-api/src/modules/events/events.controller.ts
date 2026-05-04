@@ -23,8 +23,11 @@ export class EventsController {
   @Get('mine')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  findMine(@CurrentUser() user: JwtPayload) {
-    return this.eventsService.findByUser(user.sub);
+  @ApiQuery({ name: 'fromDate', required: false, type: String })
+  @ApiQuery({ name: 'toDate', required: false, type: String })
+  @ApiQuery({ name: 'limit', required: false, type: Number })
+  findMine(@CurrentUser() user: JwtPayload, @Query() query: FindEventsQueryDto) {
+    return this.eventsService.findByUser(user.sub, query);
   }
 
   @Get(':id')

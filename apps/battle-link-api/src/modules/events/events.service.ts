@@ -68,12 +68,26 @@ export class EventsService {
     return { items, total };
   }
 
-  async findByUser(userId: string): Promise<EventDocument[]> {
-    return this.eventModel
-      .find({ participants: userId })
-      .sort({ startDate: 1 })
-      .lean()
-      .exec() as unknown as EventDocument[];
+  async findByUser(
+    userId: string,
+    query: { fromDate?: string; toDate?: string; limit?: number } = {},
+  ): Promise<EventDocument[]> {
+    const filter: Record<string, unknown> = { participants: userId, status: 'published' };
+
+    if (query.fromDate || query.toDate) {
+      const dateFilter: Record<string, string> = {};
+      if (query.fromDate) dateFilter['$gte'] = query.fromDate;
+      if (query.toDate) dateFilter['$lt'] = query.toDate;
+      filter['startDate'] = dateFilter;
+    }
+
+    let q = this.eventModel.find(filter).sort({ startDate: 1 }).lean();
+
+    if (query.limit) {
+      q = q.limit(query.limit);
+    }
+
+    return q.exec() as unknown as EventDocument[];
   }
 
   async findById(id: string): Promise<EventDocument> {
