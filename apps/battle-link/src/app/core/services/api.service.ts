@@ -124,8 +124,13 @@ export class ApiService {
     return this.getWithParams<EventsPage>('events', p);
   }
 
-  getMyEvents(): Observable<Event[]> {
-    return this.get('events/mine');
+  getMyEvents(params: { fromDate?: string; toDate?: string; limit?: number } = {}): Observable<Event[]> {
+    const p: Record<string, string> = {};
+    if (params.fromDate) p['fromDate'] = params.fromDate;
+    if (params.toDate) p['toDate'] = params.toDate;
+    if (params.limit != null) p['limit'] = String(params.limit);
+    if (Object.keys(p).length === 0) return this.get<Event[]>('events/mine');
+    return this.getWithParams<Event[]>('events/mine', p);
   }
 
   getEvent(id: string): Observable<Event> {

@@ -200,6 +200,36 @@ describe('ApiService', () => {
       expect(req.request.method).toBe('GET');
       req.flush(wrap([mockEvent]));
     });
+
+    it('should GET /events/mine with no params when called with empty object', () => {
+      service.getMyEvents({}).subscribe((res) => expect(res).toEqual([mockEvent]));
+      const req = http.expectOne(`${base}/events/mine`);
+      expect(req.request.method).toBe('GET');
+      req.flush(wrap([mockEvent]));
+    });
+
+    it('should forward fromDate and limit as query params', () => {
+      service.getMyEvents({ fromDate: '2026-04-28T00:00:00.000Z', limit: 5 }).subscribe();
+      const req = http.expectOne(
+        (r) =>
+          r.url === `${base}/events/mine` &&
+          r.params.get('fromDate') === '2026-04-28T00:00:00.000Z' &&
+          r.params.get('limit') === '5',
+      );
+      expect(req.request.method).toBe('GET');
+      req.flush(wrap([mockEvent]));
+    });
+
+    it('should forward toDate as query param', () => {
+      service.getMyEvents({ toDate: '2026-04-28T00:00:00.000Z' }).subscribe();
+      const req = http.expectOne(
+        (r) =>
+          r.url === `${base}/events/mine` &&
+          r.params.get('toDate') === '2026-04-28T00:00:00.000Z',
+      );
+      expect(req.request.method).toBe('GET');
+      req.flush(wrap([]));
+    });
   });
 
   // Places
