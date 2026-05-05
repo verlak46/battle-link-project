@@ -23,9 +23,10 @@ function makeAuthMock(user: any = null) {
   } satisfies Partial<AuthService>;
 }
 
-function makeApiMock(places: any[] = []) {
+function makeApiMock(places: any[] = [], events: any[] = []) {
   return {
     getPlaces: () => of(places),
+    getMyEvents: (_params?: unknown) => of(events),
   } satisfies Partial<ApiService>;
 }
 
@@ -93,5 +94,20 @@ describe('HomePage', () => {
     const fixture = TestBed.createComponent(HomePage);
     fixture.detectChanges();
     expect(fixture.componentInstance.nearbyPlaces()).toEqual(places);
+  });
+
+  it('should pass fromDate and limit 5 to getMyEvents', () => {
+    const calls: unknown[] = [];
+    const apiMock = {
+      getPlaces: () => of([]),
+      getMyEvents: (params: unknown) => { calls.push(params); return of([]); },
+    };
+    TestBed.overrideProvider(ApiService, { useValue: apiMock });
+    const fixture = TestBed.createComponent(HomePage);
+    fixture.detectChanges();
+    expect(calls.length).toBeGreaterThan(0);
+    const params = calls[0] as { fromDate?: string; limit?: number };
+    expect(params.fromDate).toBeDefined();
+    expect(params.limit).toBe(5);
   });
 });

@@ -80,7 +80,11 @@ export class HomePage {
 
   private readonly eventsReload = signal(0);
   readonly myEvents = toSignal(
-    toObservable(this.eventsReload).pipe(switchMap(() => this.api.getMyEvents())),
+    toObservable(this.eventsReload).pipe(
+      switchMap(() =>
+        this.api.getMyEvents({ fromDate: new Date().toISOString(), limit: 5 }),
+      ),
+    ),
     { initialValue: [] as Event[] },
   );
 
