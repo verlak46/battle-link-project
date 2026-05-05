@@ -68,6 +68,7 @@
     "MY_EVENTS": "Mis próximas partidas",
     "NO_EVENTS": "No tienes partidas próximas.",
     "CREATE_GAME": "Crear partida",
+    "FIND_GAME": "Buscar partida",
     "MY_TOURNAMENTS": "Mis torneos",
     "NO_TOURNAMENTS": "No estás inscrito en ningún torneo.",
     "EXPLORE_TOURNAMENTS": "Explorar torneos",
@@ -235,6 +236,12 @@
     "DELETE_CONFIRM_BTN": "Eliminar",
     "MY_GAMES": "Mis partidas",
     "NO_GAMES": "Aún no has creado ninguna partida.",
+    "EVENTS": {
+      "TAB_ACTIVE": "Activas",
+      "TAB_HISTORY": "Historial",
+      "EMPTY_ACTIVE": "No tienes partidas activas.",
+      "EMPTY_HISTORY": "Aún no has jugado ninguna partida."
+    },
     "CREATE_GAME": "Crear partida",
     "EDIT_OVERLAY": "EDITAR"
   },

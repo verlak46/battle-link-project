@@ -68,6 +68,7 @@
     "MY_EVENTS": "My upcoming games",
     "NO_EVENTS": "You have no upcoming games.",
     "CREATE_GAME": "Create game",
+    "FIND_GAME": "Find a game",
     "MY_TOURNAMENTS": "My tournaments",
     "NO_TOURNAMENTS": "You are not enrolled in any tournament.",
     "EXPLORE_TOURNAMENTS": "Explore tournaments",
@@ -235,6 +236,12 @@
     "DELETE_CONFIRM_BTN": "Delete",
     "MY_GAMES": "My games",
     "NO_GAMES": "You have not created any games yet.",
+    "EVENTS": {
+      "TAB_ACTIVE": "Active",
+      "TAB_HISTORY": "History",
+      "EMPTY_ACTIVE": "You have no active games.",
+      "EMPTY_HISTORY": "You haven't played any games yet."
+    },
     "CREATE_GAME": "Create game",
     "EDIT_OVERLAY": "EDIT"
   },
