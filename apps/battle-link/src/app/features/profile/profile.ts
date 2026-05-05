@@ -15,7 +15,6 @@ import { arrowBack, settingsOutline } from 'ionicons/icons';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../core/services/auth.service';
-import { ApiService, Event } from '../../core/services/api.service';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit';
 import { ProfileAvatarComponent } from './components/profile-avatar/profile-avatar';
 import { ProfileEventsComponent } from './components/profile-events/profile-events';
@@ -23,8 +22,6 @@ import { ProfileSettingsComponent } from './components/profile-settings/profile-
 import { ProfileAccountComponent } from './components/profile-account/profile-account';
 import { ProfileAppearanceComponent } from './components/profile-appearance/profile-appearance';
 import { ProfileLanguageComponent } from './components/profile-language/profile-language';
-import { toSignal, toObservable } from '@angular/core/rxjs-interop';
-import { switchMap } from 'rxjs';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.html',
@@ -50,7 +47,6 @@ import { switchMap } from 'rxjs';
 })
 export class ProfilePage {
   private readonly auth = inject(AuthService);
-  private readonly api = inject(ApiService);
   private readonly router = inject(Router);
   private readonly alertCtrl = inject(AlertController);
   private readonly translate = inject(TranslateService);
@@ -61,11 +57,7 @@ export class ProfilePage {
   showAppearance = signal(false);
   showLanguage = signal(false);
 
-  private readonly eventsReload = signal(0);
-  myEvents = toSignal(
-    toObservable(this.eventsReload).pipe(switchMap(() => this.api.getMyEvents())),
-    { initialValue: [] as Event[] },
-  );
+  readonly eventsReload = signal(0);
 
   private readonly user = computed(() => this.auth.user());
 

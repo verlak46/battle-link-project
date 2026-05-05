@@ -46,6 +46,6 @@
       [nick]="displayNick()"
       (editClick)="showEdit.set(true)"
     ></app-profile-avatar>
-    <app-profile-events [events]="myEvents()"></app-profile-events>
+    <app-profile-events [reload]="eventsReload()"></app-profile-events>
   }
 </ion-content>

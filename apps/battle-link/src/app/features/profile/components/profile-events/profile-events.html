@@ -4,17 +4,40 @@
     <h3>{{ 'PROFILE.MY_GAMES' | translate }}</h3>
   </div>
 
-  @if (events().length > 0) {
-    @for (event of events(); track event._id) {
-      <app-event-card [event]="event" />
+  <ion-segment [value]="activeTab()" (ionChange)="activeTab.set($any($event).detail.value)">
+    <ion-segment-button value="active">
+      <ion-label>{{ 'PROFILE.EVENTS.TAB_ACTIVE' | translate }}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="history">
+      <ion-label>{{ 'PROFILE.EVENTS.TAB_HISTORY' | translate }}</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  @if (activeTab() === 'active') {
+    @if (activeEvents().length > 0) {
+      @for (event of activeEvents(); track event._id) {
+        <app-event-card [event]="event" />
+      }
+    } @else {
+      <div class="empty-state">
+        <p>{{ 'PROFILE.EVENTS.EMPTY_ACTIVE' | translate }}</p>
+        <ion-button fill="outline" routerLink="/tabs/new">
+          <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+          {{ 'PROFILE.CREATE_GAME' | translate }}
+        </ion-button>
+      </div>
     }
-  } @else {
-    <div class="empty-state">
-      <p>{{ 'PROFILE.NO_GAMES' | translate }}</p>
-      <ion-button fill="outline" routerLink="/tabs/new">
-        <ion-icon name="add-circle-outline" slot="start"></ion-icon>
-        {{ 'PROFILE.CREATE_GAME' | translate }}
-      </ion-button>
-    </div>
+  }
+
+  @if (activeTab() === 'history') {
+    @if (historyEvents().length > 0) {
+      @for (event of historyEvents(); track event._id) {
+        <app-event-card [event]="event" />
+      }
+    } @else {
+      <div class="empty-state">
+        <p>{{ 'PROFILE.EVENTS.EMPTY_HISTORY' | translate }}</p>
+      </div>
+    }
   }
 </section>
